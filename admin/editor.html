@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Editor — Harmony Digital Consults</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,1 29,8.5 29,23.5 16,31 3,23.5 3,8.5' fill='%2301696F'/%3E%3Cpath d='M11,11 L11,21 M11,16 L21,16 M21,11 L21,21' stroke='white' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Quill Rich Text Editor -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --teal: #01696F;
+      --teal-light: #e6f3f4;
+      --teal-hover: #0C4E54;
+      --bg: #F7F6F2;
+      --surface: #ffffff;
+      --text: #28251D;
+      --text-muted: #7A7974;
+      --border: #D4D1CA;
+      --radius: 8px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .editor-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .editor-header svg { flex-shrink: 0; }
+
+    .editor-header h1 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .editor-header span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--teal-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* Main Layout */
+    .editor-main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Instructions */
+    .instructions {
+      background: var(--teal-light);
+      border-left: 4px solid var(--teal);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .instructions strong { color: var(--teal); }
+
+    .instructions ol {
+      margin: 0.5rem 0 0 1.2rem;
+      line-height: 1.8;
+    }
+
+    /* Form Fields */
+    .field-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field--full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    input, textarea, select {
+      font-family: var(--font);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(1, 105, 111, 0.1);
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* Quill Editor */
+    .editor-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .editor-section h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .editor-section p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    #editor-container {
+      height: 450px;
+      font-size: 1rem;
+      font-family: var(--font);
+    }
+
+    .ql-toolbar.ql-snow {
+      border-radius: var(--radius) var(--radius) 0 0;
+      border-color: var(--border);
+    }
+
+    .ql-container.ql-snow {
+      border-radius: 0 0 var(--radius) var(--radius);
+      border-color: var(--border);
+    }
+
+    .ql-editor {
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .ql-editor h2 { font-size: 1.4rem; margin: 1.5rem 0 0.75rem; }
+    .ql-editor h3 { font-size: 1.15rem; margin: 1.25rem 0 0.5rem; }
+
+    /* OR Divider */
+    .or-divider {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin: 0.75rem 0;
+      position: relative;
+    }
+
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .or-divider::before { left: 0; }
+    .or-divider::after { right: 0; }
+
+    /* Paste area */
+    .paste-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      min-height: 200px;
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.7;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .paste-area:focus {
+      border-color: var(--teal);
+    }
+
+    .paste-area:empty::before {
+      content: 'Paste from Google Docs here... (Ctrl+V / Cmd+V)';
+      color: var(--text-muted);
+    }
+
+    .paste-area h1, .paste-area h2, .paste-area h3 {
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* Action Buttons */
+    .actions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .actions h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn--primary {
+      background: var(--teal);
+      color: white;
+    }
+
+    .btn--primary:hover { background: var(--teal-hover); }
+
+    .btn--secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn--secondary:hover { background: var(--border); }
+
+    /* Output Preview */
+    .output-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .output-section.visible { display: block; }
+
+    .output-section h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .output-html {
+      background: #1a1a1a;
+      color: #a5d6a7;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      padding: 1rem;
+      border-radius: 6px;
+      max-height: 300px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .output-preview {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .output-preview h2 { font-size: 1.4rem; margin: 1.5rem 0 0.75rem; color: var(--teal); }
+    .output-preview h3 { font-size: 1.15rem; margin: 1.25rem 0 0.5rem; }
+    .output-preview p { margin-bottom: 1rem; }
+    .output-preview ul, .output-preview ol { margin: 0.5rem 0 1rem 1.5rem; }
+    .output-preview li { margin-bottom: 0.35rem; }
+    .output-preview strong { font-weight: 700; }
+
+    /* Sheet row output */
+    .sheet-row {
+      background: var(--teal-light);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .sheet-row table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .sheet-row td {
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid rgba(1, 105, 111, 0.15);
+      vertical-align: top;
+    }
+
+    .sheet-row td:first-child {
+      font-weight: 600;
+      color: var(--teal);
+      white-space: nowrap;
+      width: 120px;
+    }
+
+    .sheet-row td:last-child {
+      word-break: break-word;
+    }
+
+    .copy-cell {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .copy-cell:hover { background: rgba(1, 105, 111, 0.08); }
+
+    .copy-cell .copied-toast {
+      position: absolute;
+      top: -1.5rem;
+      right: 0;
+      background: var(--teal);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .copy-cell .copied-toast.show { opacity: 1; }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--teal);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* CMS link */
+    .cms-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .cms-link:hover { text-decoration: underline; }
+
+    /* Tabs */
+    .editor-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .editor-tab {
+      padding: 0.6rem 1.25rem;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: var(--bg);
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .editor-tab.active {
+      background: var(--surface);
+      color: var(--teal);
+      border-color: var(--border);
+    }
+
+    .editor-tab:not(.active):hover { background: var(--surface); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="editor-header">
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+      <polygon points="16,1 29,8.5 29,23.5 16,31 3,23.5 3,8.5" fill="#01696F"/>
+      <path d="M11,11 L11,21 M11,16 L21,16 M21,11 L21,21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <h1>Blog Editor</h1>
+    <span>Harmony Digital Consults</span>
+  </div>
+
+  <div class="editor-main">
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <strong>How to publish a blog post:</strong>
+      <ol>
+        <li>Fill in the post details below (title, slug, excerpt, etc.)</li>
+        <li>Write your article using the editor OR paste from Google Docs</li>
+        <li>Click <strong>"Generate for CMS"</strong> to get the formatted output</li>
+        <li>Copy each field and paste into your <a href="https://docs.google.com/spreadsheets/d/194Dk1gM2hd-BaqwQXMSTm6hx53-fgijsGmAqwoNwc54/edit" target="_blank" class="cms-link">CMS Google Sheet</a> (Blog Posts tab)</li>
+      </ol>
+    </div>
+
+    <!-- Post Metadata -->
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field">
+          <label for="post-title">Title</label>
+          <input type="text" id="post-title" placeholder="e.g., How AI is Changing Nigerian Classrooms">
+        </div>
+        <div class="field">
+          <label for="post-slug">Slug (URL name)</label>
+          <input type="text" id="post-slug" placeholder="e.g., ai-changing-nigerian-classrooms">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="post-author">Author</label>
+          <input type="text" id="post-author" value="Harmony Digital Consults">
+        </div>
+        <div class="field">
+          <label for="post-read-time">Read Time</label>
+          <input type="text" id="post-read-time" placeholder="e.g., 5 min read">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="post-tags">Tags (comma separated)</label>
+          <input type="text" id="post-tags" placeholder="e.g., EdTech, AI, Nigeria">
+        </div>
+        <div class="field">
+          <label for="post-status">Status</label>
+          <select id="post-status">
+            <option value="published">Published (live immediately)</option>
+            <option value="draft">Draft (not visible on site)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field field--full">
+          <label for="post-excerpt">Excerpt (1-2 sentences for the blog listing)</label>
+          <textarea id="post-excerpt" rows="2" placeholder="A short summary that appears on the blog listing page..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Editor -->
+    <div class="editor-section">
+      <h2>Article Content</h2>
+      <p>Write directly in the editor below, or paste formatted content from Google Docs.</p>
+
+      <div class="editor-tabs">
+        <button class="editor-tab active" data-tab="write">Write</button>
+        <button class="editor-tab" data-tab="paste">Paste from Google Docs</button>
+      </div>
+
+      <!-- Tab 1: Rich Text Editor -->
+      <div class="tab-content active" id="tab-write">
+        <div id="editor-container"></div>
+      </div>
+
+      <!-- Tab 2: Paste from Docs -->
+      <div class="tab-content" id="tab-paste">
+        <div class="paste-area" contenteditable="true" id="paste-area"></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <h2>Generate Output</h2>
+      <div class="btn-row">
+        <button class="btn btn--primary" onclick="generateOutput()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Generate for CMS
+        </button>
+        <button class="btn btn--secondary" onclick="copyAllFields()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy All as Tab-Separated Row
+        </button>
+        <button class="btn btn--secondary" onclick="previewArticle()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview
+        </button>
+        <a href="https://docs.google.com/spreadsheets/d/194Dk1gM2hd-BaqwQXMSTm6hx53-fgijsGmAqwoNwc54/edit" target="_blank" class="btn btn--secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open CMS Sheet
+        </a>
+      </div>
+    </div>
+
+    <!-- Output: Sheet Row -->
+    <div class="output-section" id="output-row">
+      <h2>CMS Sheet Row — Click any cell to copy</h2>
+      <div class="sheet-row" id="sheet-row-content"></div>
+    </div>
+
+    <!-- Output: HTML -->
+    <div class="output-section" id="output-html">
+      <h2>HTML Content (for the content column)</h2>
+      <div class="output-html" id="html-output"></div>
+    </div>
+
+    <!-- Output: Preview -->
+    <div class="output-section" id="output-preview">
+      <h2>Article Preview</h2>
+      <div class="output-preview" id="preview-content"></div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Quill -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+  <script>
+    // ===== Quill Editor Setup =====
+    const quill = new Quill('#editor-container', {
+      theme: 'snow',
+      placeholder: 'Start writing your article...',
+      modules: {
+        toolbar: [
+          [{ 'header': [2, 3, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['blockquote'],
+          ['link'],
+          ['clean']
+        ]
+      }
+    });
+
+    // ===== Tab Switching =====
+    document.querySelectorAll('.editor-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ===== Auto-generate slug from title =====
+    document.getElementById('post-title').addEventListener('input', function() {
+      const slugField = document.getElementById('post-slug');
+      if (!slugField.dataset.manual) {
+        slugField.value = this.value
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .trim();
+      }
+    });
+
+    document.getElementById('post-slug').addEventListener('input', function() {
+      this.dataset.manual = 'true';
+    });
+
+    // ===== Get Content HTML =====
+    function getContentHtml() {
+      const activeTab = document.querySelector('.editor-tab.active').dataset.tab;
+      let html = '';
+
+      if (activeTab === 'write') {
+        html = quill.root.innerHTML;
+      } else {
+        html = document.getElementById('paste-area').innerHTML;
+      }
+
+      // Clean up the HTML
+      html = cleanHtml(html);
+      return html;
+    }
+
+    function cleanHtml(html) {
+      // Remove Quill-specific classes and empty paragraphs
+      html = html.replace(/<p class="ql-[^"]*">/g, '<p>');
+      html = html.replace(/<p><br><\/p>/g, '');
+      html = html.replace(/<p><br\s*\/?><\/p>/g, '');
+
+      // Clean up Google Docs pasted content
+      html = html.replace(/\s*style="[^"]*"/g, '');
+      html = html.replace(/\s*class="[^"]*"/g, '');
+      html = html.replace(/\s*id="[^"]*"/g, '');
+      html = html.replace(/<span>/g, '');
+      html = html.replace(/<\/span>/g, '');
+      html = html.replace(/<div>/g, '<p>');
+      html = html.replace(/<\/div>/g, '</p>');
+
+      // Convert h1 to h2 (Google Docs titles)
+      html = html.replace(/<h1>/g, '<h2>');
+      html = html.replace(/<\/h1>/g, '</h2>');
+
+      // Remove empty tags
+      html = html.replace(/<p>\s*<\/p>/g, '');
+      html = html.replace(/<strong>\s*<\/strong>/g, '');
+
+      // Normalize whitespace
+      html = html.replace(/\n\s*\n/g, '\n');
+
+      return html.trim();
+    }
+
+    // ===== Generate Output =====
+    function generateOutput() {
+      const title = document.getElementById('post-title').value.trim();
+      const slug = document.getElementById('post-slug').value.trim();
+      const excerpt = document.getElementById('post-excerpt').value.trim();
+      const author = document.getElementById('post-author').value.trim();
+      const readTime = document.getElementById('post-read-time').value.trim();
+      const tags = document.getElementById('post-tags').value.trim();
+      const status = document.getElementById('post-status').value;
+      const content = getContentHtml();
+      const today = new Date().toISOString().split('T')[0];
+
+      if (!title || !slug) {
+        showToast('Please fill in at least the title and slug.');
+        return;
+      }
+
+      if (!content || content === '<p></p>') {
+        showToast('Please write some content first.');
+        return;
+      }
+
+      // Show the sheet row output
+      const rowSection = document.getElementById('output-row');
+      rowSection.classList.add('visible');
+
+      const fields = [
+        { label: 'slug', value: slug },
+        { label: 'title', value: title },
+        { label: 'excerpt', value: excerpt },
+        { label: 'content', value: content },
+        { label: 'author', value: author || 'Harmony Digital Consults' },
+        { label: 'date', value: today },
+        { label: 'read_time', value: readTime || '5 min read' },
+        { label: 'status', value: status },
+        { label: 'featured_image', value: '' },
+        { label: 'tags', value: tags }
+      ];
+
+      document.getElementById('sheet-row-content').innerHTML = `
+        <table>
+          ${fields.map(f => `
+            <tr>
+              <td>${f.label}</td>
+              <td class="copy-cell" onclick="copyCellValue(this, '${f.label}')" title="Click to copy">
+                ${escapeHtmlForDisplay(f.value).substring(0, 200)}${f.value.length > 200 ? '...' : ''}
+                <span class="copied-toast">Copied</span>
+              </td>
+            </tr>
+          `).join('')}
+        </table>
+      `;
+
+      // Store full values for copying
+      window._cmsFields = fields;
+
+      // Show HTML output
+      const htmlSection = document.getElementById('output-html');
+      htmlSection.classList.add('visible');
+      document.getElementById('html-output').textContent = content;
+
+      showToast('Output generated. Click any cell to copy, or use "Copy All" for the full row.');
+
+      // Scroll to output
+      rowSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== Copy Functions =====
+    function copyCellValue(el, label) {
+      const field = window._cmsFields.find(f => f.label === label);
+      if (field) {
+        navigator.clipboard.writeText(field.value).then(() => {
+          const toast = el.querySelector('.copied-toast');
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 1500);
+        });
+      }
+    }
+
+    function copyAllFields() {
+      if (!window._cmsFields) {
+        showToast('Generate output first.');
+        return;
+      }
+      // Tab-separated values for pasting into a spreadsheet row
+      const row = window._cmsFields.map(f => f.value).join('\t');
+      navigator.clipboard.writeText(row).then(() => {
+        showToast('Full row copied. Go to your CMS Sheet, click cell A (next empty row), and paste (Ctrl+V).');
+      });
+    }
+
+    function previewArticle() {
+      const content = getContentHtml();
+      if (!content || content === '<p></p>') {
+        showToast('Write some content first.');
+        return;
+      }
+
+      const previewSection = document.getElementById('output-preview');
+      previewSection.classList.add('visible');
+      document.getElementById('preview-content').innerHTML = content;
+      previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== Helpers =====
+    function escapeHtmlForDisplay(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+  </script>
+</body>
+</html>
