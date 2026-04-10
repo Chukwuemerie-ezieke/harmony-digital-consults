@@ -340,6 +340,12 @@ a, button, [role="button"] {
 
 .header__logo-icon { flex-shrink: 0; }
 
+.header__logo-img {
+  flex-shrink: 0;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
 .header__logo-text {
   display: none;
 }
