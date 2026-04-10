@@ -25,6 +25,282 @@
     gtag('js', new Date());
     gtag('config', 'G-4B2KCDEWER');
   </script>
+  <style>
+    /* ===== EBOOK CARD STYLES ===== */
+    .ebooks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .ebook-card {
+      position: relative;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: row;
+      overflow: visible;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .ebook-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(1, 105, 111, 0.14);
+    }
+
+    /* Badge */
+    .ebook-card__badge {
+      position: absolute;
+      top: -0.75rem;
+      right: 1.25rem;
+      background: #01696F;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 99px;
+      z-index: 2;
+      white-space: nowrap;
+    }
+
+    .ebook-card__badge--bestseller {
+      background: #e07a1a;
+    }
+
+    .ebook-card__badge--new {
+      background: #1a7ae0;
+    }
+
+    .ebook-card__badge--featured {
+      background: #01696F;
+    }
+
+    .ebook-card__badge--popular {
+      background: #9c27b0;
+    }
+
+    /* Cover image column */
+    .ebook-card__cover-wrap {
+      flex: 0 0 200px;
+      width: 200px;
+      min-height: 240px;
+      border-radius: 1rem 0 0 1rem;
+      overflow: hidden;
+      background: #f0f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ebook-card__cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Content column */
+    .ebook-card__body {
+      flex: 1 1 0;
+      padding: 1.75rem 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .ebook-card__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--color-text, #111827);
+      margin: 0;
+    }
+
+    .ebook-card__desc {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--color-text-muted, #6b7280);
+      margin: 0;
+    }
+
+    .ebook-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .ebook-card__meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-text-muted, #6b7280);
+      background: var(--color-surface-alt, #f3f4f6);
+      border-radius: 99px;
+      padding: 0.2rem 0.65rem;
+    }
+
+    .ebook-card__meta-item svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Footer row: price + button */
+    .ebook-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border, #e5e7eb);
+    }
+
+    .ebook-card__pricing {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .ebook-card__price {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #01696F;
+    }
+
+    .ebook-card__price-original {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text-muted, #9ca3af);
+      text-decoration: line-through;
+    }
+
+    .ebook-card__savings {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      background: #e07a1a;
+      border-radius: 99px;
+      padding: 0.2rem 0.55rem;
+      white-space: nowrap;
+    }
+
+    .ebook-card__buy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #01696F;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 0.6rem;
+      padding: 0.65rem 1.4rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .ebook-card__buy-btn:hover {
+      background: #015257;
+      transform: translateY(-1px);
+    }
+
+    .ebook-card__buy-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Tags */
+    .ebook-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .ebook-card__tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #01696F;
+      background: rgba(1, 105, 111, 0.1);
+      border-radius: 99px;
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* Dark mode support */
+    [data-theme="dark"] .ebook-card {
+      background: var(--color-surface, #1f2937);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .ebook-card:hover {
+      box-shadow: 0 8px 32px rgba(1, 105, 111, 0.25);
+    }
+
+    [data-theme="dark"] .ebook-card__cover-wrap {
+      background: #111827;
+    }
+
+    [data-theme="dark"] .ebook-card__title {
+      color: var(--color-text, #f9fafb);
+    }
+
+    [data-theme="dark"] .ebook-card__meta-item {
+      background: rgba(255,255,255,0.07);
+      color: #9ca3af;
+    }
+
+    [data-theme="dark"] .ebook-card__footer {
+      border-top-color: rgba(255,255,255,0.08);
+    }
+
+    [data-theme="dark"] .ebook-card__tag {
+      background: rgba(1, 105, 111, 0.2);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .ebook-card {
+        flex-direction: column;
+      }
+
+      .ebook-card__cover-wrap {
+        flex: 0 0 auto;
+        width: 100%;
+        min-height: 220px;
+        border-radius: 1rem 1rem 0 0;
+      }
+
+      .ebook-card__body {
+        padding: 1.25rem 1.25rem 1.25rem;
+      }
+
+      .ebook-card__badge {
+        top: 0.75rem;
+        right: 0.75rem;
+      }
+
+      .ebook-card__footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ebook-card__buy-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -78,78 +354,204 @@
           <span>Publications</span>
         </div>
         <h1 class="page-header__title">Publications</h1>
-        <p class="page-header__subtitle">Knowledge resources to support digital transformation in African education.</p>
+        <p class="page-header__subtitle">Our digital publications — practical guides and resources for educators, students, and professionals.</p>
       </div>
     </section>
 
-    <!-- Publications Grid -->
+    <!-- Publications List -->
     <section class="section">
       <div class="container">
-        <div class="publications-grid">
+        <div class="ebooks-list">
 
-          <!-- AI Navigator -->
-          <div class="pub-card pub-card--large reveal reveal-delay-1">
-            <div class="pub-card__badge">
-              <i data-lucide="sparkles"></i>
-              NEW
+          <!-- 1. AI Navigator -->
+          <div class="ebook-card reveal reveal-delay-1">
+            <span class="ebook-card__badge ebook-card__badge--bestseller">BESTSELLER</span>
+            <div class="ebook-card__cover-wrap">
+              <img
+                src="images/ai-navigator-cover.png"
+                alt="AI Navigator: The Higher Institution Student's Complete Guide to AI (2026 Edition) cover"
+                class="ebook-card__cover"
+                loading="lazy"
+              >
             </div>
-            <h3 class="pub-card__title">AI Navigator: The Higher Institution Student's Complete Guide to Artificial Intelligence</h3>
-            <p class="pub-card__desc">A comprehensive 163-page guide tailored for African university students, covering AI platforms, prompt engineering (TAP Framework), academic applications, ethics, and career development. Written to demystify AI and make it a practical tool for academic and professional success.</p>
-            <div class="pub-card__features">
-              <div class="pub-card__feature">
-                <i data-lucide="book-open"></i>
-                <span>163 pages, 47,000+ words</span>
+            <div class="ebook-card__body">
+              <h2 class="ebook-card__title">AI Navigator: The Higher Institution Student's Complete Guide to AI (2026 Edition)</h2>
+              <p class="ebook-card__desc">A practical guide that teaches Nigerian and African higher institution students how to think with AI. Covers the TAP Framework for prompting, AI tools comparison (ChatGPT, Gemini, Claude), ethical use, AI detection avoidance, and a 30-Day AI Skills Challenge.</p>
+              <div class="ebook-card__meta">
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  165 Pages
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  14 Chapters
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  2026 Edition
+                </span>
               </div>
-              <div class="pub-card__feature">
-                <i data-lucide="globe"></i>
-                <span>Tailored for African university students</span>
+              <div class="ebook-card__tags">
+                <span class="ebook-card__tag">AI</span>
+                <span class="ebook-card__tag">Students</span>
+                <span class="ebook-card__tag">Prompt Engineering</span>
               </div>
-              <div class="pub-card__feature">
-                <i data-lucide="brain"></i>
-                <span>TAP Framework for prompt engineering</span>
+              <div class="ebook-card__footer">
+                <div class="ebook-card__pricing">
+                  <span class="ebook-card__price">₦4,000</span>
+                  <span class="ebook-card__price-original">₦12,000</span>
+                  <span class="ebook-card__savings">67% OFF</span>
+                </div>
+                <a href="https://selar.com/6355nbr585" class="ebook-card__buy-btn" target="_blank" rel="noopener noreferrer">
+                  Buy Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
-              <div class="pub-card__feature">
-                <i data-lucide="briefcase"></i>
-                <span>Career development &amp; ethics guidance</span>
-              </div>
-            </div>
-            <div class="pub-card__meta">
-              <span class="pub-card__meta-item">163 Pages</span>
-              <span class="pub-card__meta-item">47,000+ Words</span>
-              <span class="pub-card__meta-item">2026</span>
             </div>
           </div>
 
-          <!-- Compliant by Design -->
-          <div class="pub-card pub-card--large reveal reveal-delay-2">
-            <div class="pub-card__badge pub-card__badge--accent">
-              <i data-lucide="award"></i>
-              FEATURED
+          <!-- 2. Nigerian School Digital Transformation Playbook -->
+          <div class="ebook-card reveal reveal-delay-2">
+            <span class="ebook-card__badge ebook-card__badge--new">NEW</span>
+            <div class="ebook-card__cover-wrap">
+              <img
+                src="images/school-playbook-cover.png"
+                alt="The Nigerian School Digital Transformation Playbook (2026 Edition) cover"
+                class="ebook-card__cover"
+                loading="lazy"
+              >
             </div>
-            <h3 class="pub-card__title">Compliant by Design: 120 AI Prompts for ISO 27001, Risk Management &amp; Cyber Governance</h3>
-            <p class="pub-card__desc">A practical resource for cybersecurity and compliance professionals, providing 120 ready-to-use AI prompts covering ISO 27001 implementation, risk management frameworks, and cyber governance strategies. Designed to accelerate compliance workflows and strengthen security posture.</p>
-            <div class="pub-card__features">
-              <div class="pub-card__feature">
-                <i data-lucide="shield"></i>
-                <span>ISO 27001 compliance prompts</span>
+            <div class="ebook-card__body">
+              <h2 class="ebook-card__title">The Nigerian School Digital Transformation Playbook (2026 Edition)</h2>
+              <p class="ebook-card__desc">The most complete guide for taking Nigerian schools digital. Covers school management platforms, Google Workspace and Microsoft 365 setup, NDPR compliance, budgeting with real Naira figures, Nigerian case studies, and vendor comparison tables.</p>
+              <div class="ebook-card__meta">
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  244 Pages
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  23 Chapters
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  7 Parts
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  2026 Edition
+                </span>
               </div>
-              <div class="pub-card__feature">
-                <i data-lucide="alert-triangle"></i>
-                <span>Risk management frameworks</span>
+              <div class="ebook-card__tags">
+                <span class="ebook-card__tag">Schools</span>
+                <span class="ebook-card__tag">Digital Transformation</span>
+                <span class="ebook-card__tag">NDPR</span>
               </div>
-              <div class="pub-card__feature">
-                <i data-lucide="lock"></i>
-                <span>Cyber governance strategies</span>
-              </div>
-              <div class="pub-card__feature">
-                <i data-lucide="zap"></i>
-                <span>120 ready-to-use AI prompts</span>
+              <div class="ebook-card__footer">
+                <div class="ebook-card__pricing">
+                  <span class="ebook-card__price">₦11,500</span>
+                  <span class="ebook-card__price-original">₦24,000</span>
+                  <span class="ebook-card__savings">52% OFF</span>
+                </div>
+                <a href="https://selar.com/a359681687" class="ebook-card__buy-btn" target="_blank" rel="noopener noreferrer">
+                  Buy Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
             </div>
-            <div class="pub-card__meta">
-              <span class="pub-card__meta-item">120 Prompts</span>
-              <span class="pub-card__meta-item">Compliance &amp; Security</span>
-              <span class="pub-card__meta-item">2026</span>
+          </div>
+
+          <!-- 3. Compliant by Design -->
+          <div class="ebook-card reveal reveal-delay-3">
+            <span class="ebook-card__badge ebook-card__badge--featured">FEATURED</span>
+            <div class="ebook-card__cover-wrap">
+              <img
+                src="images/compliant-by-design-cover.png"
+                alt="Compliant by Design: 120 AI Prompts for ISO 27001, Risk Management & Cyber Governance cover"
+                class="ebook-card__cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="ebook-card__body">
+              <h2 class="ebook-card__title">Compliant by Design: 120 AI Prompts for ISO 27001, Risk Management &amp; Cyber Governance</h2>
+              <p class="ebook-card__desc">120 field-tested AI prompts mapped to 6 major frameworks: ISO 27001:2022, NIST CSF 2.0, GDPR, Nigeria Data Protection Act 2023, PCI-DSS 4.0, and SOC 2. Essential for GRC Analysts, CISOs, DPOs, and Internal Auditors. Includes 3 bonus materials.</p>
+              <div class="ebook-card__meta">
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  182 Pages
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  120 Prompts
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  3 Bonus Materials
+                </span>
+              </div>
+              <div class="ebook-card__tags">
+                <span class="ebook-card__tag">ISO 27001</span>
+                <span class="ebook-card__tag">Cybersecurity</span>
+                <span class="ebook-card__tag">Compliance</span>
+              </div>
+              <div class="ebook-card__footer">
+                <div class="ebook-card__pricing">
+                  <span class="ebook-card__price">₦8,000</span>
+                  <span class="ebook-card__price-original">₦18,000</span>
+                  <span class="ebook-card__savings">56% OFF</span>
+                </div>
+                <a href="https://selar.com/257s8rxv04" class="ebook-card__buy-btn" target="_blank" rel="noopener noreferrer">
+                  Buy Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Prompt to Profit -->
+          <div class="ebook-card reveal reveal-delay-4">
+            <span class="ebook-card__badge ebook-card__badge--popular">POPULAR</span>
+            <div class="ebook-card__cover-wrap">
+              <img
+                src="images/prompt-to-profit-cover.png"
+                alt="Prompt to Profit: The AI Copywriting Playbook for Entrepreneurs cover"
+                class="ebook-card__cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="ebook-card__body">
+              <h2 class="ebook-card__title">Prompt to Profit: The AI Copywriting Playbook for Entrepreneurs</h2>
+              <p class="ebook-card__desc">100 proven AI prompts for entrepreneurs to write faster and sell more. Covers Blog Writing, Social Media, Email Marketing, Sales Pages, Product Descriptions, Ad Copy, Brand Voice, and Content Repurposing across 10 focused chapters.</p>
+              <div class="ebook-card__meta">
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  72 Pages
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  10 Chapters
+                </span>
+                <span class="ebook-card__meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  100 Prompts
+                </span>
+              </div>
+              <div class="ebook-card__tags">
+                <span class="ebook-card__tag">AI Prompts</span>
+                <span class="ebook-card__tag">Marketing</span>
+                <span class="ebook-card__tag">Entrepreneurs</span>
+              </div>
+              <div class="ebook-card__footer">
+                <div class="ebook-card__pricing">
+                  <span class="ebook-card__price">₦5,500</span>
+                  <span class="ebook-card__price-original">₦18,000</span>
+                  <span class="ebook-card__savings">69% OFF</span>
+                </div>
+                <a href="https://selar.com/m41w74xkh7" class="ebook-card__buy-btn" target="_blank" rel="noopener noreferrer">
+                  Buy Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              </div>
             </div>
           </div>
 
