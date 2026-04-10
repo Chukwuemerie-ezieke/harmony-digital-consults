@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publication Editor — Harmony Digital Consults</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../images/logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --teal: #01696F;
+      --teal-light: #e6f3f4;
+      --teal-hover: #0C4E54;
+      --bg: #F7F6F2;
+      --surface: #ffffff;
+      --text: #28251D;
+      --text-muted: #7A7974;
+      --border: #D4D1CA;
+      --radius: 8px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --orange: #e67e22;
+      --blue: #3498db;
+      --purple: #9b59b6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .editor-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .editor-header svg { flex-shrink: 0; }
+
+    .editor-header h1 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .editor-header span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--teal-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .editor-header__links {
+      margin-left: auto;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .editor-header__links a {
+      font-size: 0.8rem;
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .editor-header__links a:hover { text-decoration: underline; }
+
+    /* Main Layout */
+    .editor-main {
+      max-width: 940px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Instructions */
+    .instructions {
+      background: var(--teal-light);
+      border-left: 4px solid var(--teal);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .instructions strong { color: var(--teal); }
+
+    .instructions ol {
+      margin: 0.5rem 0 0 1.2rem;
+      line-height: 1.8;
+    }
+
+    .instructions a {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* Form Fields */
+    .field-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .field-group__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .field-row--three {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 600px) {
+      .field-row, .field-row--three { grid-template-columns: 1fr; }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field--full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    label .hint {
+      text-transform: none;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0;
+      opacity: 0.8;
+    }
+
+    input, textarea, select {
+      font-family: var(--font);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(1, 105, 111, 0.1);
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* Image Upload / Preview */
+    .image-upload {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .image-upload:hover { border-color: var(--teal); background: var(--teal-light); }
+
+    .image-upload.has-image {
+      border-style: solid;
+      border-color: var(--teal);
+      padding: 0.5rem;
+    }
+
+    .image-upload__placeholder {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .image-upload__placeholder svg { margin-bottom: 0.25rem; }
+
+    .image-upload img {
+      max-width: 100%;
+      max-height: 250px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
+    .image-upload__remove {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .image-upload.has-image .image-upload__remove { display: flex; }
+
+    /* OR Divider */
+    .or-text {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin: 0.5rem 0;
+    }
+
+    /* Action Buttons */
+    .actions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .actions h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn--primary {
+      background: var(--teal);
+      color: white;
+    }
+
+    .btn--primary:hover { background: var(--teal-hover); }
+
+    .btn--secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn--secondary:hover { background: var(--border); }
+
+    .btn--danger {
+      background: #fdf0ef;
+      color: #c0392b;
+      border: 1px solid #f5c6cb;
+    }
+
+    .btn--danger:hover { background: #f5c6cb; }
+
+    /* Output Section */
+    .output-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .output-section.visible { display: block; }
+
+    .output-section h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Sheet Row */
+    .sheet-row {
+      background: var(--teal-light);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .sheet-row table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .sheet-row td {
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid rgba(1, 105, 111, 0.15);
+      vertical-align: top;
+      font-size: 0.85rem;
+    }
+
+    .sheet-row td:first-child {
+      font-weight: 600;
+      color: var(--teal);
+      white-space: nowrap;
+      width: 140px;
+    }
+
+    .sheet-row td:last-child {
+      word-break: break-word;
+    }
+
+    .copy-cell {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .copy-cell:hover { background: rgba(1, 105, 111, 0.08); }
+
+    .copy-cell .copied-toast {
+      position: absolute;
+      top: -1.5rem;
+      right: 0;
+      background: var(--teal);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .copy-cell .copied-toast.show { opacity: 1; }
+
+    /* Live Preview Card */
+    .preview-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      background: white;
+      margin-top: 1rem;
+      max-width: 700px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .preview-card__image {
+      width: 180px;
+      min-height: 220px;
+      flex-shrink: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .preview-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-card__image-placeholder {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .preview-card__body {
+      flex: 1;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+    }
+
+    .preview-card__badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+    }
+
+    .preview-card__badge--bestseller { background: var(--orange); }
+    .preview-card__badge--new { background: var(--blue); }
+    .preview-card__badge--featured { background: var(--teal); }
+    .preview-card__badge--popular { background: var(--purple); }
+
+    .preview-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      padding-right: 70px;
+    }
+
+    .preview-card__desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .preview-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .preview-card__meta-pill {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-muted);
+    }
+
+    .preview-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .preview-card__tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      background: var(--teal-light);
+      color: var(--teal);
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .preview-card__pricing {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .preview-card__price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--teal);
+    }
+
+    .preview-card__price-original {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .preview-card__discount {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: #ff6b35;
+      color: white;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .preview-card__buy-btn {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      margin-top: 0.25rem;
+      width: fit-content;
+    }
+
+    @media (max-width: 600px) {
+      .preview-card { flex-direction: column; }
+      .preview-card__image { width: 100%; min-height: 200px; }
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--teal);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      max-width: 400px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Saved Publications List */
+    .saved-list {
+      margin-top: 1rem;
+    }
+
+    .saved-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      background: var(--bg);
+      font-size: 0.85rem;
+    }
+
+    .saved-item__title {
+      flex: 1;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .saved-item__price { color: var(--teal); font-weight: 700; }
+
+    .saved-item__actions {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .saved-item__btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: var(--font);
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+
+    .saved-item__btn:hover { border-color: var(--teal); color: var(--teal); }
+
+    .saved-item__btn--delete:hover { border-color: #c0392b; color: #c0392b; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    /* Helper text */
+    .helper-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="editor-header">
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+      <polygon points="16,1 29,8.5 29,23.5 16,31 3,23.5 3,8.5" fill="#01696F"/>
+      <path d="M11,11 L11,21 M11,16 L21,16 M21,11 L21,21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <h1>Publication Editor</h1>
+    <span>Harmony Digital Consults</span>
+    <div class="editor-header__links">
+      <a href="editor.html">Blog Editor</a>
+      <a href="https://docs.google.com/spreadsheets/d/194Dk1gM2hd-BaqwQXMSTm6hx53-fgijsGmAqwoNwc54/edit" target="_blank">CMS Sheet</a>
+      <a href="../publications.html" target="_blank">View Live</a>
+    </div>
+  </div>
+
+  <div class="editor-main">
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <strong>How to add a new publication:</strong>
+      <ol>
+        <li>Fill in the publication details below (title, price, Selar link, etc.)</li>
+        <li>Upload or link a cover image</li>
+        <li>Click <strong>"Generate for CMS"</strong> to get the formatted output</li>
+        <li>Click <strong>"Copy All as Tab-Separated Row"</strong></li>
+        <li>Open your <a href="https://docs.google.com/spreadsheets/d/194Dk1gM2hd-BaqwQXMSTm6hx53-fgijsGmAqwoNwc54/edit" target="_blank">CMS Google Sheet</a> → <strong>Publications</strong> tab</li>
+        <li>Click the first empty cell in column A and paste (Ctrl+V)</li>
+      </ol>
+    </div>
+
+    <!-- Publication Details -->
+    <div class="field-group">
+      <div class="field-group__title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Publication Details
+      </div>
+
+      <div class="field-row">
+        <div class="field field--full">
+          <label for="pub-title">Title</label>
+          <input type="text" id="pub-title" placeholder="e.g., AI Navigator: The Higher Institution Student's Complete Guide to AI">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field field--full">
+          <label for="pub-description">Description <span class="hint">(2-3 sentences for the listing card)</span></label>
+          <textarea id="pub-description" rows="3" placeholder="A practical guide that teaches Nigerian and African higher institution students how to think with AI..."></textarea>
+        </div>
+      </div>
+
+      <div class="field-row field-row--three">
+        <div class="field">
+          <label for="pub-pages">Pages</label>
+          <input type="text" id="pub-pages" placeholder="e.g., 165">
+        </div>
+        <div class="field">
+          <label for="pub-chapters">Chapters</label>
+          <input type="text" id="pub-chapters" placeholder="e.g., 14">
+        </div>
+        <div class="field">
+          <label for="pub-edition">Edition / Year</label>
+          <input type="text" id="pub-edition" placeholder="e.g., 2026 Edition" value="2026 Edition">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="pub-extra-meta">Extra Info <span class="hint">(optional — e.g., "7 Parts" or "100 Prompts")</span></label>
+          <input type="text" id="pub-extra-meta" placeholder="e.g., 3 Bonus Materials">
+        </div>
+        <div class="field">
+          <label for="pub-tags">Tags <span class="hint">(comma separated)</span></label>
+          <input type="text" id="pub-tags" placeholder="e.g., AI, Students, Prompt Engineering">
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing & Links -->
+    <div class="field-group">
+      <div class="field-group__title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Pricing &amp; Sales
+      </div>
+
+      <div class="field-row field-row--three">
+        <div class="field">
+          <label for="pub-price">Current Price (₦)</label>
+          <input type="text" id="pub-price" placeholder="e.g., 4000">
+        </div>
+        <div class="field">
+          <label for="pub-original-price">Original Price (₦) <span class="hint">(strikethrough)</span></label>
+          <input type="text" id="pub-original-price" placeholder="e.g., 12000">
+        </div>
+        <div class="field">
+          <label>Discount</label>
+          <input type="text" id="pub-discount" readonly placeholder="Auto-calculated" style="background: var(--teal-light); color: var(--teal); font-weight: 700;">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="pub-buy-link">Selar Buy Link</label>
+          <input type="url" id="pub-buy-link" placeholder="e.g., https://selar.com/6355nbr585">
+        </div>
+        <div class="field">
+          <label for="pub-badge">Badge</label>
+          <select id="pub-badge">
+            <option value="">None</option>
+            <option value="BESTSELLER">BESTSELLER</option>
+            <option value="NEW">NEW</option>
+            <option value="FEATURED">FEATURED</option>
+            <option value="POPULAR">POPULAR</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="pub-status">Status</label>
+          <select id="pub-status">
+            <option value="published">Published (live on site)</option>
+            <option value="draft">Draft (not visible)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pub-order">Display Order <span class="hint">(lower = first)</span></label>
+          <input type="number" id="pub-order" placeholder="e.g., 1" value="1" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover Image -->
+    <div class="field-group">
+      <div class="field-group__title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Cover Image
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="pub-image-url">Image URL <span class="hint">(from Selar, or any public URL)</span></label>
+          <input type="url" id="pub-image-url" placeholder="e.g., https://files.selar.co/product-images/...">
+          <p class="helper-text">Paste the cover image URL from your Selar product page, or any publicly hosted image.</p>
+        </div>
+        <div class="field">
+          <label>Preview</label>
+          <div class="image-upload" id="image-preview-area">
+            <div class="image-upload__placeholder" id="image-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <br>Enter URL to preview
+            </div>
+            <img id="image-preview" style="display:none" alt="Cover preview">
+            <button type="button" class="image-upload__remove" id="image-remove" onclick="clearImage()">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="or-text">— or upload directly —</div>
+
+      <div class="field">
+        <label for="pub-image-file">Upload from Device <span class="hint">(will be converted to a data URL for preview; host it and use the URL above for production)</span></label>
+        <input type="file" id="pub-image-file" accept="image/*" style="padding: 0.4rem;">
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="field-group">
+      <div class="field-group__title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Live Preview
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">This is how the publication will appear on the website.</p>
+      <div class="preview-card" id="live-preview">
+        <div class="preview-card__image">
+          <div class="preview-card__image-placeholder" id="preview-image-placeholder">No cover image</div>
+          <img id="preview-card-img" style="display:none" alt="">
+        </div>
+        <div class="preview-card__body">
+          <span class="preview-card__badge" id="preview-badge" style="display:none"></span>
+          <div class="preview-card__title" id="preview-title">Publication Title</div>
+          <div class="preview-card__desc" id="preview-desc">Publication description will appear here...</div>
+          <div class="preview-card__meta" id="preview-meta">
+            <span class="preview-card__meta-pill">— Pages</span>
+            <span class="preview-card__meta-pill">— Chapters</span>
+            <span class="preview-card__meta-pill">2026 Edition</span>
+          </div>
+          <div class="preview-card__tags" id="preview-tags">
+            <span class="preview-card__tag">Tag</span>
+          </div>
+          <div class="preview-card__pricing" id="preview-pricing">
+            <span class="preview-card__price">₦0</span>
+            <span class="preview-card__price-original">₦0</span>
+            <span class="preview-card__discount">0% OFF</span>
+          </div>
+          <a href="#" class="preview-card__buy-btn" id="preview-buy-btn" target="_blank">Buy Now →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <h2>Generate Output</h2>
+      <div class="btn-row">
+        <button class="btn btn--primary" onclick="generateOutput()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Generate for CMS
+        </button>
+        <button class="btn btn--secondary" onclick="copyAllFields()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy All as Tab-Separated Row
+        </button>
+        <button class="btn btn--secondary" onclick="saveLocally()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Draft Locally
+        </button>
+        <button class="btn btn--danger" onclick="clearForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- Output: Sheet Row -->
+    <div class="output-section" id="output-row">
+      <h2>CMS Sheet Row — Click any cell to copy</h2>
+      <div class="sheet-row" id="sheet-row-content"></div>
+    </div>
+
+    <!-- Saved Drafts -->
+    <div class="field-group">
+      <div class="field-group__title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Saved Drafts
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Drafts are stored in your browser's local storage and persist between sessions.</p>
+      <div class="saved-list" id="saved-list">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">No saved drafts yet.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== Live Preview Updates =====
+    const fields = {
+      title: document.getElementById('pub-title'),
+      description: document.getElementById('pub-description'),
+      pages: document.getElementById('pub-pages'),
+      chapters: document.getElementById('pub-chapters'),
+      edition: document.getElementById('pub-edition'),
+      extraMeta: document.getElementById('pub-extra-meta'),
+      tags: document.getElementById('pub-tags'),
+      price: document.getElementById('pub-price'),
+      originalPrice: document.getElementById('pub-original-price'),
+      discount: document.getElementById('pub-discount'),
+      buyLink: document.getElementById('pub-buy-link'),
+      badge: document.getElementById('pub-badge'),
+      status: document.getElementById('pub-status'),
+      order: document.getElementById('pub-order'),
+      imageUrl: document.getElementById('pub-image-url'),
+      imageFile: document.getElementById('pub-image-file')
+    };
+
+    // Listen for changes on all fields
+    Object.values(fields).forEach(el => {
+      if (el) {
+        el.addEventListener('input', updatePreview);
+        el.addEventListener('change', updatePreview);
+      }
+    });
+
+    function updatePreview() {
+      const title = fields.title.value || 'Publication Title';
+      const desc = fields.description.value || 'Publication description will appear here...';
+      const pages = fields.pages.value;
+      const chapters = fields.chapters.value;
+      const edition = fields.edition.value || '2026 Edition';
+      const extraMeta = fields.extraMeta.value;
+      const tags = fields.tags.value.split(',').map(t => t.trim()).filter(Boolean);
+      const price = parseFloat(fields.price.value) || 0;
+      const originalPrice = parseFloat(fields.originalPrice.value) || 0;
+      const badge = fields.badge.value;
+      const buyLink = fields.buyLink.value || '#';
+
+      // Title & desc
+      document.getElementById('preview-title').textContent = title;
+      document.getElementById('preview-desc').textContent = desc;
+
+      // Meta pills
+      const metaPills = [];
+      if (pages) metaPills.push(`📄 ${pages} Pages`);
+      if (chapters) metaPills.push(`📑 ${chapters} Chapters`);
+      if (extraMeta) metaPills.push(`✦ ${extraMeta}`);
+      metaPills.push(`📅 ${edition}`);
+      document.getElementById('preview-meta').innerHTML = metaPills
+        .map(p => `<span class="preview-card__meta-pill">${p}</span>`)
+        .join('');
+
+      // Tags
+      document.getElementById('preview-tags').innerHTML = tags.length > 0
+        ? tags.map(t => `<span class="preview-card__tag">${escapeHtml(t)}</span>`).join('')
+        : '<span class="preview-card__tag">Tag</span>';
+
+      // Pricing
+      let discountPct = 0;
+      if (originalPrice > 0 && price > 0 && originalPrice > price) {
+        discountPct = Math.round(((originalPrice - price) / originalPrice) * 100);
+      }
+      fields.discount.value = discountPct > 0 ? `${discountPct}% OFF` : '';
+
+      const pricingHtml = [];
+      if (price > 0) pricingHtml.push(`<span class="preview-card__price">₦${formatNumber(price)}</span>`);
+      if (originalPrice > 0) pricingHtml.push(`<span class="preview-card__price-original">₦${formatNumber(originalPrice)}</span>`);
+      if (discountPct > 0) pricingHtml.push(`<span class="preview-card__discount">${discountPct}% OFF</span>`);
+      document.getElementById('preview-pricing').innerHTML = pricingHtml.join('') || '<span class="preview-card__price">₦0</span>';
+
+      // Badge
+      const badgeEl = document.getElementById('preview-badge');
+      if (badge) {
+        badgeEl.textContent = badge;
+        badgeEl.style.display = 'inline-block';
+        badgeEl.className = 'preview-card__badge preview-card__badge--' + badge.toLowerCase();
+      } else {
+        badgeEl.style.display = 'none';
+      }
+
+      // Buy link
+      document.getElementById('preview-buy-btn').href = buyLink;
+    }
+
+    // ===== Image Handling =====
+    fields.imageUrl.addEventListener('input', function() {
+      const url = this.value.trim();
+      if (url) {
+        showImagePreview(url);
+      } else {
+        clearImage();
+      }
+    });
+
+    fields.imageFile.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          showImagePreview(e.target.result);
+          // Don't overwrite the URL field if it already has a value
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function showImagePreview(src) {
+      const previewImg = document.getElementById('image-preview');
+      const placeholder = document.getElementById('image-placeholder');
+      const area = document.getElementById('image-preview-area');
+      const cardImg = document.getElementById('preview-card-img');
+      const cardPlaceholder = document.getElementById('preview-image-placeholder');
+
+      previewImg.src = src;
+      previewImg.style.display = 'block';
+      placeholder.style.display = 'none';
+      area.classList.add('has-image');
+
+      cardImg.src = src;
+      cardImg.style.display = 'block';
+      cardPlaceholder.style.display = 'none';
+    }
+
+    function clearImage() {
+      const previewImg = document.getElementById('image-preview');
+      const placeholder = document.getElementById('image-placeholder');
+      const area = document.getElementById('image-preview-area');
+      const cardImg = document.getElementById('preview-card-img');
+      const cardPlaceholder = document.getElementById('preview-image-placeholder');
+
+      previewImg.src = '';
+      previewImg.style.display = 'none';
+      placeholder.style.display = 'block';
+      area.classList.remove('has-image');
+
+      cardImg.src = '';
+      cardImg.style.display = 'none';
+      cardPlaceholder.style.display = 'block';
+
+      fields.imageUrl.value = '';
+      fields.imageFile.value = '';
+    }
+
+    // ===== Generate Output =====
+    function generateOutput() {
+      const title = fields.title.value.trim();
+      const description = fields.description.value.trim();
+      const pages = fields.pages.value.trim();
+      const chapters = fields.chapters.value.trim();
+      const edition = fields.edition.value.trim();
+      const extraMeta = fields.extraMeta.value.trim();
+      const tags = fields.tags.value.trim();
+      const price = fields.price.value.trim();
+      const originalPrice = fields.originalPrice.value.trim();
+      const buyLink = fields.buyLink.value.trim();
+      const badge = fields.badge.value;
+      const status = fields.status.value;
+      const order = fields.order.value.trim();
+      const imageUrl = fields.imageUrl.value.trim();
+
+      if (!title) {
+        showToast('Please fill in at least the title.');
+        return;
+      }
+
+      // Build features string (pipe-separated for CMS compatibility)
+      const featureParts = [];
+      if (pages) featureParts.push(`${pages} pages`);
+      if (chapters) featureParts.push(`${chapters} chapters`);
+      if (extraMeta) featureParts.push(extraMeta);
+      if (edition) featureParts.push(edition);
+      const features = featureParts.join(' | ');
+
+      // CMS fields — these match the Publications sheet columns
+      const cmsFields = [
+        { label: 'title', value: title },
+        { label: 'description', value: description },
+        { label: 'features', value: features },
+        { label: 'badge', value: badge },
+        { label: 'page_count', value: pages },
+        { label: 'word_count', value: chapters ? `${chapters} Chapters` : '' },
+        { label: 'status', value: status },
+        { label: 'order', value: order },
+        { label: 'price', value: price },
+        { label: 'original_price', value: originalPrice },
+        { label: 'buy_link', value: buyLink },
+        { label: 'cover_image', value: imageUrl },
+        { label: 'tags', value: tags },
+        { label: 'extra_meta', value: extraMeta },
+        { label: 'edition', value: edition }
+      ];
+
+      window._cmsFields = cmsFields;
+
+      // Render sheet row
+      const rowSection = document.getElementById('output-row');
+      rowSection.classList.add('visible');
+
+      document.getElementById('sheet-row-content').innerHTML = `
+        <table>
+          ${cmsFields.map(f => `
+            <tr>
+              <td>${f.label}</td>
+              <td class="copy-cell" onclick="copyCellValue(this, '${f.label}')" title="Click to copy">
+                ${escapeHtml(f.value).substring(0, 300)}${f.value.length > 300 ? '...' : ''}
+                <span class="copied-toast">Copied</span>
+              </td>
+            </tr>
+          `).join('')}
+        </table>
+      `;
+
+      showToast('Output generated. Click cells to copy individually, or use "Copy All" for the full row.');
+      rowSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== Copy Functions =====
+    function copyCellValue(el, label) {
+      const field = window._cmsFields.find(f => f.label === label);
+      if (field) {
+        navigator.clipboard.writeText(field.value).then(() => {
+          const toast = el.querySelector('.copied-toast');
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 1500);
+        });
+      }
+    }
+
+    function copyAllFields() {
+      if (!window._cmsFields) {
+        generateOutput();
+        if (!window._cmsFields) return;
+      }
+      const row = window._cmsFields.map(f => f.value).join('\t');
+      navigator.clipboard.writeText(row).then(() => {
+        showToast('Full row copied. Go to your CMS Sheet → Publications tab, click cell A (next empty row), and paste (Ctrl+V).');
+      });
+    }
+
+    // ===== Local Storage (Saved Drafts) =====
+    const STORAGE_KEY = 'hdc_pub_drafts';
+
+    function getSavedDrafts() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch { return []; }
+    }
+
+    function saveDrafts(drafts) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(drafts));
+    }
+
+    function saveLocally() {
+      const title = fields.title.value.trim();
+      if (!title) {
+        showToast('Please fill in the title before saving.');
+        return;
+      }
+
+      const draft = {
+        id: Date.now(),
+        title: title,
+        description: fields.description.value,
+        pages: fields.pages.value,
+        chapters: fields.chapters.value,
+        edition: fields.edition.value,
+        extraMeta: fields.extraMeta.value,
+        tags: fields.tags.value,
+        price: fields.price.value,
+        originalPrice: fields.originalPrice.value,
+        buyLink: fields.buyLink.value,
+        badge: fields.badge.value,
+        status: fields.status.value,
+        order: fields.order.value,
+        imageUrl: fields.imageUrl.value,
+        savedAt: new Date().toISOString()
+      };
+
+      const drafts = getSavedDrafts();
+      drafts.unshift(draft);
+      saveDrafts(drafts);
+      renderSavedDrafts();
+      showToast('Draft saved locally.');
+    }
+
+    function loadDraft(id) {
+      const drafts = getSavedDrafts();
+      const draft = drafts.find(d => d.id === id);
+      if (!draft) return;
+
+      fields.title.value = draft.title || '';
+      fields.description.value = draft.description || '';
+      fields.pages.value = draft.pages || '';
+      fields.chapters.value = draft.chapters || '';
+      fields.edition.value = draft.edition || '2026 Edition';
+      fields.extraMeta.value = draft.extraMeta || '';
+      fields.tags.value = draft.tags || '';
+      fields.price.value = draft.price || '';
+      fields.originalPrice.value = draft.originalPrice || '';
+      fields.buyLink.value = draft.buyLink || '';
+      fields.badge.value = draft.badge || '';
+      fields.status.value = draft.status || 'published';
+      fields.order.value = draft.order || '1';
+      fields.imageUrl.value = draft.imageUrl || '';
+
+      if (draft.imageUrl) showImagePreview(draft.imageUrl);
+      else clearImage();
+
+      updatePreview();
+      showToast('Draft loaded.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deleteDraft(id) {
+      let drafts = getSavedDrafts();
+      drafts = drafts.filter(d => d.id !== id);
+      saveDrafts(drafts);
+      renderSavedDrafts();
+      showToast('Draft deleted.');
+    }
+
+    function renderSavedDrafts() {
+      const list = document.getElementById('saved-list');
+      const drafts = getSavedDrafts();
+
+      if (drafts.length === 0) {
+        list.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">No saved drafts yet.</p>';
+        return;
+      }
+
+      list.innerHTML = drafts.map(d => {
+        const date = new Date(d.savedAt).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `
+          <div class="saved-item">
+            <div class="saved-item__title">${escapeHtml(d.title)}</div>
+            <div class="saved-item__price">${d.price ? '₦' + formatNumber(d.price) : '—'}</div>
+            <span style="font-size:0.75rem; color:var(--text-muted)">${date}</span>
+            <div class="saved-item__actions">
+              <button class="saved-item__btn" onclick="loadDraft(${d.id})">Load</button>
+              <button class="saved-item__btn saved-item__btn--delete" onclick="deleteDraft(${d.id})">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ===== Clear Form =====
+    function clearForm() {
+      if (!confirm('Clear all fields? This cannot be undone.')) return;
+
+      fields.title.value = '';
+      fields.description.value = '';
+      fields.pages.value = '';
+      fields.chapters.value = '';
+      fields.edition.value = '2026 Edition';
+      fields.extraMeta.value = '';
+      fields.tags.value = '';
+      fields.price.value = '';
+      fields.originalPrice.value = '';
+      fields.discount.value = '';
+      fields.buyLink.value = '';
+      fields.badge.value = '';
+      fields.status.value = 'published';
+      fields.order.value = '1';
+
+      clearImage();
+      updatePreview();
+
+      document.getElementById('output-row').classList.remove('visible');
+      window._cmsFields = null;
+
+      showToast('Form cleared.');
+    }
+
+    // ===== Helpers =====
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatNumber(num) {
+      return parseFloat(num).toLocaleString('en-NG');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // ===== Init =====
+    updatePreview();
+    renderSavedDrafts();
+  </script>
+</body>
+</html>
