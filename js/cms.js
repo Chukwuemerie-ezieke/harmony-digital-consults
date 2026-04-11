@@ -115,7 +115,7 @@
     const published = data
       .filter(item => (item.status || '').toLowerCase() === 'published')
       .sort((a, b) => parseInt(a.order || 0) - parseInt(b.order || 0))
-      .slice(0, 4);
+      .slice(0, 5);
 
     if (published.length === 0) return;
 
