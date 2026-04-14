@@ -81,6 +81,54 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- EduTrack Nigeria -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/edutrack-nigeria.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- HarmonyShield -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/harmonyshield.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Harmony TimeGrid -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/timegrid.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Harmony DocBridge -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/docbridge.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Exam Prep Suite -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/exam-prep.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- School Readiness Dashboard -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/school-readiness.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Blog: Offline-First Technology -->
   <url>
     <loc>https://harmonydigitalconsults.com.ng/blog/offline-first-technology.html</loc>
