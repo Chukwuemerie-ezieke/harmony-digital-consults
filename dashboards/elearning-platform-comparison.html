@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning Platform Comparison Tool | Harmony Digital Consults</title>
+  <meta name="description" content="Compare leading e-learning platforms (Moodle, Google Classroom, uLesson, Teachable, Thinkific, Kajabi, Edmodo) side-by-side. Free best-fit recommender for African schools, edupreneurs, and trainers.">
+  <meta name="keywords" content="LMS comparison, e-learning platforms Africa, Moodle vs Google Classroom, Teachable vs Thinkific, best LMS Nigeria">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/elearning-platform-comparison.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="E-Learning Platform Comparison Tool — Harmony Insights Hub">
+  <meta property="og:description" content="Side-by-side comparison of leading e-learning platforms with a best-fit recommender for African schools, edupreneurs, and trainers.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/elearning-platform-comparison.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero {
+      background: linear-gradient(135deg, #01696F 0%, #02898F 100%);
+      color: #fff;
+      padding: var(--space-10) 0 var(--space-8);
+    }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 {
+      color: #fff;
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+      margin: 0 0 var(--space-3);
+    }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+
+    .db-section { padding: var(--space-8) 0; }
+
+    .lms-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .lms-controls label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .lms-controls select,
+    .lms-controls input[type=text] {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+
+    .lms-table-wrap { overflow-x: auto; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; }
+    table.lms-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+      font-size: 0.9rem;
+    }
+    table.lms-table th, table.lms-table td {
+      padding: 0.9rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: top;
+    }
+    table.lms-table th {
+      background: var(--color-bg);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      position: sticky; top: 0;
+    }
+    table.lms-table tr:last-child td { border-bottom: none; }
+    table.lms-table .lms-name { font-weight: 700; color: var(--color-text); }
+    table.lms-table .lms-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(1,105,111,0.1);
+      color: #01696F;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+    .lms-cta-btn {
+      display: inline-block;
+      padding: 0.45rem 0.85rem;
+      background: #01696F;
+      color: #fff !important;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .lms-cta-btn:hover { background: #02898F; }
+
+    /* Recommender */
+    .reco-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .reco-card h2 { margin: 0 0 var(--space-2); font-size: 1.3rem; }
+    .reco-card p.intro { color: var(--color-text-muted); margin: 0 0 var(--space-5); }
+    .reco-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+    .reco-result {
+      background: linear-gradient(135deg, #01696F 0%, #02898F 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: var(--space-5);
+      display: none;
+    }
+    .reco-result.is-visible { display: block; }
+    .reco-result h3 { color: #fff; margin: 0 0 var(--space-2); font-size: 1.2rem; }
+    .reco-result p { margin: 0 0 var(--space-3); opacity: 0.95; }
+    .reco-result .pick-name { font-weight: 800; font-size: 1.05rem; }
+    .reco-result a {
+      display: inline-block;
+      background: #fff;
+      color: #01696F;
+      padding: 0.55rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .db-cta {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-radius: 16px;
+      padding: var(--space-8);
+      text-align: center;
+      margin-top: var(--space-8);
+    }
+    .db-cta h3 { color: #92400e; margin: 0 0 var(--space-2); }
+    .db-cta p { color: #78350f; margin: 0 0 var(--space-5); }
+    .db-cta .btn { background: #01696F; color: #fff; border: none; }
+
+    .db-disclosure {
+      margin-top: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      background: rgba(1,105,111,0.06);
+      border-left: 3px solid #01696F;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+    .db-sources {
+      margin-top: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+    }
+    .db-sources strong { color: var(--color-text); }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / E-Learning Platform Comparison Tool</div>
+        <h1>E-Learning Platform Comparison Tool</h1>
+        <p>Compare leading e-learning platforms side-by-side and find the best fit for your school, training programme, or course business — built for African educators, edupreneurs, and L&amp;D leaders.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <!-- Filters -->
+        <div class="lms-controls">
+          <div>
+            <label for="f-use">Primary Use</label>
+            <select id="f-use">
+              <option value="">All</option>
+              <option value="school">K-12 School</option>
+              <option value="higher">Higher Education</option>
+              <option value="corporate">Corporate L&amp;D</option>
+              <option value="course-creator">Course Creator / Edupreneur</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-budget">Budget</label>
+            <select id="f-budget">
+              <option value="">All</option>
+              <option value="free">Free / Freemium</option>
+              <option value="low">Low ( &lt; $30/mo )</option>
+              <option value="mid">Mid ($30–$150/mo)</option>
+              <option value="high">High ($150+/mo)</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-host">Hosting</label>
+            <select id="f-host">
+              <option value="">All</option>
+              <option value="cloud">Cloud / SaaS</option>
+              <option value="self">Self-hosted</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-search">Search</label>
+            <input id="f-search" type="text" placeholder="Name or feature…">
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="lms-table-wrap">
+          <table class="lms-table" id="lms-table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Best for</th>
+                <th>Pricing (USD)</th>
+                <th>Hosting</th>
+                <th>Highlights</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="lms-tbody"></tbody>
+          </table>
+        </div>
+
+        <p class="db-disclosure">
+          <strong>Affiliate disclosure:</strong> Some links above are affiliate links. If you sign up through them, Harmony Digital Consults may earn a commission at no extra cost to you. We only recommend platforms we have hands-on tested and would deploy for our own clients.
+        </p>
+
+        <!-- Recommender -->
+        <div class="reco-card">
+          <h2>Best-Fit Recommender</h2>
+          <p class="intro">Answer 3 quick questions and we'll match you to the best platform from the list above.</p>
+          <div class="reco-grid">
+            <div>
+              <label for="r-role">I am a…</label>
+              <select id="r-role">
+                <option value="school">School administrator</option>
+                <option value="course-creator">Course creator / coach</option>
+                <option value="corporate">Corporate L&amp;D / HR</option>
+                <option value="higher">University / polytechnic</option>
+              </select>
+            </div>
+            <div>
+              <label for="r-budget">My budget is…</label>
+              <select id="r-budget">
+                <option value="free">Free / very low</option>
+                <option value="low">Under $30/month</option>
+                <option value="mid">$30–$150/month</option>
+                <option value="high">$150+/month</option>
+              </select>
+            </div>
+            <div>
+              <label for="r-host">Hosting preference</label>
+              <select id="r-host">
+                <option value="cloud">Cloud (no IT needed)</option>
+                <option value="self">Self-host (full control)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn" id="reco-btn" style="background:#01696F;color:#fff;border:none;">Get My Recommendation →</button>
+
+          <div class="reco-result" id="reco-result">
+            <h3>Our pick: <span class="pick-name" id="reco-name">—</span></h3>
+            <p id="reco-why"></p>
+            <a id="reco-link" href="#" target="_blank" rel="noopener">Visit Platform →</a>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="db-cta">
+          <h3>Need help choosing or migrating?</h3>
+          <p>Harmony Digital Consults offers free 30-minute LMS strategy calls and full deployment, training, and migration services for schools and organisations across Africa.</p>
+          <a href="../contact.html" class="btn">Book a Free LMS Strategy Call →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Data sources:</strong> Vendor public pricing pages (verified May 2026), G2 reviews, Capterra reviews, and Harmony Digital Consults hands-on deployment experience.</p>
+          <p><strong>Last updated:</strong> 11 May 2026 &nbsp;·&nbsp; <strong>Update cadence:</strong> Bi-monthly &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    const PLATFORMS = [
+      { name: 'Moodle', use: ['school','higher','corporate'], budget: 'free', host: 'self',
+        pricing: 'Free (self-host); MoodleCloud from $130/year',
+        best: 'Schools & universities wanting full control',
+        highlights: ['Open-source','Most flexible','Strong assessment engine'],
+        url: 'https://moodle.org' },
+      { name: 'Google Classroom', use: ['school','higher'], budget: 'free', host: 'cloud',
+        pricing: 'Free with Google Workspace for Education',
+        best: 'K-12 schools already on Google',
+        highlights: ['Free','Familiar UI','Tight Docs/Drive integration'],
+        url: 'https://classroom.google.com' },
+      { name: 'uLesson Schools', use: ['school'], budget: 'mid', host: 'cloud',
+        pricing: 'From ~₦1,500 per student / term',
+        best: 'Nigerian K-12 with curriculum content needs',
+        highlights: ['WAEC/NECO-aligned','Local payments','Offline app'],
+        url: 'https://schools.ulesson.com' },
+      { name: 'Edmodo Africa', use: ['school'], budget: 'low', host: 'cloud',
+        pricing: 'Freemium; paid school plans on request',
+        best: 'Low-bandwidth schools needing parent comms',
+        highlights: ['Parent app','Lightweight','Social-style feed'],
+        url: 'https://new.edmodo.com' },
+      { name: 'Teachable', use: ['course-creator'], budget: 'mid', host: 'cloud',
+        pricing: 'From $39/mo (Basic)',
+        best: 'Edupreneurs selling courses globally',
+        highlights: ['Easy course builder','Global payments','Affiliate program'],
+        url: 'https://teachable.com' },
+      { name: 'Thinkific', use: ['course-creator','corporate'], budget: 'mid', host: 'cloud',
+        pricing: 'Free tier; Paid from $49/mo',
+        best: 'Course creators wanting a free start',
+        highlights: ['Generous free plan','Strong site builder','Communities add-on'],
+        url: 'https://thinkific.com' },
+      { name: 'Kajabi', use: ['course-creator','corporate'], budget: 'high', host: 'cloud',
+        pricing: 'From $149/mo (Kickstarter)',
+        best: 'Established creators wanting all-in-one (courses + email + funnels)',
+        highlights: ['All-in-one','Email & funnels included','High ARPU friendly'],
+        url: 'https://kajabi.com' },
+      { name: 'TalentLMS', use: ['corporate'], budget: 'mid', host: 'cloud',
+        pricing: 'Free up to 5 users; Paid from $89/mo',
+        best: 'SMBs running staff & compliance training',
+        highlights: ['Quick setup','SCORM/xAPI','Branding controls'],
+        url: 'https://talentlms.com' },
+      { name: 'LearnDash (WordPress)', use: ['course-creator','higher'], budget: 'low', host: 'self',
+        pricing: 'From $199/year (single site)',
+        best: 'Teams already on WordPress',
+        highlights: ['WordPress plugin','One-time annual fee','Membership integrations'],
+        url: 'https://learndash.com' },
+      { name: 'Canvas LMS', use: ['higher','school'], budget: 'high', host: 'cloud',
+        pricing: 'Enterprise pricing on request',
+        best: 'Universities and large school groups',
+        highlights: ['Enterprise-grade','Strong API','Mobile-first UX'],
+        url: 'https://instructure.com/canvas' }
+    ];
+
+    function budgetLabel(b) {
+      return { free: 'Free / Freemium', low: 'Low (<$30/mo)', mid: 'Mid ($30–$150/mo)', high: 'High ($150+/mo)' }[b] || b;
+    }
+    function hostLabel(h) {
+      return { cloud: 'Cloud / SaaS', self: 'Self-hosted' }[h] || h;
+    }
+
+    function render() {
+      const fUse = document.getElementById('f-use').value;
+      const fBudget = document.getElementById('f-budget').value;
+      const fHost = document.getElementById('f-host').value;
+      const q = document.getElementById('f-search').value.trim().toLowerCase();
+
+      const rows = PLATFORMS.filter(p => {
+        if (fUse && !p.use.includes(fUse)) return false;
+        if (fBudget && p.budget !== fBudget) return false;
+        if (fHost && p.host !== fHost) return false;
+        if (q && !(p.name.toLowerCase().includes(q) || p.highlights.join(' ').toLowerCase().includes(q))) return false;
+        return true;
+      });
+
+      const tbody = document.getElementById('lms-tbody');
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:#64748b;">No platforms match your filters. Try widening them.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(p => `
+        <tr>
+          <td><div class="lms-name">${p.name}</div></td>
+          <td>${p.best}</td>
+          <td>${p.pricing}<br><span class="lms-tag">${budgetLabel(p.budget)}</span></td>
+          <td>${hostLabel(p.host)}</td>
+          <td>${p.highlights.map(h => `<span class="lms-tag">${h}</span>`).join(' ')}</td>
+          <td><a class="lms-cta-btn" href="${p.url}?ref=harmonydigital" target="_blank" rel="noopener sponsored">Visit →</a></td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('f-use').addEventListener('change', render);
+    document.getElementById('f-budget').addEventListener('change', render);
+    document.getElementById('f-host').addEventListener('change', render);
+    document.getElementById('f-search').addEventListener('input', render);
+    render();
+
+    // Recommender
+    document.getElementById('reco-btn').addEventListener('click', () => {
+      const role = document.getElementById('r-role').value;
+      const budget = document.getElementById('r-budget').value;
+      const host = document.getElementById('r-host').value;
+
+      // Score each platform
+      const scored = PLATFORMS.map(p => {
+        let score = 0;
+        if (p.use.includes(role)) score += 3;
+        if (p.budget === budget) score += 2;
+        if (p.host === host) score += 2;
+        // budget proximity
+        const order = ['free','low','mid','high'];
+        const diff = Math.abs(order.indexOf(p.budget) - order.indexOf(budget));
+        score += (3 - diff);
+        return { ...p, score };
+      }).sort((a, b) => b.score - a.score);
+
+      const pick = scored[0];
+      document.getElementById('reco-name').textContent = pick.name;
+      document.getElementById('reco-why').textContent =
+        `${pick.best}. ${pick.pricing}. Strengths: ${pick.highlights.join(', ')}.`;
+      const link = document.getElementById('reco-link');
+      link.href = pick.url + '?ref=harmonydigital';
+      document.getElementById('reco-result').classList.add('is-visible');
+    });
+  </script>
+</body>
+</html>

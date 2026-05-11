@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-11",
+  "owner": "Harmony Digital Consults Ltd",
+  "dashboards": [
+    {
+      "id": "nigeria-digital-skills-gap",
+      "title": "Nigeria Digital Skills Gap Dashboard",
+      "slug": "nigeria-digital-skills-gap",
+      "url": "/dashboards/nigeria-digital-skills-gap.html",
+      "summary": "Interactive snapshot of Nigeria's digital skills demand vs. supply across NITDA priority sectors, gender splits, and regional distribution.",
+      "category": "Research & Advocacy",
+      "tags": ["Nigeria", "Digital Skills", "Workforce", "NITDA", "Policy"],
+      "audience": ["Policymakers", "Donors", "EdTech Founders", "Schools"],
+      "data_sources": ["NITDA", "NBS", "World Bank", "ITU", "PLANE"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-11",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Engage Harmony for Capacity Building",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "elearning-platform-comparison",
+      "title": "E-Learning Platform Comparison Tool",
+      "slug": "elearning-platform-comparison",
+      "url": "/dashboards/elearning-platform-comparison.html",
+      "summary": "Side-by-side comparison of leading e-learning platforms (Moodle, Google Classroom, uLesson, Edmodo Africa, Teachable, Thinkific, Kajabi) with filters and a best-fit recommender for African schools, edupreneurs, and corporates.",
+      "category": "Tools & Recommenders",
+      "tags": ["E-Learning", "LMS", "Comparison", "Affiliate", "Africa"],
+      "audience": ["School Owners", "Edupreneurs", "L&D Managers", "Trainers"],
+      "data_sources": ["Vendor websites", "G2", "Capterra", "Harmony hands-on reviews"],
+      "update_cadence": "Bi-monthly",
+      "last_updated": "2026-05-11",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Free LMS Strategy Call",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "nigeria-vs-kenya-edtech",
+      "title": "Nigeria vs. Kenya EdTech Market Comparison",
+      "slug": "nigeria-vs-kenya-edtech",
+      "url": "/dashboards/nigeria-vs-kenya-edtech.html",
+      "summary": "Head-to-head comparison of the EdTech ecosystems in Nigeria and Kenya — funding, regulation, internet penetration, K-12 reach, startup density, and donor activity.",
+      "category": "Market Intelligence",
+      "tags": ["EdTech", "Nigeria", "Kenya", "Funding", "Market"],
+      "audience": ["Investors", "Founders", "Donor Agencies", "Researchers"],
+      "data_sources": ["Briter Bridges", "Partech Africa", "World Bank", "GSMA", "UNESCO UIS"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-11",
+      "lead_author": "Harmony Digital Consults Market Intelligence Desk",
+      "featured": true,
+      "cta": {
+        "label": "Request a Custom Market Brief",
+        "url": "/contact.html"
+      }
+    }
+  ]
+}

@@ -153,4 +153,36 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- Insights Hub -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/insights/</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard: Nigeria Digital Skills Gap -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/nigeria-digital-skills-gap.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard: E-Learning Platform Comparison Tool -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/elearning-platform-comparison.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard: Nigeria vs Kenya EdTech -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/nigeria-vs-kenya-edtech.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
