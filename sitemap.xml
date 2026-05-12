@@ -28,9 +28,17 @@
   <!-- Services -->
   <url>
     <loc>https://harmonydigitalconsults.com.ng/services.html</loc>
-    <lastmod>2026-04-14</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- AI-in-Education Programme -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/ai-in-education-program.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 
   <!-- Process -->
