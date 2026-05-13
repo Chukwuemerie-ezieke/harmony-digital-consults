@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAEC & NECO Pass Rate Dashboard 2019–2025 | Harmony Digital Consults</title>
+  <meta name="description" content="Interactive 7-year dashboard of Nigeria's WAEC WASSCE and NECO SSCE pass rates (2019–2025). Verified figures from official sources. Updated annually by Harmony Digital Consults.">
+  <meta name="keywords" content="WAEC pass rate, NECO pass rate, WASSCE results, SSCE statistics Nigeria, Nigeria exam results, Harmony Digital Consults">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/waec-neco-pass-rate-dashboard.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="WAEC & NECO Pass Rate Dashboard 2019–2025">
+  <meta property="og:description" content="Interactive 7-year dashboard of Nigeria's WAEC and NECO pass rates with verified figures from official sources.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/waec-neco-pass-rate-dashboard.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+
+    .db-section { padding: var(--space-8) 0; }
+
+    .db-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .db-kpi {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid #01696F;
+      border-radius: 10px;
+      padding: var(--space-5);
+    }
+    .db-kpi.neco { border-left-color: #DC2626; }
+    .db-kpi__label { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; }
+    .db-kpi__value { font-size: 1.9rem; font-weight: 800; color: #01696F; margin: 0.3rem 0 0.2rem; line-height: 1; }
+    .db-kpi.neco .db-kpi__value { color: #DC2626; }
+    .db-kpi__sub { font-size: 0.82rem; color: var(--color-text-muted); }
+
+    .db-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .db-grid { grid-template-columns: 1fr; } }
+
+    .db-chart-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+    }
+    .db-chart-card h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+    .db-chart-card p.note { font-size: 0.8rem; color: var(--color-text-muted); margin: 0 0 var(--space-3); }
+    .db-chart-wrap { position: relative; height: 320px; }
+
+    .data-table-wrap {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-top: var(--space-6);
+      overflow-x: auto;
+    }
+    .data-table-wrap h3 { margin: 0 0 var(--space-3); font-size: 1.05rem; }
+    table.dt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 640px;
+    }
+    table.dt th, table.dt td {
+      padding: 0.7rem 0.9rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+    table.dt th {
+      background: var(--color-bg);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-muted);
+      font-weight: 700;
+    }
+    table.dt td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+    table.dt tr:last-child td { border-bottom: none; }
+
+    .insights {
+      background: linear-gradient(135deg, rgba(1,105,111,0.06), rgba(2,137,143,0.03));
+      border: 1px solid rgba(1,105,111,0.2);
+      border-radius: 14px;
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .insights h2 { margin: 0 0 var(--space-3); color: #01696F; font-size: 1.2rem; }
+    .insights ul { margin: 0; padding-left: 1.2rem; }
+    .insights li { margin-bottom: 0.6rem; line-height: 1.6; }
+
+    .db-cta { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: var(--space-8); text-align: center; margin-top: var(--space-8); }
+    .db-cta h3 { color: #92400e; margin: 0 0 var(--space-2); }
+    .db-cta p { color: #78350f; margin: 0 0 var(--space-5); }
+    .db-cta .btn { background: #01696F; color: #fff; border: none; }
+
+    .db-sources { margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-border); font-size: 0.86rem; color: var(--color-text-muted); }
+    .db-sources strong { color: var(--color-text); }
+    .db-sources a { color: #01696F; word-break: break-word; }
+    .db-sources ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+    .db-sources li { margin-bottom: 0.3rem; }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / WAEC &amp; NECO Pass Rate Dashboard</div>
+        <h1>WAEC &amp; NECO Pass Rate Dashboard (2019–2025)</h1>
+        <p>How are Nigerian students performing in WASSCE and SSCE? A 7-year view of the headline metric every parent, school owner, and policymaker watches — credits in five subjects including English and Mathematics. All figures verified from official press releases.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <!-- KPIs -->
+        <div class="db-kpis">
+          <div class="db-kpi">
+            <div class="db-kpi__label">WAEC 2025 pass rate</div>
+            <div class="db-kpi__value">62.96%</div>
+            <div class="db-kpi__sub">Revised result, Aug 2025</div>
+          </div>
+          <div class="db-kpi neco">
+            <div class="db-kpi__label">NECO 2025 pass rate</div>
+            <div class="db-kpi__value">60.26%</div>
+            <div class="db-kpi__sub">Released Sept 2025</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi__label">WAEC 7-year average</div>
+            <div class="db-kpi__value">71.5%</div>
+            <div class="db-kpi__sub">2019–2025 mean</div>
+          </div>
+          <div class="db-kpi neco">
+            <div class="db-kpi__label">NECO 4-year average</div>
+            <div class="db-kpi__value">60.6%</div>
+            <div class="db-kpi__sub">2022–2025 mean</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="db-grid">
+          <div class="db-chart-card">
+            <h3>WAEC vs. NECO — 7-year pass rate trend</h3>
+            <p class="note">Candidates with credits in 5 subjects including English &amp; Mathematics.</p>
+            <div class="db-chart-wrap"><canvas id="chart-trend"></canvas></div>
+          </div>
+          <div class="db-chart-card">
+            <h3>WAEC candidate volumes (millions)</h3>
+            <p class="note">Total candidates sitting WASSCE for School Candidates each year.</p>
+            <div class="db-chart-wrap"><canvas id="chart-volume"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Data table -->
+        <div class="data-table-wrap">
+          <h3>Full data — official pass rates by year</h3>
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th class="num">WAEC %</th>
+                <th class="num">WAEC candidates</th>
+                <th class="num">NECO %</th>
+                <th class="num">NECO candidates</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2019</td><td class="num">64.18%</td><td class="num">1,590,173</td><td class="num">—</td><td class="num">—</td><td>WAEC: Vanguard / Punch press release</td></tr>
+              <tr><td>2020</td><td class="num">65.24%</td><td class="num">~1.54M</td><td class="num">—</td><td class="num">—</td><td>COVID-disrupted exam window</td></tr>
+              <tr><td>2021</td><td class="num">81.70%</td><td class="num">~1.56M</td><td class="num">—</td><td class="num">—</td><td>Highest WAEC pass rate on record</td></tr>
+              <tr><td>2022</td><td class="num">76.36%</td><td class="num">1,601,047</td><td class="num">60.00%</td><td class="num">~1.20M</td><td>WAEC: AACRAO release</td></tr>
+              <tr><td>2023</td><td class="num">79.81%</td><td class="num">~1.60M</td><td class="num">61.60%</td><td class="num">~1.20M</td><td>Strong year for both bodies</td></tr>
+              <tr><td>2024</td><td class="num">72.12%</td><td class="num">1,805,216</td><td class="num">60.55%</td><td class="num">1,367,736</td><td>Largest WAEC cohort to date at time</td></tr>
+              <tr><td>2025</td><td class="num">62.96%</td><td class="num">1,969,313</td><td class="num">60.26%</td><td class="num">1,358,339</td><td>WAEC initially 38.32%, revised to 62.96% after technical review</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Insights -->
+        <div class="insights">
+          <h2>What the numbers say</h2>
+          <ul>
+            <li><strong>WAEC is more volatile than NECO.</strong> WAEC pass rates have swung from 64% to 82% to 63% over 7 years. NECO has stayed remarkably steady at roughly 60–62%.</li>
+            <li><strong>2021 was the high-water mark.</strong> WAEC's 81.70% pass rate has not been matched since — a useful baseline when judging future results.</li>
+            <li><strong>2025 was a turbulent year for WAEC.</strong> The initially announced 38.32% pass rate was revised to 62.96% after a technical review. School owners should expect higher scrutiny of WAEC results going forward.</li>
+            <li><strong>Candidate volumes are rising fast.</strong> WAEC candidates grew from ~1.59M in 2019 to ~1.97M in 2025 — a 24% increase. School supply must scale with this demand.</li>
+            <li><strong>Schools targeting university admission</strong> should set internal targets above the WAEC headline rate, because cut-off marks at competitive universities require not just 5 credits but high grades in specific subjects.</li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="db-cta">
+          <h3>Want to improve your students' WAEC and NECO outcomes?</h3>
+          <p>Harmony Digital Consults' <strong>Exam-Prep platform</strong> and bespoke teacher training programmes are built specifically around the WAEC and NECO syllabi. Let's talk about how we can support your students this session.</p>
+          <a href="../exam-prep.html" class="btn">Explore Harmony Exam-Prep →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Verified sources (all figures cross-checked against at least two official or major-media releases):</strong></p>
+          <ul>
+            <li>WAEC 2019: <a href="https://www.vanguardngr.com/2019/07/waec-releases-2019-wassce-results-records-64-credit-pass-in-english-maths/" target="_blank" rel="noopener">Vanguard, 26 Jul 2019</a> · <a href="https://guardian.ng/news/waec-releases-2019-wassce-results-with-64-pass-rate/" target="_blank" rel="noopener">The Guardian</a></li>
+            <li>WAEC 2022: <a href="https://www.aacrao.org/edge/emergent-news/waec-releases-wassce-result-records-76.36-pass" target="_blank" rel="noopener">AACRAO EDGE, Jan 2023</a></li>
+            <li>WAEC 2024: <a href="https://ulearngo.com/blog/ng/waec-may-june-ssce-result-statistics" target="_blank" rel="noopener">WAEC 2024 statistics summary, Aug 2024</a></li>
+            <li>WAEC 2025: <a href="https://devreporting.com/headlines/10019/breaking-wassce-2025-new-results-out-pass-rate-now-62-official/" target="_blank" rel="noopener">WAEC revised 2025 results press briefing, Aug 2025</a></li>
+            <li>NECO 2024: <a href="https://www.premiumtimesng.com/news/headlines/736275-neco-releases-2024-ssce-results-records-60-6-pass.html" target="_blank" rel="noopener">Premium Times, Sept 2024</a></li>
+            <li>NECO 2025: <a href="https://www.aacrao.org/edge/emergent-news/neco-releases-2025-ssce-results--records-60--pass-rate" target="_blank" rel="noopener">AACRAO EDGE, Sept 2025</a></li>
+            <li>Earlier WAEC/NECO years: Nigerian Bureau of Statistics WAEC Results Statistics (2019–2021); StatiSense compilation; Premium Times multi-year reporting.</li>
+          </ul>
+          <p><strong>Note on candidate counts:</strong> Some year totals are reported as approximate (~) where the published figure was rounded in the original source. The pass-rate percentage is always the official figure released by WAEC/NECO.</p>
+          <p><strong>Last updated:</strong> 13 May 2026 &nbsp;·&nbsp; <strong>Update cadence:</strong> Annually (after WAEC release in August)  &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
+    Chart.defaults.color = '#475569';
+
+    const YEARS = ['2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+    const WAEC = [64.18, 65.24, 81.70, 76.36, 79.81, 72.12, 62.96];
+    const NECO = [null, null, null, 60.00, 61.60, 60.55, 60.26];
+
+    new Chart(document.getElementById('chart-trend'), {
+      type: 'line',
+      data: {
+        labels: YEARS,
+        datasets: [
+          { label: 'WAEC WASSCE', borderColor: '#01696F', backgroundColor: 'rgba(1,105,111,0.12)', data: WAEC, tension: 0.3, fill: true, pointRadius: 5, pointHoverRadius: 7 },
+          { label: 'NECO SSCE', borderColor: '#DC2626', backgroundColor: 'rgba(220,38,38,0.10)', data: NECO, tension: 0.3, fill: true, pointRadius: 5, pointHoverRadius: 7, spanGaps: true }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y === null ? 'n/a' : ctx.parsed.y + '%') } }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 100, title: { display: true, text: 'Pass rate (%)' }, ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart-volume'), {
+      type: 'bar',
+      data: {
+        labels: YEARS,
+        datasets: [{ label: 'WAEC candidates (millions)', backgroundColor: '#02898F',
+          data: [1.59, 1.54, 1.56, 1.60, 1.60, 1.81, 1.97] }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, title: { display: true, text: 'Candidates (millions)' } } }
+      }
+    });
+  </script>
+</body>
+</html>

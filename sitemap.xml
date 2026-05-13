@@ -211,4 +211,29 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Dashboard: School ICT Readiness Scorecard -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/school-ict-readiness-scorecard.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard: Teacher Digital Skills Self-Assessment -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/teacher-digital-skills-self-assessment.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard: WAEC & NECO Pass Rate Dashboard -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/waec-neco-pass-rate-dashboard.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>

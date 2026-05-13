@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "updated": "2026-05-11",
+  "version": "1.1",
+  "updated": "2026-05-13",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
     {
@@ -39,6 +39,63 @@
       "cta": {
         "label": "Book a Free LMS Strategy Call",
         "url": "/contact.html"
+      }
+    },
+    {
+      "id": "school-ict-readiness-scorecard",
+      "title": "School ICT Readiness Scorecard",
+      "slug": "school-ict-readiness-scorecard",
+      "url": "/dashboards/school-ict-readiness-scorecard.html",
+      "summary": "Free 10-question self-assessment that scores your school's ICT readiness across devices, internet, teacher skills, LMS, power, data, safety, budget, and leadership. Instant score plus a tailored 90-day action plan.",
+      "category": "Tools & Recommenders",
+      "tags": ["Schools", "ICT", "Assessment", "Nigeria", "Readiness"],
+      "audience": ["School Owners", "Principals", "Education Investors", "Donor Agencies"],
+      "data_sources": ["UNESCO ICT-CFT v3", "World Bank EdTech", "Harmony deployment experience"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-13",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Free 30-min ICT Strategy Call",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "teacher-digital-skills-self-assessment",
+      "title": "Teacher Digital Skills Self-Assessment",
+      "slug": "teacher-digital-skills-self-assessment",
+      "url": "/dashboards/teacher-digital-skills-self-assessment.html",
+      "summary": "Teachers rate themselves across 6 digital competencies grounded in the TPACK framework and UNESCO ICT-CFT, then receive a personalised growth profile with recommended Harmony training modules.",
+      "category": "Tools & Recommenders",
+      "tags": ["Teachers", "TPACK", "Training", "Self-Assessment", "Digital Skills"],
+      "audience": ["Teachers", "Heads of Department", "School Owners", "Training Providers"],
+      "data_sources": ["UNESCO ICT-CFT v3", "TPACK (Mishra & Koehler)", "Harmony training curriculum"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-13",
+      "lead_author": "Harmony Digital Consults Training Team",
+      "featured": true,
+      "cta": {
+        "label": "Enrol in Harmony Teacher Training",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "waec-neco-pass-rate-dashboard",
+      "title": "WAEC & NECO Pass Rate Dashboard (2019–2025)",
+      "slug": "waec-neco-pass-rate-dashboard",
+      "url": "/dashboards/waec-neco-pass-rate-dashboard.html",
+      "summary": "Interactive 7-year view of WAEC WASSCE and NECO SSCE pass rates with verified figures cross-checked against official press releases (Vanguard, Premium Times, AACRAO EDGE, NBS). Updated annually after WAEC release.",
+      "category": "Research & Advocacy",
+      "tags": ["WAEC", "NECO", "WASSCE", "SSCE", "Exam Results", "Nigeria"],
+      "audience": ["Parents", "School Owners", "Policymakers", "Journalists", "Researchers"],
+      "data_sources": ["WAEC press releases", "NECO press releases", "NBS", "AACRAO EDGE", "Premium Times"],
+      "update_cadence": "Annually (August)",
+      "last_updated": "2026-05-13",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Explore Harmony Exam-Prep",
+        "url": "/exam-prep.html"
       }
     },
     {

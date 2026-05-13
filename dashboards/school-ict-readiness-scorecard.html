@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School ICT Readiness Scorecard | Harmony Digital Consults</title>
+  <meta name="description" content="Free 10-question self-assessment that scores your school's ICT readiness across devices, internet, teacher skills, LMS use, and power. Get an instant score plus tailored recommendations from Harmony Digital Consults.">
+  <meta name="keywords" content="school ICT readiness, Nigeria school digital, EdTech assessment, school technology audit, Harmony Digital Consults">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/school-ict-readiness-scorecard.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="School ICT Readiness Scorecard — Harmony Insights Hub">
+  <meta property="og:description" content="Free 10-question self-assessment for school owners. Get your readiness score and tailored next steps in 3 minutes.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/school-ict-readiness-scorecard.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+
+    .db-section { padding: var(--space-8) 0; }
+
+    .quiz-progress {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    .quiz-progress__bar {
+      height: 100%;
+      background: linear-gradient(90deg, #01696F, #02898F);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .quiz-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+      font-weight: 600;
+    }
+
+    .quiz-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: var(--space-6);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .quiz-area { display: block; }
+    .quiz-area.is-hidden { display: none; }
+
+    .quiz-question {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin: 0 0 var(--space-2);
+      line-height: 1.4;
+    }
+    .quiz-hint {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      margin: 0 0 var(--space-5);
+    }
+    .quiz-options { display: grid; gap: 0.6rem; margin-bottom: var(--space-5); }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 1.1rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--color-bg);
+    }
+    .quiz-option:hover { border-color: #01696F; background: rgba(1,105,111,0.04); }
+    .quiz-option.is-selected { border-color: #01696F; background: rgba(1,105,111,0.08); }
+    .quiz-option input { accent-color: #01696F; width: 18px; height: 18px; }
+    .quiz-option__label { font-size: 0.95rem; color: var(--color-text); flex: 1; }
+
+    .quiz-nav { display: flex; justify-content: space-between; gap: var(--space-3); }
+    .quiz-btn {
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: inherit;
+    }
+    .quiz-btn:hover { border-color: #01696F; color: #01696F; }
+    .quiz-btn--primary { background: #01696F; color: #fff; border-color: #01696F; }
+    .quiz-btn--primary:hover { background: #02898F; color: #fff; border-color: #02898F; }
+    .quiz-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* Results */
+    .result-hero {
+      text-align: center;
+      padding: var(--space-6) 0 var(--space-4);
+    }
+    .score-ring {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto var(--space-4);
+    }
+    .score-ring svg { transform: rotate(-90deg); }
+    .score-ring__bg { stroke: var(--color-border); }
+    .score-ring__fg { stroke: #01696F; transition: stroke-dashoffset 1s ease; }
+    .score-ring__text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-ring__num { font-size: 2.6rem; font-weight: 800; color: #01696F; line-height: 1; }
+    .score-ring__suffix { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.3rem; }
+    .result-tier {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+    .tier-emerging { background: #FEE2E2; color: #991B1B; }
+    .tier-developing { background: #FEF3C7; color: #92400E; }
+    .tier-progressing { background: #DBEAFE; color: #1E40AF; }
+    .tier-advanced { background: #D1FAE5; color: #065F46; }
+    .result-summary { max-width: 600px; margin: 0 auto var(--space-6); color: var(--color-text-muted); font-size: 1rem; line-height: 1.6; }
+
+    .reco-block {
+      background: var(--color-bg);
+      border-left: 4px solid #01696F;
+      padding: var(--space-5);
+      border-radius: 8px;
+      margin-bottom: var(--space-4);
+    }
+    .reco-block h3 { margin: 0 0 var(--space-2); color: #01696F; font-size: 1.05rem; }
+    .reco-block ul { margin: 0; padding-left: 1.2rem; }
+    .reco-block li { margin-bottom: 0.45rem; line-height: 1.55; font-size: 0.93rem; color: var(--color-text); }
+
+    .db-cta { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: var(--space-8); text-align: center; margin-top: var(--space-8); }
+    .db-cta h3 { color: #92400e; margin: 0 0 var(--space-2); }
+    .db-cta p { color: #78350f; margin: 0 0 var(--space-5); }
+    .db-cta .btn { background: #01696F; color: #fff; border: none; }
+
+    .db-sources { margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-border); font-size: 0.86rem; color: var(--color-text-muted); }
+    .db-sources strong { color: var(--color-text); }
+    .db-sources a { color: #01696F; }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / School ICT Readiness Scorecard</div>
+        <h1>School ICT Readiness Scorecard</h1>
+        <p>10 quick questions. 3 minutes. Get an instant score plus a tailored 90-day action plan for your school — adapted from the UNESCO ICT Competency Framework and the World Bank EduTech readiness model.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <!-- QUIZ AREA -->
+        <div id="quiz-area" class="quiz-area">
+          <div class="quiz-meta">
+            <span>Question <strong id="q-current">1</strong> of <strong id="q-total">10</strong></span>
+            <span id="q-category">Devices</span>
+          </div>
+          <div class="quiz-progress"><div class="quiz-progress__bar" id="progress-bar"></div></div>
+
+          <div class="quiz-card">
+            <h2 class="quiz-question" id="q-text">—</h2>
+            <p class="quiz-hint" id="q-hint">—</p>
+            <div class="quiz-options" id="q-options"></div>
+            <div class="quiz-nav">
+              <button class="quiz-btn" id="btn-back">← Back</button>
+              <button class="quiz-btn quiz-btn--primary" id="btn-next" disabled>Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTS AREA -->
+        <div id="result-area" class="quiz-area is-hidden">
+          <div class="quiz-card">
+            <div class="result-hero">
+              <div class="score-ring">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                  <circle class="score-ring__bg" cx="90" cy="90" r="78" stroke-width="14" fill="none"/>
+                  <circle class="score-ring__fg" cx="90" cy="90" r="78" stroke-width="14" fill="none"
+                          stroke-linecap="round"
+                          stroke-dasharray="490" stroke-dashoffset="490" id="ring-fg"/>
+                </svg>
+                <div class="score-ring__text">
+                  <div class="score-ring__num" id="score-num">0</div>
+                  <div class="score-ring__suffix">/ 100</div>
+                </div>
+              </div>
+              <div class="result-tier" id="result-tier">—</div>
+              <p class="result-summary" id="result-summary">—</p>
+            </div>
+
+            <div id="result-recos"></div>
+
+            <div style="text-align:center; margin-top: var(--space-6);">
+              <button class="quiz-btn" id="btn-restart">↺ Take it again</button>
+            </div>
+          </div>
+
+          <div class="db-cta">
+            <h3>Ready to act on your score?</h3>
+            <p>Harmony Digital Consults builds custom ICT roadmaps for Nigerian schools — from device procurement and teacher training to LMS deployment and parent engagement systems.</p>
+            <a href="../contact.html" class="btn">Book a Free 30-min ICT Strategy Call →</a>
+          </div>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Framework:</strong> Questions and scoring tiers are adapted from the <a href="https://www.unesco.org/en/digital-competencies-skills/ict-cft" target="_blank" rel="noopener">UNESCO ICT Competency Framework for Teachers (ICT-CFT, v3)</a> and the <a href="https://www.worldbank.org/en/topic/edutech" target="_blank" rel="noopener">World Bank EdTech readiness pillars</a>. Recommendations reflect Harmony Digital Consults' deployment experience with Nigerian K-12 schools.</p>
+          <p><strong>Privacy:</strong> This tool runs entirely in your browser — no answers are stored or transmitted unless you choose to contact us.</p>
+          <p><strong>Last updated:</strong> 13 May 2026 &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    const QUESTIONS = [
+      { cat: 'Devices', text: 'How many functional student devices (laptop, tablet, or shared computer) does the school have per 10 students?',
+        hint: 'Count devices in regular educational use this term.',
+        options: [
+          { label: 'None or fewer than 1', score: 0 },
+          { label: '1–3 devices per 10 students', score: 3 },
+          { label: '4–6 devices per 10 students', score: 7 },
+          { label: '7 or more (or 1-to-1 programme)', score: 10 } ]
+      },
+      { cat: 'Internet', text: 'What is the reliability of internet connectivity on school premises?',
+        hint: 'Reliability = enough bandwidth for classroom use without major disruption.',
+        options: [
+          { label: 'No internet on school premises', score: 0 },
+          { label: 'Only in admin office / staff room', score: 3 },
+          { label: 'Available in classrooms but slow / unreliable', score: 6 },
+          { label: 'Reliable Wi-Fi across most teaching spaces', score: 10 } ]
+      },
+      { cat: 'Power', text: 'How reliable is electricity for ICT use during school hours?',
+        hint: 'Including grid power, generator, inverter, or solar.',
+        options: [
+          { label: 'Grid only — frequent outages disrupt lessons', score: 2 },
+          { label: 'Grid + generator (used as needed)', score: 5 },
+          { label: 'Inverter / battery backup keeps ICT running', score: 8 },
+          { label: 'Solar or hybrid system — near-100% uptime', score: 10 } ]
+      },
+      { cat: 'Teacher Skills', text: 'What share of your teachers can confidently use a computer to prepare and deliver a lesson?',
+        hint: 'Confident = can prepare slides, use search, share files, and run a digital lesson without help.',
+        options: [
+          { label: 'Less than 25% of teachers', score: 1 },
+          { label: '25–50% of teachers', score: 4 },
+          { label: '51–75% of teachers', score: 7 },
+          { label: 'More than 75% of teachers', score: 10 } ]
+      },
+      { cat: 'LMS / Platform', text: 'Does the school use a Learning Management System (LMS) or digital learning platform?',
+        hint: 'Examples: Google Classroom, Moodle, uLesson Schools, Edmodo, custom platform.',
+        options: [
+          { label: 'No LMS in use', score: 0 },
+          { label: 'Used informally by 1–2 teachers', score: 3 },
+          { label: 'Used regularly in some classes / subjects', score: 7 },
+          { label: 'Used school-wide with parent visibility', score: 10 } ]
+      },
+      { cat: 'Curriculum Integration', text: 'How is ICT integrated into the regular curriculum?',
+        hint: 'Not just a "Computer Studies" period — ICT used to teach other subjects.',
+        options: [
+          { label: 'Only as a separate Computer Studies subject', score: 2 },
+          { label: 'A few teachers occasionally use ICT in lessons', score: 5 },
+          { label: 'Most subjects use ICT at least weekly', score: 8 },
+          { label: 'ICT is embedded across subjects and assessments', score: 10 } ]
+      },
+      { cat: 'Data & Records', text: 'How are student records, attendance, and results managed?',
+        hint: 'Think about how a parent gets a termly report.',
+        options: [
+          { label: 'Entirely paper-based', score: 1 },
+          { label: 'Mostly paper, some Excel files', score: 4 },
+          { label: 'A school management system (SIS/SMS) for most records', score: 8 },
+          { label: 'Full SIS with parent / student portal access', score: 10 } ]
+      },
+      { cat: 'Safety & Policy', text: 'Does the school have a written digital / acceptable-use and child-safety policy?',
+        hint: 'Should cover device use, internet safety, and data protection (NDPA 2023).',
+        options: [
+          { label: 'No written policy', score: 0 },
+          { label: 'Informal rules, not written down', score: 3 },
+          { label: 'Written policy exists but rarely referenced', score: 6 },
+          { label: 'Written, signed by staff/parents, reviewed yearly', score: 10 } ]
+      },
+      { cat: 'Budget', text: 'How is ICT funded in the school budget?',
+        hint: 'Sustainable funding = predictable line item, not one-off purchases.',
+        options: [
+          { label: 'No dedicated ICT budget', score: 1 },
+          { label: 'Ad-hoc, only when something breaks', score: 4 },
+          { label: 'Annual ICT budget, but tight', score: 7 },
+          { label: 'Multi-year ICT plan with budgeted training', score: 10 } ]
+      },
+      { cat: 'Leadership', text: 'How involved is school leadership in ICT decisions?',
+        hint: 'Owners, principal, head of school.',
+        options: [
+          { label: 'Leadership delegates everything to "the IT person"', score: 2 },
+          { label: 'Leadership is interested but not actively involved', score: 5 },
+          { label: 'Leadership reviews ICT performance termly', score: 8 },
+          { label: 'Leadership sets ICT strategy and tracks KPIs', score: 10 } ]
+      }
+    ];
+
+    const TIERS = [
+      { min: 0,  max: 30,  name: 'Emerging',    cls: 'tier-emerging',
+        summary: 'Your school is at the very start of its ICT journey. Foundational gaps in devices, connectivity, and teacher skills mean every quick win will compound. The good news: 90 days of focused work can move you to the next tier.' },
+      { min: 31, max: 55,  name: 'Developing',  cls: 'tier-developing',
+        summary: 'You have some ICT building blocks in place but they are not yet working as a system. The biggest unlock is usually connecting your teachers, devices, and a simple platform so every classroom can benefit consistently.' },
+      { min: 56, max: 78,  name: 'Progressing', cls: 'tier-progressing',
+        summary: 'You are ahead of most Nigerian schools. The opportunity now is depth — embedding ICT into every subject, every classroom, and your parent engagement, while strengthening data and safety governance.' },
+      { min: 79, max: 100, name: 'Advanced',    cls: 'tier-advanced',
+        summary: 'Excellent. You are running ICT as a strategic capability, not a side project. Focus now on advanced data analytics, learner-specific personalisation, and turning your model into a brand differentiator.' }
+    ];
+
+    // Generic recommendations based on lowest-scoring categories
+    const RECOS = {
+      'Devices':       ['Audit and refurbish broken devices before buying new — often 20–30% are recoverable.', 'Start with a shared-cart model (30 tablets shared across classrooms) before pursuing 1-to-1.', 'Explore PLANE / NITDA / state ICT grants and equipment partnerships.'],
+      'Internet':      ['Get a redundant connection — primary fibre plus a 4G MiFi or router for failover.', 'Set up a content cache (e.g. Kolibri or KA Lite) so core content works offline.', 'Negotiate a school plan with MTN, Glo, Airtel, or Spectranet — significant discounts exist for K-12.'],
+      'Power':         ['Audit ICT power load (computers, projectors, Wi-Fi).', 'Add a small inverter + battery for the ICT room as a first step before solar.', 'Get quotes for a 3–5 kW solar hybrid system — many schools recover cost within 24 months.'],
+      'Teacher Skills':['Run a 5-day intensive on Google Workspace + Microsoft Word/Excel before any LMS rollout.', 'Pair every "champion" teacher with 2 peers for monthly coaching.', 'Track teacher digital skills with the companion <a href="teacher-digital-skills-self-assessment.html">Teacher Self-Assessment</a>.'],
+      'LMS / Platform':['Pick one platform school-wide — fragmentation kills adoption. Compare options in the <a href="elearning-platform-comparison.html">E-Learning Comparison Tool</a>.', 'Start with one subject and one grade level. Scale only after 60 days of consistent use.', 'Make parent visibility a launch feature, not an afterthought.'],
+      'Curriculum Integration':['Require one ICT-integrated lesson per teacher per week, logged simply.', 'Build a shared resource library so teachers reuse, not reinvent.', 'Tie ICT integration to teacher performance reviews.'],
+      'Data & Records':['Move attendance and results to a School Management System (SIS) before anything else.', 'Insist on parent portal access — it drives parent satisfaction and renewal.', 'Back up data weekly to cloud storage (Drive, OneDrive) with restricted access.'],
+      'Safety & Policy':['Adopt a one-page Acceptable Use Policy signed by all staff, parents, and students.', 'Comply with the Nigeria Data Protection Act (NDPA) 2023 — document what data you collect and why.', 'Run an annual online-safety assembly for students aged 9 and above.'],
+      'Budget':        ['Allocate at least 3–5% of fee revenue to ICT (devices, software, training, maintenance).', 'Separate capital (devices) from recurring (subscriptions, training) in your budget.', 'Negotiate annual subscriptions instead of monthly — most vendors offer 15–25% off.'],
+      'Leadership':    ['Add one ICT KPI to every termly leadership review (e.g. % teachers using LMS).', 'Sponsor one senior leader to attend an EdTech conference each year.', 'Engage Harmony Digital Consults or another partner for a quarterly external review.']
+    };
+
+    let idx = 0;
+    const answers = new Array(QUESTIONS.length).fill(null);
+
+    const $ = id => document.getElementById(id);
+
+    function renderQuestion() {
+      const q = QUESTIONS[idx];
+      $('q-current').textContent = idx + 1;
+      $('q-total').textContent = QUESTIONS.length;
+      $('q-category').textContent = q.cat;
+      $('q-text').textContent = q.text;
+      $('q-hint').textContent = q.hint;
+      $('progress-bar').style.width = ((idx) / QUESTIONS.length * 100) + '%';
+
+      const optsHtml = q.options.map((o, i) => `
+        <label class="quiz-option ${answers[idx] === i ? 'is-selected' : ''}" data-i="${i}">
+          <input type="radio" name="opt" ${answers[idx] === i ? 'checked' : ''}>
+          <span class="quiz-option__label">${o.label}</span>
+        </label>
+      `).join('');
+      $('q-options').innerHTML = optsHtml;
+
+      $('q-options').querySelectorAll('.quiz-option').forEach(el => {
+        el.addEventListener('click', () => {
+          const i = parseInt(el.dataset.i, 10);
+          answers[idx] = i;
+          $('q-options').querySelectorAll('.quiz-option').forEach(x => x.classList.remove('is-selected'));
+          el.classList.add('is-selected');
+          el.querySelector('input').checked = true;
+          $('btn-next').disabled = false;
+        });
+      });
+
+      $('btn-back').disabled = idx === 0;
+      $('btn-next').disabled = answers[idx] === null;
+      $('btn-next').textContent = (idx === QUESTIONS.length - 1) ? 'See my score →' : 'Next →';
+    }
+
+    $('btn-back').addEventListener('click', () => { if (idx > 0) { idx--; renderQuestion(); } });
+    $('btn-next').addEventListener('click', () => {
+      if (answers[idx] === null) return;
+      if (idx < QUESTIONS.length - 1) { idx++; renderQuestion(); }
+      else { showResults(); }
+    });
+
+    function showResults() {
+      // Score = sum of selected option scores; max is 100 (10 questions × 10).
+      const total = answers.reduce((sum, ans, i) => sum + (ans === null ? 0 : QUESTIONS[i].options[ans].score), 0);
+      const tier = TIERS.find(t => total >= t.min && total <= t.max);
+
+      // Hide quiz, show results
+      $('quiz-area').classList.add('is-hidden');
+      $('result-area').classList.remove('is-hidden');
+
+      // Animate ring
+      const circ = 2 * Math.PI * 78; // ≈ 490
+      const offset = circ * (1 - total / 100);
+      const ring = $('ring-fg');
+      setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+
+      // Animate number
+      let n = 0;
+      const step = Math.max(1, Math.round(total / 30));
+      const iv = setInterval(() => {
+        n = Math.min(total, n + step);
+        $('score-num').textContent = n;
+        if (n >= total) clearInterval(iv);
+      }, 30);
+
+      // Tier
+      const tierEl = $('result-tier');
+      tierEl.textContent = tier.name;
+      tierEl.className = 'result-tier ' + tier.cls;
+      $('result-summary').textContent = tier.summary;
+
+      // Top 3 weakest categories → recommendations
+      const ranked = QUESTIONS.map((q, i) => ({
+        cat: q.cat,
+        score: answers[i] === null ? 0 : q.options[answers[i]].score
+      })).sort((a, b) => a.score - b.score).slice(0, 3);
+
+      const recosHtml = ranked.map(r => `
+        <div class="reco-block">
+          <h3>Priority: ${r.cat} (scored ${r.score}/10)</h3>
+          <ul>${RECOS[r.cat].map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+      `).join('');
+      $('result-recos').innerHTML = recosHtml;
+
+      window.scrollTo({ top: document.querySelector('main').offsetTop, behavior: 'smooth' });
+    }
+
+    $('btn-restart').addEventListener('click', () => {
+      idx = 0;
+      for (let i = 0; i < answers.length; i++) answers[i] = null;
+      $('result-area').classList.add('is-hidden');
+      $('quiz-area').classList.remove('is-hidden');
+      $('ring-fg').style.strokeDashoffset = 490;
+      $('score-num').textContent = '0';
+      renderQuestion();
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>
