@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "updated": "2026-05-13",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
@@ -96,6 +96,44 @@
       "cta": {
         "label": "Explore Harmony Exam-Prep",
         "url": "/exam-prep.html"
+      }
+    },
+    {
+      "id": "ai-tools-for-teachers-directory",
+      "title": "AI Tools for Teachers Directory",
+      "slug": "ai-tools-for-teachers-directory",
+      "url": "/dashboards/ai-tools-for-teachers-directory.html",
+      "summary": "Curated, monthly-refreshed directory of 15+ AI tools for teachers (ChatGPT, MagicSchool, Diffit, Canva, NotebookLM, Perplexity, Claude, etc.) scored 1-5 on classroom usefulness with filters by category, budget, and level.",
+      "category": "Tools & Recommenders",
+      "tags": ["AI", "Teachers", "Tools", "Directory", "Affiliate"],
+      "audience": ["Teachers", "Heads of Department", "School Owners", "L&D Managers"],
+      "data_sources": ["Vendor websites", "Harmony hands-on testing"],
+      "update_cadence": "Monthly",
+      "last_updated": "2026-05-13",
+      "lead_author": "Harmony Digital Consults Training Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Teacher AI Workshop",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "out-of-school-children-nigeria",
+      "title": "Out-of-School Children in Nigeria",
+      "slug": "out-of-school-children-nigeria",
+      "url": "/dashboards/out-of-school-children-nigeria.html",
+      "summary": "Verified UNICEF, UNESCO UIS, UBEC, and NBS data on Nigeria's 18.3M out-of-school children — state breakdown (Kebbi 67.6%, Sokoto 66.4%), age splits, regional concentration, global context, and 6 root causes.",
+      "category": "Research & Advocacy",
+      "tags": ["UNICEF", "UNESCO", "UBEC", "Out-of-School", "Nigeria", "Donor"],
+      "audience": ["Donors", "NGOs", "Ministries", "Researchers", "Journalists"],
+      "data_sources": ["UNICEF Nigeria", "UNESCO UIS", "NBS 2024", "NILDS Issue Brief"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-13",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Request a Custom Research Brief",
+        "url": "/contact.html"
       }
     },
     {

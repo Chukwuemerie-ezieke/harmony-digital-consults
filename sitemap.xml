@@ -236,4 +236,20 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Dashboard: AI Tools for Teachers Directory -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/ai-tools-for-teachers-directory.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard: Out-of-School Children in Nigeria -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/out-of-school-children-nigeria.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>

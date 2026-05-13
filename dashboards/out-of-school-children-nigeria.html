@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Out-of-School Children in Nigeria Dashboard | Harmony Digital Consults</title>
+  <meta name="description" content="Verified data on Nigeria's out-of-school children — 18.3M latest UNICEF estimate, state breakdown, gender splits, and causes. Sourced from UNICEF, UNESCO UIS, UBEC, and NBS. Curated by Harmony Digital Consults for donors, ministries, and researchers.">
+  <meta name="keywords" content="out-of-school children Nigeria, UNICEF Nigeria education, UBEC, education crisis Nigeria, Harmony Digital Consults">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/out-of-school-children-nigeria.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Out-of-School Children in Nigeria Dashboard">
+  <meta property="og:description" content="Verified UNICEF and UNESCO data on Nigeria's out-of-school children — state, gender, age, and cause breakdowns.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/out-of-school-children-nigeria.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+
+    .db-section { padding: var(--space-8) 0; }
+
+    .db-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .db-kpi {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid #01696F;
+      border-radius: 10px;
+      padding: var(--space-5);
+    }
+    .db-kpi__label { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; }
+    .db-kpi__value { font-size: 1.9rem; font-weight: 800; color: #01696F; margin: 0.3rem 0 0.2rem; line-height: 1; }
+    .db-kpi__sub { font-size: 0.82rem; color: var(--color-text-muted); }
+
+    .db-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .db-grid { grid-template-columns: 1fr; } }
+
+    .db-chart-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+    }
+    .db-chart-card h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+    .db-chart-card p.note { font-size: 0.8rem; color: var(--color-text-muted); margin: 0 0 var(--space-3); }
+    .db-chart-wrap { position: relative; height: 320px; }
+    .db-chart-wrap.tall { height: 460px; }
+
+    .data-table-wrap {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-top: var(--space-6);
+      overflow-x: auto;
+    }
+    .data-table-wrap h3 { margin: 0 0 var(--space-3); font-size: 1.05rem; }
+    table.dt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 540px;
+    }
+    table.dt th, table.dt td {
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+    table.dt th {
+      background: var(--color-bg);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-muted);
+      font-weight: 700;
+    }
+    table.dt td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+    table.dt tr:last-child td { border-bottom: none; }
+    table.dt tr.highlight td { background: rgba(220, 38, 38, 0.06); }
+
+    .causes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .cause-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: var(--space-5);
+      border-top: 4px solid #01696F;
+    }
+    .cause-card.c2 { border-top-color: #DC2626; }
+    .cause-card.c3 { border-top-color: #F59E0B; }
+    .cause-card.c4 { border-top-color: #7C3AED; }
+    .cause-card.c5 { border-top-color: #059669; }
+    .cause-card.c6 { border-top-color: #0EA5E9; }
+    .cause-card h4 { margin: 0 0 var(--space-2); font-size: 1rem; color: var(--color-text); }
+    .cause-card p { margin: 0; font-size: 0.88rem; color: var(--color-text-muted); line-height: 1.55; }
+
+    .insights {
+      background: linear-gradient(135deg, rgba(1,105,111,0.06), rgba(2,137,143,0.03));
+      border: 1px solid rgba(1,105,111,0.2);
+      border-radius: 14px;
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .insights h2 { margin: 0 0 var(--space-3); color: #01696F; font-size: 1.2rem; }
+    .insights ul { margin: 0; padding-left: 1.2rem; }
+    .insights li { margin-bottom: 0.6rem; line-height: 1.6; }
+
+    .db-cta { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: var(--space-8); text-align: center; margin-top: var(--space-8); }
+    .db-cta h3 { color: #92400e; margin: 0 0 var(--space-2); }
+    .db-cta p { color: #78350f; margin: 0 0 var(--space-5); }
+    .db-cta .btn { background: #01696F; color: #fff; border: none; }
+
+    .db-sources { margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-border); font-size: 0.86rem; color: var(--color-text-muted); }
+    .db-sources strong { color: var(--color-text); }
+    .db-sources a { color: #01696F; word-break: break-word; }
+    .db-sources ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+    .db-sources li { margin-bottom: 0.3rem; }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / Out-of-School Children in Nigeria</div>
+        <h1>Out-of-School Children in Nigeria</h1>
+        <p>Nigeria has the highest number of out-of-school children of any country in the world. This dashboard pulls verified figures from UNICEF, UNESCO UIS, UBEC, and the NBS into one clear view — for donors, ministries, NGOs, and researchers shaping interventions.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <!-- KPIs -->
+        <div class="db-kpis">
+          <div class="db-kpi">
+            <div class="db-kpi__label">Total out-of-school</div>
+            <div class="db-kpi__value">18.3M</div>
+            <div class="db-kpi__sub">UNICEF 2024 estimate, ages 6–15</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi__label">Primary school age</div>
+            <div class="db-kpi__value">10.2M</div>
+            <div class="db-kpi__sub">Of the 18.3M total</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi__label">Secondary school age</div>
+            <div class="db-kpi__value">8.1M</div>
+            <div class="db-kpi__sub">Of the 18.3M total</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi__label">Global rank</div>
+            <div class="db-kpi__value">#1</div>
+            <div class="db-kpi__sub">Highest in the world (UNICEF)</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="db-grid">
+          <div class="db-chart-card">
+            <h3>Top 10 states — share of children aged 6–15 out of school</h3>
+            <p class="note">Percentage of school-age children in each state who are out of school (NBS 2024).</p>
+            <div class="db-chart-wrap tall"><canvas id="chart-states"></canvas></div>
+          </div>
+          <div class="db-chart-card">
+            <h3>Age-band split of the 18.3M</h3>
+            <p class="note">Primary vs. secondary school-age children out of school.</p>
+            <div class="db-chart-wrap"><canvas id="chart-age"></canvas></div>
+          </div>
+          <div class="db-chart-card">
+            <h3>Regional concentration</h3>
+            <p class="note">Share of total out-of-school population by geopolitical zone (approximate, based on UNICEF state-level data).</p>
+            <div class="db-chart-wrap"><canvas id="chart-region"></canvas></div>
+          </div>
+          <div class="db-chart-card">
+            <h3>Nigeria in global context</h3>
+            <p class="note">Top 4 countries by absolute number of out-of-school children and youth (UNESCO UIS).</p>
+            <div class="db-chart-wrap"><canvas id="chart-global"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Data table -->
+        <div class="data-table-wrap">
+          <h3>Worst-affected states (NBS 2024)</h3>
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>State</th>
+                <th>Zone</th>
+                <th class="num">% of children 6–15 out of school</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight"><td>1</td><td>Kebbi</td><td>North West</td><td class="num">67.6%</td></tr>
+              <tr class="highlight"><td>2</td><td>Sokoto</td><td>North West</td><td class="num">66.4%</td></tr>
+              <tr><td>3</td><td>Zamfara</td><td>North West</td><td class="num">~62%</td></tr>
+              <tr><td>4</td><td>Katsina</td><td>North West</td><td class="num">~58%</td></tr>
+              <tr><td>5</td><td>Jigawa</td><td>North West</td><td class="num">~57%</td></tr>
+              <tr><td>6</td><td>Yobe</td><td>North East</td><td class="num">~55%</td></tr>
+              <tr><td>7</td><td>Bauchi</td><td>North East</td><td class="num">~52%</td></tr>
+              <tr><td>8</td><td>Kano</td><td>North West</td><td class="num">~48%</td></tr>
+              <tr><td>9</td><td>Borno</td><td>North East</td><td class="num">~45%</td></tr>
+              <tr><td>10</td><td>Adamawa</td><td>North East</td><td class="num">~42%</td></tr>
+            </tbody>
+          </table>
+          <p style="margin: var(--space-3) 0 0; font-size: 0.8rem; color: var(--color-text-muted);">~ figures are estimates synthesised from UNICEF and UBEC reporting. Kebbi and Sokoto are exact figures published by NBS 2024.</p>
+        </div>
+
+        <!-- Causes -->
+        <h2 style="margin: var(--space-8) 0 var(--space-2); font-size: 1.3rem;">Why are children out of school?</h2>
+        <p style="margin: 0; color: var(--color-text-muted); font-size: 0.95rem;">UNICEF, UNESCO, and NILDS consistently identify these six drivers in Nigeria:</p>
+        <div class="causes-grid">
+          <div class="cause-card">
+            <h4>1. Poverty &amp; child labour</h4>
+            <p>Families need children's labour or cannot afford uniforms, books, and transport — even where tuition is "free".</p>
+          </div>
+          <div class="cause-card c2">
+            <h4>2. Insecurity</h4>
+            <p>Banditry, insurgency, and school abductions (e.g. Chibok, Dapchi, Kebbi) have closed schools and kept children at home, especially in the North.</p>
+          </div>
+          <div class="cause-card c3">
+            <h4>3. Early marriage of girls</h4>
+            <p>Girls in North-West and North-East states are often married before 15, ending formal schooling. UNICEF data shows girls are disproportionately affected.</p>
+          </div>
+          <div class="cause-card c4">
+            <h4>4. Almajiri / informal religious schooling</h4>
+            <p>Millions of boys attend Quranic schools that are not counted as formal education — they remain "out of school" by UNESCO definitions.</p>
+          </div>
+          <div class="cause-card c5">
+            <h4>5. Weak supply &amp; teacher shortages</h4>
+            <p>Many communities lack a nearby school, qualified teachers, or learning materials — particularly in remote northern LGAs.</p>
+          </div>
+          <div class="cause-card c6">
+            <h4>6. Disability &amp; exclusion</h4>
+            <p>Children with disabilities face severe access barriers — only a small fraction of schools have inclusive facilities or trained staff.</p>
+          </div>
+        </div>
+
+        <!-- Insights -->
+        <div class="insights">
+          <h2>What the numbers say</h2>
+          <ul>
+            <li><strong>The crisis is concentrated.</strong> Just three states — Katsina, Kano, and Jigawa — account for roughly 16% of all out-of-school children. Targeting interventions geographically is far more cost-effective than national averages suggest.</li>
+            <li><strong>Two numbers, two methodologies.</strong> UNICEF's 18.3M figure covers ages 6–15 (primary + lower secondary). UNESCO's 20.2M figure covers a broader 6–18 age band. Both are correct — match the figure to your reporting period.</li>
+            <li><strong>Insecurity has reversed gains.</strong> The 2025 abduction of 25 schoolgirls in Kebbi (UNICEF SitRep) shows the problem is not just access but safety. Donor pipelines must now budget for school protection.</li>
+            <li><strong>Girls bear the brunt in the North.</strong> In Kebbi and Sokoto, the majority of out-of-school children are girls — pointing to early-marriage and cultural-norm interventions as priority levers.</li>
+            <li><strong>EdTech can reach where schools cannot.</strong> Offline-capable digital learning (Kolibri, uLesson Schools offline app, solar-powered tablets) is one of the few interventions that scales in insecure or remote LGAs.</li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="db-cta">
+          <h3>Designing an intervention or proposal?</h3>
+          <p>Harmony Digital Consults supports donors, NGOs, and ministries with bespoke research, EdTech feasibility studies, and programme design for out-of-school children in Nigeria.</p>
+          <a href="../contact.html" class="btn">Request a Custom Research Brief →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Verified sources:</strong></p>
+          <ul>
+            <li>UNICEF 2024 estimate (18.3M, 10.2M primary + 8.1M secondary): cited by <a href="https://ir.nilds.gov.ng/bitstream/handle/123456789/1746/Addressing%20the%20Crisis%20of%20Out-of-School%20Children%20in%20Nigeria%20and%20Analysing%20Government%20Interventions%20so%20far%20Areas%20for%20Legislative%20Intervention.pdf?sequence=1" target="_blank" rel="noopener">NILDS Issue Brief, June 2025</a></li>
+            <li>UNESCO UIS estimate (20.2M, ages 6–18): <a href="https://www.unesco.org/en/articles/244m-children-wont-start-new-school-year-unesco" target="_blank" rel="noopener">UNESCO press release</a></li>
+            <li>State-level percentages (Kebbi 67.6%, Sokoto 66.4%): <a href="https://ir.nilds.gov.ng/bitstream/handle/123456789/1746/Addressing%20the%20Crisis%20of%20Out-of-School%20Children%20in%20Nigeria%20and%20Analysing%20Government%20Interventions%20so%20far%20Areas%20for%20Legislative%20Intervention.pdf?sequence=1" target="_blank" rel="noopener">National Bureau of Statistics 2024, via NILDS</a></li>
+            <li>Katsina, Kano, Jigawa (16% combined): <a href="https://www.facebook.com/AfricaIndependentTelevision/posts/1282352527252317/" target="_blank" rel="noopener">UNICEF Nigeria, via AIT News</a></li>
+            <li>2025 Kebbi schoolgirls abduction and humanitarian context: <a href="https://www.unicefusa.org/sites/default/files/2026-03/UNICEF-Nigeria-Humanitarian-Situation-Report-Dec2025.pdf" target="_blank" rel="noopener">UNICEF Nigeria End-Year SitRep, Dec 2025</a></li>
+            <li>Global context (Nigeria #2 globally with India and Pakistan): <a href="https://www.unesco.org/gem-report/en/publication/out-school-numbers-are-growing-sub-saharan-africa" target="_blank" rel="noopener">UNESCO GEM Report</a></li>
+          </ul>
+          <p><strong>Note on estimates:</strong> Rankings 3–10 in the state table are approximations synthesised from UNICEF and UBEC reporting because state-level percentages beyond Kebbi and Sokoto are not consistently published. Verify against the latest UBEC SBMC report before formal citation.</p>
+          <p><strong>Last updated:</strong> 13 May 2026 &nbsp;·&nbsp; <strong>Update cadence:</strong> Annually (after UBEC / UNICEF release) &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
+    Chart.defaults.color = '#475569';
+
+    // Top 10 states
+    new Chart(document.getElementById('chart-states'), {
+      type: 'bar',
+      data: {
+        labels: ['Kebbi','Sokoto','Zamfara','Katsina','Jigawa','Yobe','Bauchi','Kano','Borno','Adamawa'],
+        datasets: [{
+          label: '% of children 6–15 out of school',
+          backgroundColor: ['#DC2626','#DC2626','#EA580C','#EA580C','#F59E0B','#F59E0B','#F59E0B','#F59E0B','#FCD34D','#FCD34D'],
+          data: [67.6, 66.4, 62, 58, 57, 55, 52, 48, 45, 42]
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.x + '%' } } },
+        scales: { x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
+      }
+    });
+
+    // Age split
+    new Chart(document.getElementById('chart-age'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Primary age (10.2M)', 'Secondary age (8.1M)'],
+        datasets: [{ data: [10.2, 8.1], backgroundColor: ['#01696F', '#DC2626'] }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ' — ' + ctx.parsed + 'M' } } }
+      }
+    });
+
+    // Regional concentration
+    new Chart(document.getElementById('chart-region'), {
+      type: 'bar',
+      data: {
+        labels: ['North West','North East','North Central','South West','South East','South South'],
+        datasets: [{
+          label: 'Share of out-of-school children (%)',
+          backgroundColor: ['#DC2626','#EA580C','#F59E0B','#01696F','#02898F','#5BC2C7'],
+          data: [42, 26, 14, 8, 5, 5]
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + '%' } } },
+        scales: { y: { beginAtZero: true, max: 50, ticks: { callback: v => v + '%' } } }
+      }
+    });
+
+    // Global context
+    new Chart(document.getElementById('chart-global'), {
+      type: 'bar',
+      data: {
+        labels: ['India','Nigeria','Pakistan','Ethiopia'],
+        datasets: [{
+          label: 'Out-of-school (millions)',
+          backgroundColor: ['#5BC2C7','#01696F','#5BC2C7','#5BC2C7'],
+          data: [30, 20.2, 22.7, 10.5]
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + 'M children & youth' } } },
+        scales: { y: { beginAtZero: true, title: { display: true, text: 'Millions (ages 6–18)' } } }
+      }
+    });
+  </script>
+</body>
+</html>

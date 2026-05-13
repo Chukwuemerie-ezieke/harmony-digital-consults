@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools for Teachers Directory | Harmony Digital Consults</title>
+  <meta name="description" content="Curated directory of AI tools for teachers — ChatGPT, MagicSchool, Diffit, Curipod, SchoolAI and more. Scored by classroom usefulness, with free vs. paid tags and affiliate-ready links. Refreshed monthly by Harmony Digital Consults.">
+  <meta name="keywords" content="AI tools teachers, MagicSchool, ChatGPT for teachers, Diffit, classroom AI, Harmony Digital Consults">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/ai-tools-for-teachers-directory.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI Tools for Teachers Directory — Harmony Insights Hub">
+  <meta property="og:description" content="Curated directory of AI tools for teachers, scored by classroom usefulness. Refreshed monthly.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/ai-tools-for-teachers-directory.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+
+    .db-section { padding: var(--space-8) 0; }
+
+    .ai-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .ai-controls label {
+      font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      display: block; margin-bottom: 0.4rem;
+    }
+    .ai-controls select, .ai-controls input[type=text] {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+
+    .results-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.88rem; color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .results-meta strong { color: var(--color-text); }
+
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: var(--space-5);
+    }
+    .ai-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      transition: all 0.2s ease;
+    }
+    .ai-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(1,105,111,0.10);
+      border-color: #01696F;
+    }
+    .ai-card__top {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3);
+    }
+    .ai-card__name {
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--color-text); margin: 0;
+    }
+    .ai-card__category {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #01696F;
+      margin-top: 0.2rem;
+    }
+    .ai-card__score {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0;
+    }
+    .score-circle {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem;
+      color: #fff;
+    }
+    .score-5 { background: #047857; }
+    .score-4 { background: #059669; }
+    .score-3 { background: #D97706; }
+    .score-2 { background: #DC2626; }
+    .score-label { font-size: 0.66rem; color: var(--color-text-muted); margin-top: 0.2rem; font-weight: 700; }
+
+    .ai-card__desc {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      margin: 0;
+      flex: 1;
+    }
+    .ai-card__usecase {
+      font-size: 0.82rem;
+      color: var(--color-text);
+      padding: 0.6rem 0.9rem;
+      background: var(--color-bg);
+      border-left: 3px solid #01696F;
+      border-radius: 4px;
+    }
+    .ai-card__usecase strong { color: #01696F; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 0.2rem; }
+
+    .ai-card__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .ai-tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .tag-free { background: #D1FAE5; color: #065F46; }
+    .tag-freemium { background: #DBEAFE; color: #1E40AF; }
+    .tag-paid { background: #FEF3C7; color: #92400E; }
+    .tag-cat { background: var(--color-bg); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+
+    .ai-card__footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border);
+      gap: var(--space-3);
+    }
+    .ai-card__price { font-size: 0.82rem; color: var(--color-text-muted); }
+    .ai-card__cta {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: #01696F;
+      color: #fff !important;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ai-card__cta:hover { background: #02898F; }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--space-10);
+      color: var(--color-text-muted);
+      grid-column: 1 / -1;
+    }
+
+    .db-disclosure {
+      margin-top: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      background: rgba(1,105,111,0.06);
+      border-left: 3px solid #01696F;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    .db-cta { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: var(--space-8); text-align: center; margin-top: var(--space-8); }
+    .db-cta h3 { color: #92400e; margin: 0 0 var(--space-2); }
+    .db-cta p { color: #78350f; margin: 0 0 var(--space-5); }
+    .db-cta .btn { background: #01696F; color: #fff; border: none; }
+
+    .db-sources { margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-border); font-size: 0.86rem; color: var(--color-text-muted); }
+    .db-sources strong { color: var(--color-text); }
+    .db-sources a { color: #01696F; }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / AI Tools for Teachers Directory</div>
+        <h1>AI Tools for Teachers Directory</h1>
+        <p>Curated and ranked by classroom usefulness — refreshed monthly. Every tool here has been hands-on tested by the Harmony Digital Consults training team. Filter by use case, budget, or category to find what fits your classroom.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <!-- Filters -->
+        <div class="ai-controls">
+          <div>
+            <label for="f-cat">Category</label>
+            <select id="f-cat">
+              <option value="">All categories</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-budget">Budget</label>
+            <select id="f-budget">
+              <option value="">Any</option>
+              <option value="free">Free</option>
+              <option value="freemium">Freemium</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-level">Best for</label>
+            <select id="f-level">
+              <option value="">Any level</option>
+              <option value="primary">Primary</option>
+              <option value="secondary">Secondary</option>
+              <option value="tertiary">Tertiary</option>
+              <option value="all">All levels</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-search">Search</label>
+            <input id="f-search" type="text" placeholder="Tool name or task…">
+          </div>
+        </div>
+
+        <div class="results-meta">
+          <div>Showing <strong id="result-count">0</strong> tools</div>
+          <div>Sort: <strong>Classroom usefulness (highest first)</strong></div>
+        </div>
+
+        <div class="ai-grid" id="ai-grid"></div>
+
+        <p class="db-disclosure">
+          <strong>Affiliate disclosure:</strong> Some links above are affiliate links — if you sign up through them, Harmony Digital Consults may earn a commission at no extra cost to you. We only list tools we have personally tested and would use in our own classroom training. Scoring is independent of affiliate status.
+        </p>
+
+        <div class="db-cta">
+          <h3>Want hands-on AI training for your teachers?</h3>
+          <p>Harmony Digital Consults runs in-person and online workshops on responsible AI use in the classroom — built around tools featured in this directory.</p>
+          <a href="../contact.html" class="btn">Book a Teacher AI Workshop →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Scoring method:</strong> Each tool is scored 1–5 on classroom usefulness based on five criteria — (1) time saved per lesson, (2) ease of use for non-technical teachers, (3) quality of output, (4) safety/age-appropriateness, (5) accessibility on low bandwidth. Scores reflect Harmony Digital Consults' hands-on testing as of the directory's last update.</p>
+          <p><strong>Last updated:</strong> 13 May 2026 &nbsp;·&nbsp; <strong>Update cadence:</strong> Monthly &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd</p>
+          <p><strong>Suggest a tool:</strong> Email <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a> with the tool name, URL, and a one-line description.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    /* ============================================================
+       AI TOOLS DIRECTORY
+       To add or edit a tool: change one object in the AI_TOOLS
+       array below. The 'url' field is where you place the
+       affiliate link when you have one (see docs/insights-hub-cms.md).
+       ============================================================ */
+    const AI_TOOLS = [
+      {
+        name: 'ChatGPT (OpenAI)',
+        category: 'General AI Assistant',
+        score: 5,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Plus $20/mo',
+        desc: 'The most versatile teacher assistant — drafts lesson plans, rubrics, quizzes, parent emails, and explanations at any grade level.',
+        usecase: 'Generate a 5-question quiz on photosynthesis aligned to JSS2 in 10 seconds.',
+        url: 'https://chat.openai.com'
+      },
+      {
+        name: 'MagicSchool AI',
+        category: 'Teacher Productivity',
+        score: 5,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free for teachers; Plus $15.99/mo',
+        desc: 'Purpose-built for teachers with 80+ tools — lesson plans, IEPs, rubrics, behaviour interventions, and a safe student-facing chat.',
+        usecase: 'Build a full week of differentiated reading activities in under 15 minutes.',
+        url: 'https://magicschool.ai'
+      },
+      {
+        name: 'Diffit',
+        category: 'Differentiation',
+        score: 5,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Pro $96/year',
+        desc: 'Takes any text, article, or YouTube video and instantly generates reading levels, vocabulary lists, and comprehension questions.',
+        usecase: 'Adapt a complex newspaper article into 3 reading levels for a mixed-ability class.',
+        url: 'https://diffit.me'
+      },
+      {
+        name: 'Curipod',
+        category: 'Interactive Lessons',
+        score: 4,
+        budget: 'freemium',
+        level: 'secondary',
+        price: 'Free tier; Pro from $7.50/mo',
+        desc: 'Build interactive AI lessons with polls, word clouds, drawings, and open-ended questions students answer on their devices.',
+        usecase: 'Auto-generate a 30-minute interactive lesson on climate change with real-time student responses.',
+        url: 'https://curipod.com'
+      },
+      {
+        name: 'SchoolAI',
+        category: 'Student-facing AI',
+        score: 4,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free for teachers; Plus $9.95/mo',
+        desc: 'Lets teachers create safe, monitored AI chat spaces where students explore topics with guardrails and a teacher dashboard.',
+        usecase: 'Run a Socratic tutor "Space" so students practice argument-writing with AI feedback.',
+        url: 'https://schoolai.com'
+      },
+      {
+        name: 'Canva Magic Studio',
+        category: 'Content Creation',
+        score: 5,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free for teachers (Canva for Education)',
+        desc: 'Generate slides, posters, worksheets, infographics, and short videos with AI built into Canva — fully free for verified teachers.',
+        usecase: 'Turn lesson notes into a polished 10-slide deck with AI-suggested layouts.',
+        url: 'https://www.canva.com/education/'
+      },
+      {
+        name: 'Quizizz AI',
+        category: 'Assessment',
+        score: 4,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Super from $7.20/mo',
+        desc: 'Generate quizzes from any topic, PDF, or web page; auto-grade and produce per-student insights.',
+        usecase: 'Upload a chapter PDF and get a 20-question quiz with answer key in 2 minutes.',
+        url: 'https://quizizz.com'
+      },
+      {
+        name: 'Brisk Teaching',
+        category: 'Chrome Extension',
+        score: 4,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Pro from $9/mo',
+        desc: 'Chrome extension that adds AI buttons to Docs, Slides, YouTube — generate quizzes, change reading level, give written feedback inline.',
+        usecase: 'Highlight student writing in Google Docs and get specific, rubric-based feedback in one click.',
+        url: 'https://www.briskteaching.com'
+      },
+      {
+        name: 'Eduaide.ai',
+        category: 'Teacher Productivity',
+        score: 4,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Pro $4.99/mo',
+        desc: 'Lesson resource generator with 100+ activity types — exit tickets, jigsaws, role-plays, sentence stems, and more.',
+        usecase: 'Generate 10 different practice activities for the same learning objective.',
+        url: 'https://www.eduaide.ai'
+      },
+      {
+        name: 'Khanmigo (Khan Academy)',
+        category: 'Tutoring',
+        score: 4,
+        budget: 'paid',
+        level: 'all',
+        price: 'Free for teachers; $4/mo per learner',
+        desc: 'Khan Academy\'s AI tutor — guides students through problems with Socratic questioning instead of giving answers.',
+        usecase: 'Let students get unstuck on a Math problem without doing the work for them.',
+        url: 'https://www.khanmigo.ai'
+      },
+      {
+        name: 'Perplexity AI',
+        category: 'Research',
+        score: 5,
+        budget: 'freemium',
+        level: 'secondary',
+        price: 'Free tier; Pro $20/mo',
+        desc: 'AI search that always shows sources — teaches students to evaluate evidence, and helps teachers build research-backed lessons fast.',
+        usecase: 'Research a topic and instantly see citations students can verify.',
+        url: 'https://www.perplexity.ai'
+      },
+      {
+        name: 'Claude (Anthropic)',
+        category: 'General AI Assistant',
+        score: 5,
+        budget: 'freemium',
+        level: 'all',
+        price: 'Free tier; Pro $20/mo',
+        desc: 'Excellent for long-form writing, lesson sequencing, and reading comprehension tasks — handles very long documents well.',
+        usecase: 'Paste a whole novel chapter and get a full week of discussion questions.',
+        url: 'https://claude.ai'
+      },
+      {
+        name: 'NotebookLM (Google)',
+        category: 'Research',
+        score: 5,
+        budget: 'free',
+        level: 'all',
+        price: 'Free with Google account',
+        desc: 'Upload your own sources (PDFs, slides, notes) and turn them into summaries, study guides, and even AI-narrated audio overviews.',
+        usecase: 'Turn 5 PDFs of curriculum material into a 10-minute audio podcast for revision.',
+        url: 'https://notebooklm.google.com'
+      },
+      {
+        name: 'Grammarly',
+        category: 'Writing Feedback',
+        score: 4,
+        budget: 'freemium',
+        level: 'secondary',
+        price: 'Free tier; Premium from $12/mo',
+        desc: 'Grammar, clarity, and tone feedback on student writing — useful for both teachers marking and students self-editing.',
+        usecase: 'Set a writing task and let students self-correct grammar before final submission.',
+        url: 'https://www.grammarly.com'
+      },
+      {
+        name: 'Twee',
+        category: 'Language Teaching',
+        score: 4,
+        budget: 'freemium',
+        level: 'secondary',
+        price: 'Free tier; Pro $19/mo',
+        desc: 'AI tools built specifically for English language teachers — generate dialogues, role-plays, fill-the-gaps, and reading tasks instantly.',
+        usecase: 'Generate a 15-minute speaking activity tailored to your students\' English level.',
+        url: 'https://twee.com'
+      }
+    ];
+
+    const $ = id => document.getElementById(id);
+
+    // Build category filter from data
+    const categories = [...new Set(AI_TOOLS.map(t => t.category))].sort();
+    categories.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      $('f-cat').appendChild(opt);
+    });
+
+    function budgetLabel(b) { return { free: 'Free', freemium: 'Freemium', paid: 'Paid' }[b] || b; }
+    function budgetClass(b) { return { free: 'tag-free', freemium: 'tag-freemium', paid: 'tag-paid' }[b] || 'tag-cat'; }
+    function levelLabel(l) { return { primary: 'Primary', secondary: 'Secondary', tertiary: 'Tertiary', all: 'All levels' }[l] || l; }
+
+    function render() {
+      const cat = $('f-cat').value;
+      const budget = $('f-budget').value;
+      const level = $('f-level').value;
+      const q = $('f-search').value.trim().toLowerCase();
+
+      const rows = AI_TOOLS
+        .filter(t => {
+          if (cat && t.category !== cat) return false;
+          if (budget && t.budget !== budget) return false;
+          if (level && t.level !== level && t.level !== 'all') return false;
+          if (q && !(t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.usecase.toLowerCase().includes(q))) return false;
+          return true;
+        })
+        .sort((a, b) => b.score - a.score);
+
+      $('result-count').textContent = rows.length;
+
+      if (rows.length === 0) {
+        $('ai-grid').innerHTML = '<div class="empty-state">No tools match these filters. Try widening them.</div>';
+        return;
+      }
+
+      $('ai-grid').innerHTML = rows.map(t => `
+        <article class="ai-card">
+          <div class="ai-card__top">
+            <div>
+              <h3 class="ai-card__name">${t.name}</h3>
+              <div class="ai-card__category">${t.category}</div>
+            </div>
+            <div class="ai-card__score">
+              <div class="score-circle score-${t.score}">${t.score}</div>
+              <div class="score-label">USEFUL</div>
+            </div>
+          </div>
+          <p class="ai-card__desc">${t.desc}</p>
+          <div class="ai-card__usecase">
+            <strong>Try this</strong>${t.usecase}
+          </div>
+          <div class="ai-card__tags">
+            <span class="ai-tag ${budgetClass(t.budget)}">${budgetLabel(t.budget)}</span>
+            <span class="ai-tag tag-cat">${levelLabel(t.level)}</span>
+          </div>
+          <div class="ai-card__footer">
+            <span class="ai-card__price">${t.price}</span>
+            <a class="ai-card__cta" href="${t.url}" target="_blank" rel="noopener sponsored">Visit →</a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    ['f-cat','f-budget','f-level'].forEach(id => $(id).addEventListener('change', render));
+    $('f-search').addEventListener('input', render);
+    render();
+  </script>
+</body>
+</html>
