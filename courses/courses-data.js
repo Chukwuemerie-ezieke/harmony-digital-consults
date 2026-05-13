@@ -10,7 +10,7 @@
  * To force-refresh after editing: add `?t=` + Date.now() to the URL (already done below).
  */
 
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/PASTE_YOUR_PUBLISHED_CSV_URL_HERE/pub?gid=0&single=true&output=csv";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1bbBvDaBvrHVSpWzmMOOfVpcgh8D2xYNIAczV2dXyX1s/gviz/tq?tqx=out:csv&sheet=Courses";
 
 // Minimal CSV parser — handles quoted fields, embedded commas, embedded quotes, newlines inside quoted cells
 function parseCSV(text){
