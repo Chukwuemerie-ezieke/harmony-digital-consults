@@ -567,20 +567,101 @@
           <p class="section-desc">Already paid? Fill the form below. Not paid yet? You can still register — just type "Pending" under payment reference and we will follow up by email.</p>
         </div>
 
-        <div class="app-embed reveal">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSe5_0T3p3pNFCdbJRetlYjQS2k-Nmfspmt89ks5JhiLL9IX-A/viewform?embedded=true"
-            title="AI-in-Education Programme Registration Form"
-            loading="lazy"
-            class="app-embed__iframe"
-            style="min-height: 1200px;">
-            Loading…
-          </iframe>
+        <div class="reg-form-wrap reveal">
+          <form id="hdcRegForm" class="reg-form" novalidate>
+            <div class="reg-row">
+              <label for="r_name">Full Name <span class="req">*</span></label>
+              <input id="r_name" name="r_name" type="text" required autocomplete="name" placeholder="As it should appear on your certificate">
+            </div>
+            <div class="reg-grid-2">
+              <div class="reg-row">
+                <label for="r_email">Email Address <span class="req">*</span></label>
+                <input id="r_email" name="r_email" type="email" required autocomplete="email" placeholder="you@example.com">
+              </div>
+              <div class="reg-row">
+                <label for="r_phone">WhatsApp / Phone <span class="req">*</span></label>
+                <input id="r_phone" name="r_phone" type="tel" required autocomplete="tel" placeholder="+234...">
+              </div>
+            </div>
+            <div class="reg-grid-2">
+              <div class="reg-row">
+                <label for="r_state">State of Residence <span class="req">*</span></label>
+                <select id="r_state" name="r_state" required>
+                  <option value="" disabled selected>Select your state…</option>
+                </select>
+              </div>
+              <div class="reg-row">
+                <label for="r_lga">LGA of Residence <span class="req">*</span></label>
+                <select id="r_lga" name="r_lga" required disabled>
+                  <option value="" disabled selected>Select state first…</option>
+                </select>
+              </div>
+            </div>
+            <div class="reg-row">
+              <label for="r_school">School Name <span class="req">*</span></label>
+              <input id="r_school" name="r_school" type="text" required placeholder="Type 'Not applicable' if not in a school">
+            </div>
+            <div class="reg-row">
+              <label for="r_subjects">Subject(s) / Class(es) You Teach</label>
+              <input id="r_subjects" name="r_subjects" type="text" placeholder="e.g. JSS2 Mathematics, Primary 4 General Studies">
+            </div>
+            <div class="reg-grid-2">
+              <div class="reg-row">
+                <label for="r_role">Role / Position <span class="req">*</span></label>
+                <select id="r_role" name="r_role" required>
+                  <option value="" disabled selected>Select your role…</option>
+                  <option>Class Teacher</option>
+                  <option>Subject Teacher</option>
+                  <option>HOD</option>
+                  <option>Academic Coordinator</option>
+                  <option>School Owner</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="reg-row">
+                <label for="r_package">Choose Your Package <span class="req">*</span></label>
+                <select id="r_package" name="r_package" required>
+                  <option value="" disabled selected>Select a package…</option>
+                  <option value="Standard ₦50,000">Standard — ₦50,000</option>
+                  <option value="Premium ₦85,000">Premium — ₦85,000</option>
+                  <option value="School Cohort (10+ teachers)">School Cohort (10+ teachers)</option>
+                </select>
+              </div>
+            </div>
+            <div class="reg-row">
+              <label for="r_payref">Payment Reference / Transaction ID <span class="req">*</span></label>
+              <input id="r_payref" name="r_payref" type="text" required placeholder="Type 'Pending' if you have not paid yet">
+            </div>
+            <div class="reg-row">
+              <label for="r_goal">What do you most hope to achieve? <span class="req">*</span></label>
+              <textarea id="r_goal" name="r_goal" rows="3" required placeholder="e.g. Plan lessons faster, create better assessments, lead AI use in my school"></textarea>
+            </div>
+            <div class="reg-row">
+              <label for="r_source">How did you hear about the programme?</label>
+              <select id="r_source" name="r_source">
+                <option value="" disabled selected>Select an option…</option>
+                <option>Website</option>
+                <option>WhatsApp</option>
+                <option>LinkedIn</option>
+                <option>Referral</option>
+                <option>Friend</option>
+                <option>Newsletter</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="reg-actions">
+              <button type="submit" class="btn btn--primary btn--lg" id="r_submit">
+                Submit Registration <i data-lucide="send" style="width:18px;height:18px"></i>
+              </button>
+              <p class="reg-privacy">We use your details only to onboard you to the programme. We do not share or sell data.</p>
+            </div>
+            <div id="r_status" class="reg-status" role="status" aria-live="polite"></div>
+          </form>
         </div>
 
         <p class="app-embed__note reveal">
           <i data-lucide="external-link" style="width:14px;height:14px;flex-shrink:0"></i>
-          <span>Form not loading? <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5_0T3p3pNFCdbJRetlYjQS2k-Nmfspmt89ks5JhiLL9IX-A/viewform" target="_blank" rel="noopener">Open the registration form in a new tab</a>.</span>
+          <span>Prefer Google Form? <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5_0T3p3pNFCdbJRetlYjQS2k-Nmfspmt89ks5JhiLL9IX-A/viewform" target="_blank" rel="noopener">Open the original registration form</a>.</span>
         </p>
       </div>
     </section>
@@ -694,5 +775,106 @@
   <script src="js/vendor/lucide.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/cms.js"></script>
+  <script src="js/ng-states-lgas.js"></script>
+  <script>
+  (function(){
+    // ----- State → LGA dependent dropdown -----
+    const stateSel = document.getElementById('r_state');
+    const lgaSel = document.getElementById('r_lga');
+    if (!stateSel || !lgaSel || typeof NG_STATE_LGAS === 'undefined') return;
+
+    Object.keys(NG_STATE_LGAS).forEach(function(st){
+      const o = document.createElement('option');
+      o.value = st; o.textContent = st;
+      stateSel.appendChild(o);
+    });
+
+    stateSel.addEventListener('change', function(){
+      lgaSel.innerHTML = '<option value="" disabled selected>Select your LGA…</option>';
+      const lgas = NG_STATE_LGAS[stateSel.value] || [];
+      lgas.forEach(function(l){
+        const o = document.createElement('option');
+        o.value = l; o.textContent = l;
+        lgaSel.appendChild(o);
+      });
+      lgaSel.disabled = lgas.length === 0;
+    });
+
+    // ----- Submit to Google Form (feeds the linked Google Sheet) -----
+    const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSe5_0T3p3pNFCdbJRetlYjQS2k-Nmfspmt89ks5JhiLL9IX-A/formResponse';
+    const FIELDS = {
+      r_name:    'entry.144a01b9',
+      r_email:   'entry.2cd3042c',
+      r_phone:   'entry.7f878e10',
+      r_state:   'entry.368b525e',
+      r_lga:     'entry.52c83d53',
+      r_school:  'entry.3ea740cb',
+      r_subjects:'entry.7429ee2f',
+      r_role:    'entry.61778924',
+      r_package: 'entry.7b2d4201',
+      r_payref:  'entry.264ad770',
+      r_goal:    'entry.5567cf30',
+      r_source:  'entry.2c5173c5'
+    };
+
+    const form = document.getElementById('hdcRegForm');
+    const status = document.getElementById('r_status');
+    const submitBtn = document.getElementById('r_submit');
+
+    function showStatus(msg, type){
+      status.className = 'reg-status show ' + type;
+      status.textContent = msg;
+      status.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      status.className = 'reg-status';
+
+      let firstInvalid = null;
+      Array.from(form.querySelectorAll('[required]')).forEach(function(el){
+        if (!el.value) {
+          el.classList.add('invalid');
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          el.classList.remove('invalid');
+        }
+      });
+      if (firstInvalid) {
+        showStatus('Please complete the highlighted fields and try again.', 'error');
+        firstInvalid.focus();
+        return;
+      }
+
+      const fd = new FormData();
+      Object.keys(FIELDS).forEach(function(k){
+        const el = document.getElementById(k);
+        if (el && el.value) fd.append(FIELDS[k], el.value);
+      });
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      // Google Forms accepts cross-origin POSTs but blocks reading the response.
+      // 'no-cors' submission — completion (no thrown error) implies success.
+      fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: fd })
+        .then(function(){
+          showStatus('✓ Registration received. Check your email within 24 hours for the welcome pack and Zoom link. If you have not paid yet, please complete payment and reply to our welcome email with the reference.', 'success');
+          form.reset();
+          lgaSel.innerHTML = '<option value="" disabled selected>Select state first…</option>';
+          lgaSel.disabled = true;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Submit Registration <i data-lucide="send" style="width:18px;height:18px"></i>';
+          if (window.lucide) window.lucide.createIcons();
+        })
+        .catch(function(){
+          showStatus('We could not submit your registration. Please check your connection and try again, or use the Google Form link below.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Submit Registration <i data-lucide="send" style="width:18px;height:18px"></i>';
+          if (window.lucide) window.lucide.createIcons();
+        });
+    });
+  })();
+  </script>
 </body>
 </html>
