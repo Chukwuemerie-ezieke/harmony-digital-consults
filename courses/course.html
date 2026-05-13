@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course — Harmony Teacher Training</title>
+<meta name="description" id="metaDesc" content="Harmony Teacher Training course details, lessons, and enrolment.">
+<link rel="canonical" href="https://harmonydigitalconsults.com.ng/courses/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:#1a1a1a;background:#fafaf9;line-height:1.6}
+  a{color:#01696F;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  header.site{background:#fff;border-bottom:1px solid #e5e5e3;position:sticky;top:0;z-index:50}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+  .logo{font-weight:800;font-size:18px;color:#01696F}
+  .nav ul{display:flex;gap:24px;list-style:none}
+  .nav a{color:#1a1a1a;font-weight:500;font-size:15px}
+  .nav a.active{color:#01696F;font-weight:700}
+
+  .hero{background:linear-gradient(135deg,#01696F 0%,#02898F 100%);color:#fff;padding:56px 0 64px}
+  .crumb{font-size:13px;opacity:.85;margin-bottom:16px}
+  .crumb a{color:#fff;text-decoration:underline}
+  .code-pill{display:inline-block;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:12px}
+  .hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:12px}
+  .hero .summary{font-size:17px;max-width:780px;opacity:.95;margin-bottom:20px}
+  .hero-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+  .hero-meta span{background:rgba(255,255,255,.12);padding:6px 14px;border-radius:8px}
+
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:40px;margin:40px auto 80px}
+  @media(max-width:880px){.layout{grid-template-columns:1fr}}
+
+  section.block{background:#fff;border:1px solid #e5e5e3;border-radius:12px;padding:28px;margin-bottom:24px}
+  section.block h2{font-size:22px;font-weight:700;margin-bottom:16px;color:#01696F}
+  .outcomes{list-style:none;padding:0}
+  .outcomes li{padding:10px 0 10px 32px;position:relative;border-bottom:1px solid #f0eeea}
+  .outcomes li:last-child{border-bottom:none}
+  .outcomes li::before{content:"✓";position:absolute;left:0;top:10px;color:#01696F;font-weight:700;font-size:18px}
+
+  .lesson{padding:16px 0;border-bottom:1px solid #f0eeea;display:flex;gap:16px}
+  .lesson:last-child{border-bottom:none}
+  .lesson-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#01696F;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .lesson-title{font-weight:600;font-size:16px;margin-bottom:4px}
+  .lesson-meta{font-size:13px;color:#7a7974;margin-bottom:6px}
+  .lesson-desc{font-size:14px;color:#4a4a48}
+
+  .video-wrap{position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;margin-bottom:24px}
+  .video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+
+  /* Sidebar */
+  aside .enrol{background:#fff;border:1px solid #e5e5e3;border-radius:12px;padding:28px;position:sticky;top:88px}
+  .price-big{font-size:36px;font-weight:800;color:#01696F;margin-bottom:6px}
+  .price-note{font-size:13px;color:#7a7974;margin-bottom:20px}
+  .enrol-btn{display:block;background:#01696F;color:#fff;text-align:center;padding:14px;border-radius:8px;font-weight:700;font-size:16px;margin-bottom:12px;transition:background .2s}
+  .enrol-btn:hover{background:#024d52;color:#fff;text-decoration:none}
+  .secondary-btn{display:block;background:#fff;color:#01696F;border:1.5px solid #01696F;text-align:center;padding:12px;border-radius:8px;font-weight:600;font-size:14px;margin-bottom:12px}
+  .secondary-btn:hover{background:#e6f4f5;text-decoration:none}
+  .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0eeea;font-size:14px}
+  .info-row:last-child{border-bottom:none}
+  .info-row span:first-child{color:#7a7974}
+  .info-row span:last-child{font-weight:600;text-align:right}
+
+  .cohort-banner{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#78350f;padding:14px 18px;border-radius:8px;font-size:14px;font-weight:600;margin-bottom:20px;text-align:center}
+
+  .loading{text-align:center;padding:80px 20px;color:#7a7974}
+  .error-state{text-align:center;padding:60px 20px;background:#fff;border-radius:12px;border:2px dashed #d4d1ca;margin:40px auto;max-width:600px}
+  .error-state h2{color:#01696F;margin-bottom:8px}
+
+  footer{background:#1a1a1a;color:#bcbcb8;padding:40px 0;font-size:14px;margin-top:60px}
+  footer a{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container nav">
+    <a href="/" class="logo">Harmony Digital Consults</a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/courses/" class="active">Courses</a></li>
+      <li><a href="/insights/">Insights</a></li>
+      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<div id="root" class="container loading">Loading course…</div>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Harmony Digital Consults Ltd. <a href="/contact.html">Contact</a> · <a href="/courses/">All courses</a></p>
+  </div>
+</footer>
+
+<script src="/courses/courses-data.js"></script>
+<script>
+(async function(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const root = document.getElementById('root');
+
+  if(!id){
+    root.innerHTML = `<div class="error-state"><h2>No course selected</h2><p>Please <a href="/courses/">browse all courses</a>.</p></div>`;
+    return;
+  }
+
+  let course;
+  try{
+    const all = await loadCourses();
+    course = all.find(c => c.course_id === id && (c.status||'').toLowerCase() === 'published');
+  }catch(err){
+    root.innerHTML = `<div class="error-state"><h2>Could not load course</h2><p>Please <a href="/courses/">browse all courses</a>.</p></div>`;
+    return;
+  }
+
+  if(!course){
+    root.innerHTML = `<div class="error-state"><h2>Course not found</h2><p>This course may have been moved or is not yet published. <a href="/courses/">Browse all courses</a>.</p></div>`;
+    return;
+  }
+
+  // Parse lessons JSON safely
+  let lessons = [];
+  try{ lessons = JSON.parse(course.lessons_json || '[]'); }catch(e){ lessons = []; }
+
+  // Set page metadata
+  document.title = `${course.title} — Harmony Teacher Training`;
+  document.getElementById('metaDesc').setAttribute('content', course.summary || '');
+
+  const outcomesHTML = (course.outcomes||'').split('|').map(s=>s.trim()).filter(Boolean).map(o=>`<li>${o}</li>`).join('');
+
+  const videoHTML = course.intro_video_url && course.intro_video_url.includes('youtube.com/embed/') ?
+    `<div class="video-wrap"><iframe src="${course.intro_video_url}" allowfullscreen></iframe></div>` : '';
+
+  const lessonsHTML = lessons.length ? lessons.map(l=>`
+    <div class="lesson">
+      <div class="lesson-num">${l.n}</div>
+      <div>
+        <div class="lesson-title">${l.title}</div>
+        <div class="lesson-meta">⏱️ ${l.duration||''}</div>
+        <div class="lesson-desc">${l.desc||''}</div>
+      </div>
+    </div>
+  `).join('') : '<p style="color:#7a7974">Lesson breakdown coming soon.</p>';
+
+  // Replace root content with full course detail page
+  root.classList.remove('loading');
+  root.classList.remove('container');
+  root.outerHTML = `
+    <section class="hero">
+      <div class="container">
+        <div class="crumb"><a href="/">Home</a> &rsaquo; <a href="/courses/">Courses</a> &rsaquo; ${course.title}</div>
+        <span class="code-pill">${course.course_id} · ${course.track||''}</span>
+        <h1>${course.title}</h1>
+        <p class="summary">${course.summary||''}</p>
+        <div class="hero-meta">
+          <span>⏱️ ${course.duration_hrs} hours</span>
+          <span>📊 ${course.level||'All levels'}</span>
+          <span>🎓 ${course.format||''}</span>
+          <span>👥 ${course.audience||''}</span>
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <div class="layout">
+        <div>
+          ${videoHTML}
+
+          <section class="block">
+            <h2>What you'll learn</h2>
+            <ul class="outcomes">${outcomesHTML}</ul>
+          </section>
+
+          <section class="block">
+            <h2>Course content</h2>
+            ${lessonsHTML}
+          </section>
+
+          ${course.workbook_url ? `
+          <section class="block">
+            <h2>Workbook & materials</h2>
+            <p style="margin-bottom:14px">Every learner gets a downloadable PDF workbook with practical exercises, templates, and a personal study log.</p>
+            <a href="${course.workbook_url}" target="_blank" rel="noopener" class="secondary-btn" style="display:inline-block">📥 Preview the workbook</a>
+          </section>` : ''}
+
+          ${course.prerequisites ? `
+          <section class="block">
+            <h2>Prerequisites</h2>
+            <p>${course.prerequisites}</p>
+          </section>` : ''}
+        </div>
+
+        <aside>
+          <div class="enrol">
+            ${course.cohort_dates ? `<div class="cohort-banner">📅 ${course.cohort_dates}</div>` : ''}
+            <div class="price-big">₦${Number(course.price_ngn||0).toLocaleString()}</div>
+            <div class="price-note">One-time payment · Lifetime access · Certificate included</div>
+            <a href="${course.paystack_url||'/contact.html'}" target="_blank" rel="noopener" class="enrol-btn">Enrol now →</a>
+            ${course.quiz_url ? `<a href="${course.quiz_url}" target="_blank" rel="noopener" class="secondary-btn">Take certification quiz</a>` : ''}
+            <a href="/contact.html" class="secondary-btn">Ask a question</a>
+
+            <div style="margin-top:20px">
+              <div class="info-row"><span>Course code</span><span>${course.course_id}</span></div>
+              <div class="info-row"><span>Duration</span><span>${course.duration_hrs} hrs</span></div>
+              <div class="info-row"><span>Level</span><span>${course.level||'All'}</span></div>
+              <div class="info-row"><span>Format</span><span>${course.format||''}</span></div>
+              <div class="info-row"><span>Last updated</span><span>${course.last_updated||''}</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  `;
+})();
+</script>
+</body>
+</html>
