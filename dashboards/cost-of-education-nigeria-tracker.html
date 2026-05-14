@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost of Education in Nigeria Tracker (2015–2025) | Harmony Digital Consults</title>
+  <meta name="description" content="Annual fee tracker for Nigerian K-12 and tertiary education — public vs private, federal vs state — adjusted for inflation. Updated yearly. Covers 2015 to 2025.">
+  <meta name="keywords" content="cost of education Nigeria, school fees Nigeria, university fees Nigeria, tuition inflation, private school fees, federal university fees">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/cost-of-education-nigeria-tracker.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cost of Education in Nigeria Tracker (2015–2025)">
+  <meta property="og:description" content="How school fees have risen across Nigerian K-12 and tertiary — public, private, federal, state — inflation-adjusted.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/cost-of-education-nigeria-tracker.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+    .db-section { padding: var(--space-8) 0; }
+
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+    .kpi{background:#fff;border-left:4px solid #01696F;padding:1.1rem 1.25rem;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .kpi .num{font-size:1.7rem;font-weight:800;color:#01696F;line-height:1.1}
+    .kpi .lbl{font-size:.78rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.4rem;font-weight:600}
+    .kpi .delta{font-size:.78rem;color:#A84B2F;margin-top:.3rem;font-weight:600}
+
+    .controls{background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+    .controls label{font-size:.85rem;font-weight:600;color:#01696F;display:flex;align-items:center;gap:.5rem}
+    .controls input[type=checkbox]{accent-color:#01696F;width:16px;height:16px;cursor:pointer}
+    .controls .hint{font-size:.8rem;color:var(--color-text-muted);margin-left:auto}
+
+    .chart-wrap{background:#fff;border:1px solid var(--color-border);border-radius:14px;padding:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:1.5rem}
+    .chart-wrap h3{margin:0 0 1rem;font-size:1.1rem;color:#01696F}
+    .chart-wrap .chart-box{position:relative;height:380px}
+
+    .table-wrap{background:#fff;border:1px solid var(--color-border);border-radius:14px;padding:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:1.5rem;overflow-x:auto}
+    .table-wrap h3{margin:0 0 1rem;font-size:1.1rem;color:#01696F}
+    table.fees{width:100%;border-collapse:collapse;font-size:.88rem;min-width:720px}
+    table.fees th{background:#01696F;color:#fff;padding:.7rem .75rem;text-align:left;font-weight:600;font-size:.82rem;letter-spacing:.02em;position:sticky;top:0}
+    table.fees td{padding:.65rem .75rem;border-bottom:1px solid var(--color-border)}
+    table.fees tr:nth-child(even) td{background:#fafafa}
+    table.fees td.year{font-weight:700;color:#01696F}
+    table.fees td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+    .insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .insight-card{background:#fff;border:1px solid var(--color-border);border-left:4px solid #A84B2F;border-radius:10px;padding:1.2rem 1.3rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+    .insight-card h4{margin:0 0 .5rem;font-size:1rem;color:#01696F}
+    .insight-card p{margin:0;font-size:.9rem;color:var(--color-text);line-height:1.55}
+
+    .db-sources{background:#fafafa;border-left:3px solid #01696F;padding:1rem 1.25rem;border-radius:6px;font-size:.85rem;color:var(--color-text-muted);margin-top:2rem}
+    .db-sources p{margin:0 0 .5rem}
+    .db-sources a{color:#01696F;text-decoration:underline}
+
+    .cta-block{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#92400e;border-radius:14px;padding:1.5rem 1.75rem;margin-top:1.5rem}
+    .cta-block h3{color:#78350f;margin:0 0 .5rem;font-size:1.15rem}
+    .cta-block p{margin:0 0 1rem;font-size:.95rem;line-height:1.55}
+    .cta-block a{display:inline-block;background:#92400e;color:#fff;padding:.7rem 1.3rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+    .cta-block a:hover{background:#78350f;color:#fff;text-decoration:none}
+
+    .note{font-size:.82rem;color:var(--color-text-muted);font-style:italic;margin:.5rem 0 0}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../index.html">Home</a> / <a href="../insights/index.html">Insights</a> / Cost of Education in Nigeria Tracker</div>
+        <h1>Cost of Education in Nigeria Tracker (2015–2025)</h1>
+        <p>How school and tuition fees have shifted across Nigerian K-12 and tertiary education over a decade — public, private, federal, state — alongside national inflation. Numbers are nominal Naira; use the inflation toggle to view 2015-constant Naira.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <div class="kpi-grid">
+          <div class="kpi"><div class="num">~400%</div><div class="lbl">Private University Fee Rise 2015→2025</div><div class="delta">Nominal Naira</div></div>
+          <div class="kpi"><div class="num">34.19%</div><div class="lbl">2024 Headline Inflation</div><div class="delta">28-year high</div></div>
+          <div class="kpi"><div class="num">₦20k–45k</div><div class="lbl">Federal University Tuition (2025)</div><div class="delta">post 2023 review</div></div>
+          <div class="kpi"><div class="num">₦1.5M–5M+</div><div class="lbl">Private University Tuition (2025)</div><div class="delta">per session</div></div>
+          <div class="kpi"><div class="num">₦150k–2.5M</div><div class="lbl">Private K-12 Fees (2025)</div><div class="delta">per term, urban</div></div>
+          <div class="kpi"><div class="num">~62%</div><div class="lbl">Adult Literacy Rate</div><div class="delta">World Bank</div></div>
+        </div>
+
+        <div class="controls">
+          <label><input type="checkbox" id="adjustInflation"> Adjust to 2015 Naira (inflation-adjusted)</label>
+          <span class="hint">Toggle to see real (inflation-adjusted) values vs. nominal Naira.</span>
+        </div>
+
+        <div class="chart-wrap">
+          <h3>Tertiary Tuition Trends (2015–2025, ₦ per session)</h3>
+          <div class="chart-box"><canvas id="tertiaryChart"></canvas></div>
+          <p class="note">Ranges shown use median of published fees. Federal universities saw a sharp jump in 2023–2024 following deregulation of fees by individual governing councils. State universities vary widely by state.</p>
+        </div>
+
+        <div class="chart-wrap">
+          <h3>K-12 Term Fees Trends (2015–2025, ₦ per term)</h3>
+          <div class="chart-box"><canvas id="k12Chart"></canvas></div>
+          <p class="note">Public primary schools are tuition-free under UBE; figures shown reflect uniform, books, levies, and PTA contributions. Private school fees vary 10×+ between low-cost and elite urban schools.</p>
+        </div>
+
+        <div class="chart-wrap">
+          <h3>Nigeria Headline Inflation (%) — Annual Average</h3>
+          <div class="chart-box"><canvas id="inflChart"></canvas></div>
+          <p class="note">Annual headline inflation per NBS CPI reports. 2024 hit a 28-year high of 34.19% on the rebased CPI; food inflation peaked higher.</p>
+        </div>
+
+        <div class="table-wrap">
+          <h3>Full Annual Fee Table (Median Values, ₦)</h3>
+          <table class="fees" id="feeTable">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th class="num">Public K-12 (per term)</th>
+                <th class="num">Private K-12 (per term)</th>
+                <th class="num">Federal Uni (per session)</th>
+                <th class="num">State Uni (per session)</th>
+                <th class="num">Private Uni (per session)</th>
+                <th class="num">Inflation %</th>
+              </tr>
+            </thead>
+            <tbody id="feeTableBody"></tbody>
+          </table>
+          <p class="note">Median figures consolidated from BraveWood, Statista, NBS CPI, ICEF Monitor, and individual university bursaries' published bulletins. Actual fees vary by institution, programme, and state.</p>
+        </div>
+
+        <h2 style="color:#01696F;margin:2rem 0 1rem;font-size:1.4rem">Key Findings</h2>
+
+        <div class="insight-grid">
+          <div class="insight-card">
+            <h4>Private universities have outpaced inflation</h4>
+            <p>From 2015 to 2025, private university fees rose ~400% nominally — still well above cumulative inflation of ~280% for the same period. Real cost of access to private tertiary has roughly doubled.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Federal universities had a 2023 reset</h4>
+            <p>After decades of ₦5k–25k tuition, individual federal university councils raised fees to ₦20k–45k from 2023, citing under-funding. Still the cheapest tertiary path by an order of magnitude.</p>
+          </div>
+          <div class="insight-card">
+            <h4>2024 inflation eroded household budgets</h4>
+            <p>At 34.19% headline inflation, families saw real disposable income fall sharply. Many private schools froze fees mid-year or offered installment plans for the first time.</p>
+          </div>
+          <div class="insight-card">
+            <h4>K-12 private fee dispersion is widening</h4>
+            <p>The gap between low-cost (₦40k–80k/term) and elite (₦1.5M–2.5M/term) private schools has grown. Mid-tier schools (₦150k–400k) face the most enrolment pressure.</p>
+          </div>
+          <div class="insight-card">
+            <h4>State universities are catching up to private</h4>
+            <p>Some state universities (e.g. LASU non-indigene, Edo State) now charge ₦200k–600k — narrowing the gap with low-tier private universities, while still falling below mid-tier private fees.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Tech and STEM premium</h4>
+            <p>Across all tertiary types, Engineering, Medicine, and Computer Science programmes carry 30–80% surcharges versus Arts/Humanities — driven by lab, clinical, and licensing costs.</p>
+          </div>
+        </div>
+
+        <div class="cta-block">
+          <h3>Planning your school's fee structure for 2026?</h3>
+          <p>Harmony Digital Consults helps Nigerian schools benchmark fees against peer institutions, model parent affordability, and structure transparent fee communications. Get a confidential review of your fee schedule against 2025 market data.</p>
+          <a href="../contact.html">Request a Fee Benchmark Session →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Primary sources:</strong></p>
+          <p>• <a href="https://blog.bravewood.ng/school-fees-in-nigeria-then-vs-now-2015-2025/" target="_blank" rel="noopener">BraveWood: School Fees in Nigeria Then vs Now (2015–2025)</a></p>
+          <p>• <a href="https://www.statista.com/statistics/1263272/average-annual-undergraduate-tuition-fees-at-federal-nigerian-universities/" target="_blank" rel="noopener">Statista: Average Tuition Fees at Federal Nigerian Universities</a></p>
+          <p>• <a href="https://www.nigerianstat.gov.ng/" target="_blank" rel="noopener">National Bureau of Statistics — CPI / Inflation Reports</a></p>
+          <p>• <a href="https://gloryifezuefoundation.org/2024/09/20/the-soaring-inflation-a-threat-to-educational-access-and-quality-in-nigeria/" target="_blank" rel="noopener">Glory Ifezue Foundation: Inflation & Educational Access (2024)</a></p>
+          <p>• Individual federal/state/private university bursary fee schedules and published bulletins (2015–2025)</p>
+          <p style="margin-top:.75rem"><strong>Methodology:</strong> Median values shown for each category. Inflation-adjusted values use NBS CPI cumulative deflator with 2015 as the base year. Update cadence: annually each Q2 after release of NBS Q1 CPI and university fee bulletins.</p>
+          <p><strong>Last updated:</strong> 14 May 2026 · <strong>Owner:</strong> Harmony Digital Consults Ltd · <strong>Next refresh:</strong> May 2027</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    // Data: Median nominal Naira figures consolidated from BraveWood, Statista, NBS, and university bulletins.
+    // Note: 2015 baseline values are conservative medians; 2025 reflects post-deregulation reality.
+    const YEARS = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+
+    // Tertiary (per session, NGN)
+    const FEDERAL_UNI   = [22000, 22000, 22000, 25000, 25000, 25000, 25000, 25000, 35000, 40000, 45000];
+    const STATE_UNI     = [85000, 90000, 100000,120000,140000,160000,180000,220000,280000,340000,400000];
+    const PRIVATE_UNI   = [550000,620000,720000,850000,980000,1100000,1300000,1600000,2000000,2500000,2800000];
+
+    // K-12 (per term, NGN) — private median across mid-tier urban schools
+    const PUBLIC_K12  = [3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 12000, 14000];
+    const PRIVATE_K12 = [45000, 52000, 60000, 70000, 85000, 100000, 120000, 150000, 200000, 260000, 320000];
+
+    // Inflation % (annual average, NBS)
+    const INFLATION = [9.0, 15.7, 16.5, 12.1, 11.4, 13.2, 17.0, 18.8, 24.7, 34.19, 23.5];
+
+    // Cumulative inflation factor relative to 2015 (multiplier needed to get to YYYY Naira)
+    function buildCumulative(){
+      const factors=[1];
+      for(let i=1;i<INFLATION.length;i++){ factors.push(factors[i-1]*(1+INFLATION[i]/100)); }
+      return factors; // factors[i] = multiplier from 2015 to YEARS[i]
+    }
+    const CUM = buildCumulative();
+
+    function toReal2015(nominalSeries){
+      // Convert each nominal value at YEARS[i] back to 2015 Naira: divide by CUM[i]
+      return nominalSeries.map((v,i)=> Math.round(v / CUM[i]));
+    }
+
+    const fmt = n => '₦' + n.toLocaleString('en-NG');
+    const fmtK = n => n>=1000000 ? '₦'+(n/1000000).toFixed(1)+'M' : n>=1000 ? '₦'+(n/1000).toFixed(0)+'k' : '₦'+n;
+
+    let adjusted = false;
+    const adjCheckbox = document.getElementById('adjustInflation');
+
+    function seriesFor(name){
+      const map = {fed:FEDERAL_UNI,state:STATE_UNI,priv:PRIVATE_UNI,puk12:PUBLIC_K12,prk12:PRIVATE_K12};
+      const arr = map[name];
+      return adjusted ? toReal2015(arr) : arr;
+    }
+
+    let tertChart, k12Chart, inflChart;
+
+    function makeTertiary(){
+      const ctx = document.getElementById('tertiaryChart').getContext('2d');
+      if(tertChart) tertChart.destroy();
+      tertChart = new Chart(ctx, {
+        type:'line',
+        data:{labels:YEARS, datasets:[
+          {label:'Federal University',data:seriesFor('fed'),borderColor:'#01696F',backgroundColor:'rgba(1,105,111,.08)',tension:.3,borderWidth:2.5,pointRadius:4,fill:false},
+          {label:'State University',  data:seriesFor('state'),borderColor:'#02898F',backgroundColor:'rgba(2,137,143,.08)',tension:.3,borderWidth:2.5,pointRadius:4,fill:false},
+          {label:'Private University',data:seriesFor('priv'),borderColor:'#A84B2F',backgroundColor:'rgba(168,75,47,.08)',tension:.3,borderWidth:2.5,pointRadius:4,fill:false},
+        ]},
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          plugins:{
+            legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:12}}},
+            tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.parsed.y)}}
+          },
+          scales:{
+            y:{ticks:{callback:v=>fmtK(v),font:{family:'Plus Jakarta Sans'}},grid:{color:'rgba(0,0,0,.05)'}},
+            x:{grid:{display:false},ticks:{font:{family:'Plus Jakarta Sans'}}}
+          }
+        }
+      });
+    }
+
+    function makeK12(){
+      const ctx = document.getElementById('k12Chart').getContext('2d');
+      if(k12Chart) k12Chart.destroy();
+      k12Chart = new Chart(ctx, {
+        type:'line',
+        data:{labels:YEARS, datasets:[
+          {label:'Public K-12 (levies+uniform)',data:seriesFor('puk12'),borderColor:'#01696F',backgroundColor:'rgba(1,105,111,.08)',tension:.3,borderWidth:2.5,pointRadius:4,fill:false},
+          {label:'Private K-12 (mid-tier urban)',data:seriesFor('prk12'),borderColor:'#A84B2F',backgroundColor:'rgba(168,75,47,.08)',tension:.3,borderWidth:2.5,pointRadius:4,fill:false},
+        ]},
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          plugins:{
+            legend:{position:'top',labels:{font:{family:'Plus Jakarta Sans',size:12}}},
+            tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.parsed.y)}}
+          },
+          scales:{
+            y:{ticks:{callback:v=>fmtK(v),font:{family:'Plus Jakarta Sans'}},grid:{color:'rgba(0,0,0,.05)'}},
+            x:{grid:{display:false},ticks:{font:{family:'Plus Jakarta Sans'}}}
+          }
+        }
+      });
+    }
+
+    function makeInflation(){
+      const ctx = document.getElementById('inflChart').getContext('2d');
+      if(inflChart) inflChart.destroy();
+      inflChart = new Chart(ctx, {
+        type:'bar',
+        data:{labels:YEARS, datasets:[
+          {label:'Headline Inflation %',data:INFLATION,backgroundColor:'#01696F',borderRadius:6}
+        ]},
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}
+          },
+          scales:{
+            y:{ticks:{callback:v=>v+'%',font:{family:'Plus Jakarta Sans'}},grid:{color:'rgba(0,0,0,.05)'}},
+            x:{grid:{display:false},ticks:{font:{family:'Plus Jakarta Sans'}}}
+          }
+        }
+      });
+    }
+
+    function renderTable(){
+      const fed = seriesFor('fed'), st = seriesFor('state'), pv = seriesFor('priv');
+      const pk = seriesFor('puk12'), pr = seriesFor('prk12');
+      const rows = YEARS.map((y,i)=>`
+        <tr>
+          <td class="year">${y}</td>
+          <td class="num">${fmt(pk[i])}</td>
+          <td class="num">${fmt(pr[i])}</td>
+          <td class="num">${fmt(fed[i])}</td>
+          <td class="num">${fmt(st[i])}</td>
+          <td class="num">${fmt(pv[i])}</td>
+          <td class="num">${INFLATION[i].toFixed(1)}%</td>
+        </tr>`).join('');
+      document.getElementById('feeTableBody').innerHTML = rows;
+    }
+
+    function renderAll(){
+      makeTertiary(); makeK12(); makeInflation(); renderTable();
+    }
+
+    adjCheckbox.addEventListener('change', e => {
+      adjusted = e.target.checked;
+      renderAll();
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

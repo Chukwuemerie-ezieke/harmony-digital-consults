@@ -1,6 +1,6 @@
 {
-  "version": "1.2",
-  "updated": "2026-05-13",
+  "version": "1.3",
+  "updated": "2026-05-14",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
     {
@@ -133,6 +133,101 @@
       "featured": true,
       "cta": {
         "label": "Request a Custom Research Brief",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "edtech-vendor-procurement-checklist",
+      "title": "EdTech Vendor Procurement Checklist",
+      "slug": "edtech-vendor-procurement-checklist",
+      "url": "/dashboards/edtech-vendor-procurement-checklist.html",
+      "summary": "Free 30-point interactive checklist Nigerian schools tick off before signing any EdTech vendor contract — covers educational fit, cost, NDPR compliance, support, integration, and exit terms. Saves progress in your browser; print-friendly.",
+      "category": "Tools & Recommenders",
+      "tags": ["Procurement", "Vendor", "EdTech", "Checklist", "NDPR", "Lead Magnet"],
+      "audience": ["School Owners", "HoDs", "Procurement Officers", "Board Members"],
+      "data_sources": ["World Bank EdTech Hub", "UNESCO", "NDPC", "Harmony deployment experience"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Get Harmony's Help with Procurement",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "tertiary-institution-tech-adoption-index",
+      "title": "Tertiary Institution Tech Adoption Index",
+      "slug": "tertiary-institution-tech-adoption-index",
+      "url": "/dashboards/tertiary-institution-tech-adoption-index.html",
+      "summary": "30 Nigerian universities ranked across 4 dimensions — LMS adoption, online programmes, e-library, and digital admissions — scored out of 100. Sortable, filterable, with type and dimension averages.",
+      "category": "Research & Advocacy",
+      "tags": ["Tertiary", "Universities", "NUC", "LMS", "Index", "Ranking"],
+      "audience": ["Policymakers", "University Leaders", "Journalists", "Researchers", "Donors"],
+      "data_sources": ["NUC", "University websites", "NOUN", "Times Higher Education", "Harmony desk research"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Commission a Custom University Audit",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "cost-of-education-nigeria-tracker",
+      "title": "Cost of Education in Nigeria Tracker (2015–2025)",
+      "slug": "cost-of-education-nigeria-tracker",
+      "url": "/dashboards/cost-of-education-nigeria-tracker.html",
+      "summary": "Ten-year fee tracker covering public/private K-12 and federal/state/private universities, with NBS inflation overlay and a 2015-Naira toggle to see real (inflation-adjusted) values.",
+      "category": "Research & Advocacy",
+      "tags": ["Fees", "Tuition", "Inflation", "K-12", "Tertiary", "Nigeria"],
+      "audience": ["Parents", "School Owners", "Investors", "Policymakers", "Journalists"],
+      "data_sources": ["BraveWood", "Statista", "NBS CPI", "University bursaries"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Request a Fee Benchmark Session",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "edtech-glossary-african-context",
+      "title": "Glossary of EdTech Terms (African Context)",
+      "slug": "edtech-glossary-african-context",
+      "url": "/dashboards/edtech-glossary-african-context.html",
+      "summary": "Plain-English glossary of 72 EdTech, pedagogy, and Nigerian policy terms — searchable, A–Z indexed, with tags for pedagogy / tech / policy. Designed for teachers, school owners, journalists, and parents.",
+      "category": "Reference",
+      "tags": ["Glossary", "Reference", "SEO", "Definitions", "Africa", "Nigeria"],
+      "audience": ["Teachers", "School Owners", "Journalists", "Students", "Parents"],
+      "data_sources": ["UNESCO", "World Bank EdTech Hub", "ISTE", "UBEC", "NUC", "NDPC"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Editorial Team",
+      "featured": false,
+      "cta": {
+        "label": "Book a Training Workshop",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "nigeria-education-stats-card",
+      "title": "Nigeria Education in 20 Numbers (Stats Card)",
+      "slug": "nigeria-education-stats-card",
+      "url": "/dashboards/nigeria-education-stats-card.html",
+      "summary": "One-page printable infographic featuring 20 verified statistics defining Nigerian education today — sources include NUC, JAMB, UBEC, NCC, UNICEF, NBS, World Bank. Optimised for print, PDF, WhatsApp, and LinkedIn share.",
+      "category": "Research & Advocacy",
+      "tags": ["Infographic", "Statistics", "Shareable", "Print", "Nigeria"],
+      "audience": ["Journalists", "Policymakers", "Donors", "Teachers", "Parents"],
+      "data_sources": ["NUC", "JAMB", "UBEC", "NCC", "UNICEF", "NBS", "World Bank", "UNESCO UIS"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Commission a Custom Stats Card",
         "url": "/contact.html"
       }
     },

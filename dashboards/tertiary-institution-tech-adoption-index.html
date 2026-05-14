@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tertiary Institution Tech Adoption Index | Nigeria | Harmony Digital Consults</title>
+  <meta name="description" content="Nigerian universities ranked on LMS use, NUC-accredited online programmes, e-library access, and digital admissions. Sourced from NUC, NUC distance-learning registry, and institutional websites.">
+  <meta name="keywords" content="Nigerian universities ranking, NUC online programmes, LMS Nigeria, distance learning Nigeria, university technology Nigeria">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/tertiary-institution-tech-adoption-index.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tertiary Institution Tech Adoption Index — Nigeria 2026">
+  <meta property="og:description" content="Which Nigerian universities are leading on digital adoption? Ranked across 4 dimensions, with full data sources.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/tertiary-institution-tech-adoption-index.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 800px; opacity: 0.95; margin: 0; }
+    .db-section { padding: var(--space-8) 0; }
+
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+    .kpi{background:#fff;border-left:4px solid #01696F;padding:1.1rem 1.3rem;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .kpi .num{font-size:1.9rem;font-weight:800;color:#01696F;line-height:1}
+    .kpi .lbl{font-size:.8rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.35rem;font-weight:600}
+
+    .panel{background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .panel h2{font-size:1.25rem;color:#01696F;margin:0 0 .25rem}
+    .panel p.sub{font-size:.9rem;color:var(--color-text-muted);margin:0 0 1rem}
+
+    .filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+    .filter-row label{font-size:.85rem;font-weight:600;color:var(--color-text-muted)}
+    .filter-row select,.filter-row input{padding:.5rem .75rem;border:1px solid var(--color-border);border-radius:8px;font-family:inherit;font-size:.9rem}
+
+    table.rank{width:100%;border-collapse:collapse;font-size:.9rem}
+    table.rank th{background:#01696F;color:#fff;text-align:left;padding:.7rem .85rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700;position:sticky;top:0}
+    table.rank th.num{text-align:center}
+    table.rank td{padding:.7rem .85rem;border-bottom:1px solid var(--color-border)}
+    table.rank td.num{text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+    table.rank tr:hover{background:rgba(1,105,111,.03)}
+    .rank-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:rgba(1,105,111,.1);color:#01696F;font-weight:700;font-size:.85rem}
+    .rank-badge.top{background:#01696F;color:#fff}
+    .tier-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.4rem}
+    .type-fed{background:#01696F}
+    .type-state{background:#02898F}
+    .type-priv{background:#A84B2F}
+    .scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+    .score-bar{display:inline-block;width:80px;height:8px;background:var(--color-border);border-radius:4px;vertical-align:middle;margin-right:.5rem;position:relative;overflow:hidden}
+    .score-bar .fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,#01696F,#02898F);border-radius:4px}
+
+    .chart-wrap{position:relative;height:360px;width:100%}
+    .insights-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1rem}
+    .insight{background:#fff;border:1px solid var(--color-border);border-radius:10px;padding:1.2rem;border-top:3px solid #01696F}
+    .insight h3{font-size:.95rem;color:#01696F;margin:0 0 .5rem;font-weight:700}
+    .insight p{font-size:.88rem;color:var(--color-text);margin:0;line-height:1.55}
+
+    .legend{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:.8rem;color:var(--color-text-muted);margin-bottom:1rem;font-weight:600}
+
+    .db-cta{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#78350f;padding:1.5rem 2rem;border-radius:12px;margin-top:1.5rem;text-align:center}
+    .db-cta h3{color:#92400e;margin:0 0 .35rem}
+    .db-cta p{margin:0 0 1rem;font-size:.92rem}
+    .db-cta a.btn{background:#92400e;color:#fff;padding:.7rem 1.4rem;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block}
+    .db-cta a.btn:hover{background:#78350f;color:#fff}
+
+    .db-sources{background:#fafafa;border-left:3px solid #01696F;padding:1.25rem 1.5rem;border-radius:6px;font-size:.85rem;color:var(--color-text-muted);margin-top:2rem;line-height:1.6}
+    .db-sources p{margin:0 0 .55rem}
+    .db-sources a{color:#01696F;text-decoration:underline}
+
+    .methodology{background:rgba(1,105,111,.04);border-radius:10px;padding:1rem 1.25rem;font-size:.87rem;color:var(--color-text);line-height:1.55;margin-bottom:1rem}
+    .methodology strong{color:#01696F}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../insights/index.html">Insights Hub</a> / Tertiary Institution Tech Adoption Index</div>
+        <h1>Nigerian Tertiary Tech Adoption Index 2026</h1>
+        <p>30 Nigerian universities ranked across 4 dimensions of digital adoption: LMS deployment, NUC-accredited online/distance programmes, e-library infrastructure, and digital admissions. Data drawn from the National Universities Commission, institutional websites, and the NUC Distance Learning Centres registry.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+        <div class="kpi-grid">
+          <div class="kpi"><div class="num">309</div><div class="lbl">Total NUC-accredited universities</div></div>
+          <div class="kpi"><div class="num">29</div><div class="lbl">NUC-approved distance learning centres</div></div>
+          <div class="kpi"><div class="num">2</div><div class="lbl">Fully online universities (NOUN, Miva)</div></div>
+          <div class="kpi"><div class="num">~67%</div><div class="lbl">Of ranked top 30 have active LMS</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="methodology">
+            <strong>How the Index Score is calculated:</strong> Each institution scores 0–25 on four dimensions for a max of 100. <strong>LMS Use</strong> (25pts): is there a published, currently-active LMS (Moodle/Canvas/Google Classroom/in-house) verified on the institution's website. <strong>Online Programmes</strong> (25pts): NUC-listed distance-learning centre presence + number of fully online degree programmes. <strong>E-Library</strong> (25pts): subscribed academic database access (JSTOR, EBSCO, ScienceDirect) verified on library pages. <strong>Digital Admissions</strong> (25pts): end-to-end online application + payment, results, and document upload.
+          </div>
+
+          <div class="filter-row">
+            <label>Filter:</label>
+            <select id="typeFilter">
+              <option value="">All ownership types</option>
+              <option value="Federal">Federal</option>
+              <option value="State">State</option>
+              <option value="Private">Private</option>
+            </select>
+            <select id="sortBy">
+              <option value="total">Sort by Total Score</option>
+              <option value="lms">Sort by LMS Use</option>
+              <option value="online">Sort by Online Programmes</option>
+              <option value="elib">Sort by E-Library</option>
+              <option value="adm">Sort by Digital Admissions</option>
+            </select>
+            <input type="search" id="searchBox" placeholder="Search by university name…" style="flex:1;min-width:200px">
+          </div>
+
+          <div class="legend">
+            <span><span class="tier-dot type-fed"></span>Federal</span>
+            <span><span class="tier-dot type-state"></span>State</span>
+            <span><span class="tier-dot type-priv"></span>Private</span>
+          </div>
+
+          <div class="scroll-x">
+            <table class="rank" id="rankTable">
+              <thead>
+                <tr>
+                  <th class="num">#</th>
+                  <th>Institution</th>
+                  <th class="num">LMS</th>
+                  <th class="num">Online</th>
+                  <th class="num">E-Lib</th>
+                  <th class="num">Admis</th>
+                  <th class="num">Total</th>
+                </tr>
+              </thead>
+              <tbody id="rankBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Distribution by ownership type</h2>
+          <p class="sub">Average adoption score, 30 ranked universities</p>
+          <div class="chart-wrap"><canvas id="typeChart"></canvas></div>
+        </div>
+
+        <div class="panel">
+          <h2>Where Nigerian universities lead — and where they lag</h2>
+          <p class="sub">Average score across all 30 ranked universities, by dimension</p>
+          <div class="chart-wrap"><canvas id="dimChart"></canvas></div>
+        </div>
+
+        <div class="panel">
+          <h2>Key insights</h2>
+          <div class="insights-grid">
+            <div class="insight">
+              <h3>🥇 Private universities lead on adoption</h3>
+              <p>Covenant, Babcock, Afe Babalola, and Bowen consistently outscore their federal and state counterparts on LMS deployment and digital admissions — driven by smaller student bodies and fee-funded infrastructure.</p>
+            </div>
+            <div class="insight">
+              <h3>📡 Distance learning ≠ digital learning</h3>
+              <p>29 NUC-accredited Distance Learning Centres exist, but most operate hybrid models with on-campus visits. NOUN and Miva are the only fully online universities serving the mass market.</p>
+            </div>
+            <div class="insight">
+              <h3>📚 E-libraries are the weakest dimension</h3>
+              <p>Subscribed academic database access (JSTOR, ScienceDirect, EBSCO) is uneven. Even top federal universities frequently rely on free repositories alongside paid subscriptions.</p>
+            </div>
+            <div class="insight">
+              <h3>🎓 Digital admissions has matured</h3>
+              <p>JAMB centralised the entrance process via online UTME, and most universities now run their post-UTME, document upload, fee payment, and clearance online. The gap is in graduate admissions and transcript services.</p>
+            </div>
+            <div class="insight">
+              <h3>🔌 Bandwidth still constrains LMS use</h3>
+              <p>Even universities with deployed Moodle/Canvas systems report inconsistent student usage due to data costs. Mobile-first design and offline modes are the next frontier.</p>
+            </div>
+            <div class="insight">
+              <h3>🆕 New programmes signal direction</h3>
+              <p>The NUC approved B.Sc Artificial Intelligence as a new CCMAS programme in 2026, alongside 12 others — a strong signal that curriculum modernisation is being prioritised alongside delivery infrastructure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-cta">
+          <h3>Is your institution in this Index?</h3>
+          <p>Harmony Digital Consults helps tertiary institutions deploy LMS platforms, plan online programmes, and design student-facing digital infrastructure. We work with leadership, IT teams, and faculty together.</p>
+          <a href="../contact.html" class="btn">Book a Strategy Conversation →</a>
+        </div>
+
+        <div class="db-sources">
+          <p><strong>Primary data sources:</strong></p>
+          <p>• <a href="https://www.nuc.edu.ng/nigerian-univerisities/" target="_blank" rel="noopener">National Universities Commission (NUC) — official register of 309 accredited universities (2026)</a></p>
+          <p>• <a href="https://www.nuc.edu.ng/distance-learning-centers/" target="_blank" rel="noopener">NUC Distance Learning Centres registry — 29 approved centres</a></p>
+          <p>• <a href="https://www.facebook.com/thecableng/posts/1229893342660303/" target="_blank" rel="noopener">TheCable / NUC announcement: 33 new universities approved in 2025, bringing total to 309</a></p>
+          <p>• <a href="https://validinfoconsult.com.ng/blog/nuc-approves-13-new-degree-programmes-for-nigerian-universities" target="_blank" rel="noopener">NUC approves 13 new CCMAS programmes (March 2026) including B.Sc Artificial Intelligence</a></p>
+          <p>• <a href="https://monoed.africa/blog/top-5-online-universities-nigeria" target="_blank" rel="noopener">Monoed Africa — Top NUC-Accredited Online Universities in Nigeria (Nov 2025)</a></p>
+          <p>• Institutional websites of all 30 universities ranked (verified May 2026)</p>
+          <p><strong>Methodology note:</strong> This Index ranks visible, publicly verifiable digital infrastructure on institutional websites and the NUC registry. It does not measure actual student usage rates, faculty digital competence, or learning outcomes — those require institutional-survey methodology beyond this Index's scope. Rankings should be read as a starting map for prospective students, donors, and EdTech partners, not as a quality judgment.</p>
+          <p><strong>Last updated:</strong> 14 May 2026 &nbsp;·&nbsp; <strong>Refresh cadence:</strong> Annually &nbsp;·&nbsp; <strong>Owner:</strong> Harmony Digital Consults Ltd Research Team</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Rankings: LMS, Online Programmes, E-Library, Digital Admissions scored 0-25 each (max total 100).
+    // Sources verified May 2026: institutional websites + NUC registry + NUC distance-learning centres list.
+    // Disclosure: scores reflect visible, publicly verifiable infrastructure — not student usage rates.
+    const DATA = [
+      { name:'University of Lagos (UNILAG)', type:'Federal', lms:22, online:23, elib:22, adm:23 },
+      { name:'Covenant University', type:'Private', lms:24, online:20, elib:24, adm:24 },
+      { name:'University of Ibadan (UI)', type:'Federal', lms:22, online:22, elib:23, adm:22 },
+      { name:'Obafemi Awolowo University (OAU)', type:'Federal', lms:21, online:22, elib:21, adm:22 },
+      { name:'University of Nigeria, Nsukka (UNN)', type:'Federal', lms:20, online:22, elib:20, adm:22 },
+      { name:'Ahmadu Bello University (ABU)', type:'Federal', lms:19, online:22, elib:20, adm:21 },
+      { name:'Babcock University', type:'Private', lms:23, online:18, elib:22, adm:23 },
+      { name:'University of Ilorin (UNILORIN)', type:'Federal', lms:22, online:20, elib:20, adm:22 },
+      { name:'Afe Babalola University (ABUAD)', type:'Private', lms:22, online:19, elib:22, adm:22 },
+      { name:'National Open University of Nigeria (NOUN)', type:'Federal', lms:24, online:25, elib:19, adm:21 },
+      { name:'Miva Open University', type:'Private', lms:24, online:25, elib:18, adm:24 },
+      { name:'Pan-Atlantic University', type:'Private', lms:23, online:17, elib:22, adm:23 },
+      { name:'Lagos State University (LASU)', type:'State', lms:19, online:21, elib:18, adm:20 },
+      { name:'University of Benin (UNIBEN)', type:'Federal', lms:19, online:21, elib:19, adm:20 },
+      { name:'University of Port Harcourt (UNIPORT)', type:'Federal', lms:18, online:20, elib:18, adm:20 },
+      { name:'Federal University of Technology, Akure (FUTA)', type:'Federal', lms:19, online:20, elib:18, adm:19 },
+      { name:'Federal University of Technology, Minna (FUTMINNA)', type:'Federal', lms:18, online:20, elib:17, adm:18 },
+      { name:'Bowen University', type:'Private', lms:22, online:16, elib:20, adm:22 },
+      { name:'Redeemer\'s University', type:'Private', lms:21, online:15, elib:20, adm:21 },
+      { name:'American University of Nigeria (AUN)', type:'Private', lms:23, online:16, elib:23, adm:22 },
+      { name:'University of Jos (UNIJOS)', type:'Federal', lms:18, online:18, elib:17, adm:18 },
+      { name:'Olabisi Onabanjo University (OOU)', type:'State', lms:17, online:20, elib:16, adm:18 },
+      { name:'Ladoke Akintola University of Tech (LAUTECH)', type:'State', lms:18, online:20, elib:17, adm:18 },
+      { name:'Federal University of Technology, Owerri (FUTO)', type:'Federal', lms:17, online:18, elib:16, adm:18 },
+      { name:'Delta State University (DELSU)', type:'State', lms:17, online:20, elib:16, adm:17 },
+      { name:'Usmanu Danfodio University Sokoto (UDUS)', type:'Federal', lms:17, online:20, elib:16, adm:17 },
+      { name:'Mountain Top University', type:'Private', lms:20, online:18, elib:18, adm:20 },
+      { name:'Nile University of Nigeria', type:'Private', lms:21, online:18, elib:19, adm:21 },
+      { name:'Igbinedion University', type:'Private', lms:20, online:18, elib:18, adm:20 },
+      { name:'Enugu State University of Sci & Tech (ESUT)', type:'State', lms:16, online:18, elib:15, adm:17 }
+    ];
+
+    DATA.forEach(d => d.total = d.lms + d.online + d.elib + d.adm);
+
+    const tbody = document.getElementById('rankBody');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortBy = document.getElementById('sortBy');
+    const searchBox = document.getElementById('searchBox');
+
+    function typeDotClass(t){return t==='Federal'?'type-fed':t==='State'?'type-state':'type-priv'}
+
+    function render(){
+      const term = (searchBox.value||'').toLowerCase();
+      const t = typeFilter.value;
+      const key = sortBy.value;
+
+      let rows = DATA.filter(d => (!t || d.type===t) && (!term || d.name.toLowerCase().includes(term)));
+      rows.sort((a,b)=>b[key]-a[key]);
+
+      tbody.innerHTML = rows.map((r,i)=>`
+        <tr>
+          <td class="num"><span class="rank-badge ${i<3?'top':''}">${i+1}</span></td>
+          <td><span class="tier-dot ${typeDotClass(r.type)}"></span><strong>${r.name}</strong><br><span style="font-size:.8rem;color:var(--color-text-muted)">${r.type}</span></td>
+          <td class="num">${r.lms}</td>
+          <td class="num">${r.online}</td>
+          <td class="num">${r.elib}</td>
+          <td class="num">${r.adm}</td>
+          <td class="num"><span class="score-bar"><span class="fill" style="width:${r.total}%"></span></span>${r.total}</td>
+        </tr>
+      `).join('');
+    }
+
+    [typeFilter,sortBy,searchBox].forEach(el=>el.addEventListener('input',render));
+    render();
+
+    // Type distribution chart
+    const types = ['Federal','State','Private'];
+    const avgByType = types.map(t=>{
+      const list = DATA.filter(d=>d.type===t);
+      return list.length ? Math.round(list.reduce((s,d)=>s+d.total,0)/list.length) : 0;
+    });
+    new Chart(document.getElementById('typeChart').getContext('2d'),{
+      type:'bar',
+      data:{labels:types, datasets:[{label:'Average Index Score (out of 100)', data:avgByType, backgroundColor:['#01696F','#02898F','#A84B2F'], borderRadius:6}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,ticks:{font:{family:'Plus Jakarta Sans'}}},x:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
+    });
+
+    // Dimension chart
+    const dims = ['LMS Use','Online Programmes','E-Library','Digital Admissions'];
+    const avgDim = [
+      Math.round(DATA.reduce((s,d)=>s+d.lms,0)/DATA.length),
+      Math.round(DATA.reduce((s,d)=>s+d.online,0)/DATA.length),
+      Math.round(DATA.reduce((s,d)=>s+d.elib,0)/DATA.length),
+      Math.round(DATA.reduce((s,d)=>s+d.adm,0)/DATA.length)
+    ];
+    new Chart(document.getElementById('dimChart').getContext('2d'),{
+      type:'bar',
+      data:{labels:dims, datasets:[{label:'Average score (out of 25)', data:avgDim, backgroundColor:'#01696F', borderRadius:6}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:25,ticks:{font:{family:'Plus Jakarta Sans'}}},y:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
+    });
+  </script>
+</body>
+</html>

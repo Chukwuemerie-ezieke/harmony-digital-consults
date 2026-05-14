@@ -252,6 +252,46 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Dashboard: EdTech Vendor Procurement Checklist -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/edtech-vendor-procurement-checklist.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard: Tertiary Institution Tech Adoption Index -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/tertiary-institution-tech-adoption-index.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard: Cost of Education in Nigeria Tracker -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/cost-of-education-nigeria-tracker.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard: Glossary of EdTech Terms (African Context) -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/edtech-glossary-african-context.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard: Nigeria Education in 20 Numbers (Stats Card) -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/dashboards/nigeria-education-stats-card.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Courses -->
   <url>
     <loc>https://harmonydigitalconsults.com.ng/courses/</loc>
