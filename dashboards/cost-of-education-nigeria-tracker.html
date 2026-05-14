@@ -269,21 +269,47 @@
   <script src="../js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
-    // Data: Median nominal Naira figures consolidated from BraveWood, Statista, NBS, and university bulletins.
-    // Note: 2015 baseline values are conservative medians; 2025 reflects post-deregulation reality.
-    const YEARS = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+    /* ============================================================
+       DATA SOURCE: Google Sheet (live)
+       Sheet:  https://docs.google.com/spreadsheets/d/1E6tWIv3BLQIfM9oqAqJ8NC_d-IEFpYuYKK070zmuSlM/edit
+       To update: edit the sheet. Page reloads pull new values.
+       Columns (row 1 = headers): Year | Public K-12 | Private K-12 |
+                                  Federal Uni | State Uni | Private Uni | Inflation %
+       Fallback values below are used if the sheet is unreachable.
+       ============================================================ */
+    const SHEET_ID = '1E6tWIv3BLQIfM9oqAqJ8NC_d-IEFpYuYKK070zmuSlM';
+    const SHEET_NAME = 'Fees';
 
-    // Tertiary (per session, NGN)
-    const FEDERAL_UNI   = [22000, 22000, 22000, 25000, 25000, 25000, 25000, 25000, 35000, 40000, 45000];
-    const STATE_UNI     = [85000, 90000, 100000,120000,140000,160000,180000,220000,280000,340000,400000];
-    const PRIVATE_UNI   = [550000,620000,720000,850000,980000,1100000,1300000,1600000,2000000,2500000,2800000];
+    // Fallback / initial values (mirror the sheet contents)
+    let YEARS        = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+    let FEDERAL_UNI  = [22000, 22000, 22000, 25000, 25000, 25000, 25000, 25000, 35000, 40000, 45000];
+    let STATE_UNI    = [85000, 90000, 100000,120000,140000,160000,180000,220000,280000,340000,400000];
+    let PRIVATE_UNI  = [550000,620000,720000,850000,980000,1100000,1300000,1600000,2000000,2500000,2800000];
+    let PUBLIC_K12   = [3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 12000, 14000];
+    let PRIVATE_K12  = [45000, 52000, 60000, 70000, 85000, 100000, 120000, 150000, 200000, 260000, 320000];
+    let INFLATION    = [9.0, 15.7, 16.5, 12.1, 11.4, 13.2, 17.0, 18.8, 24.7, 34.19, 23.5];
 
-    // K-12 (per term, NGN) — private median across mid-tier urban schools
-    const PUBLIC_K12  = [3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 12000, 14000];
-    const PRIVATE_K12 = [45000, 52000, 60000, 70000, 85000, 100000, 120000, 150000, 200000, 260000, 320000];
-
-    // Inflation % (annual average, NBS)
-    const INFLATION = [9.0, 15.7, 16.5, 12.1, 11.4, 13.2, 17.0, 18.8, 24.7, 34.19, 23.5];
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r => r.text()).then(txt => {
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+        const rows = json.table.rows;
+        const num = c => c && c.v != null ? Number(c.v) : null;
+        const ys=[],pk=[],pr=[],fu=[],su=[],pu=[],inf=[];
+        for(const r of rows){
+          const c = r.c || [];
+          if(num(c[0]) == null) continue;
+          ys.push(num(c[0])); pk.push(num(c[1])); pr.push(num(c[2]));
+          fu.push(num(c[3])); su.push(num(c[4])); pu.push(num(c[5]));
+          inf.push(num(c[6]));
+        }
+        if(ys.length){
+          YEARS=ys; PUBLIC_K12=pk; PRIVATE_K12=pr;
+          FEDERAL_UNI=fu; STATE_UNI=su; PRIVATE_UNI=pu; INFLATION=inf;
+          CUM = buildCumulative();
+        }
+      }).catch(err => console.warn('Sheet fetch failed, using fallback data:', err));
+    }
 
     // Cumulative inflation factor relative to 2015 (multiplier needed to get to YYYY Naira)
     function buildCumulative(){
@@ -291,7 +317,7 @@
       for(let i=1;i<INFLATION.length;i++){ factors.push(factors[i-1]*(1+INFLATION[i]/100)); }
       return factors; // factors[i] = multiplier from 2015 to YEARS[i]
     }
-    const CUM = buildCumulative();
+    let CUM = buildCumulative();
 
     function toReal2015(nominalSeries){
       // Convert each nominal value at YEARS[i] back to 2015 Naira: divide by CUM[i]
@@ -406,7 +432,9 @@
       renderAll();
     });
 
+    // Initial render with fallback values, then refresh from sheet once fetched.
     renderAll();
+    loadFromSheet().then(renderAll);
   </script>
 </body>
 </html>

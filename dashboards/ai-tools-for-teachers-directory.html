@@ -348,11 +348,17 @@
   <script>
     /* ============================================================
        AI TOOLS DIRECTORY
-       To add or edit a tool: change one object in the AI_TOOLS
-       array below. The 'url' field is where you place the
-       affiliate link when you have one (see docs/insights-hub-cms.md).
+       DATA SOURCE: Google Sheet (live)
+       Sheet: https://docs.google.com/spreadsheets/d/1leuhgyNtwjTqEdXIG61UHYn4XwGJz5AnDixPONMcn_c/edit
+       Columns: Name | Category | Score (1-5) | Budget | Level | Price | Description | Use Case | URL
+       To add/edit a tool: edit the sheet. Page reloads pull new values.
+       The 'URL' column is where affiliate links go.
+       The list below is a fallback if the sheet is unreachable.
        ============================================================ */
-    const AI_TOOLS = [
+    const TOOLS_SHEET_ID = '1leuhgyNtwjTqEdXIG61UHYn4XwGJz5AnDixPONMcn_c';
+    const TOOLS_SHEET_NAME = 'Tools';
+
+    let AI_TOOLS = [
       {
         name: 'ChatGPT (OpenAI)',
         category: 'General AI Assistant',
@@ -522,13 +528,49 @@
 
     const $ = id => document.getElementById(id);
 
-    // Build category filter from data
-    const categories = [...new Set(AI_TOOLS.map(t => t.category))].sort();
-    categories.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c; opt.textContent = c;
-      $('f-cat').appendChild(opt);
-    });
+    function populateCategoryFilter(){
+      const sel = $('f-cat');
+      const current = sel.value;
+      // Keep first option (All categories) and rebuild the rest
+      while(sel.options.length > 1) sel.remove(1);
+      const categories = [...new Set(AI_TOOLS.map(t => t.category))].sort();
+      categories.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        sel.appendChild(opt);
+      });
+      if(current && categories.includes(current)) sel.value = current;
+    }
+    populateCategoryFilter();
+
+    function loadToolsFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${TOOLS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(TOOLS_SHEET_NAME)}`;
+      return fetch(url).then(r => r.text()).then(txt => {
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+        const rows = json.table.rows;
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!c[0] || c[0].v == null || String(c[0].v).trim() === '') continue;
+          out.push({
+            name:     String(c[0].v),
+            category: c[1] && c[1].v != null ? String(c[1].v) : '',
+            score:    c[2] && c[2].v != null ? Number(c[2].v) : 0,
+            budget:   c[3] && c[3].v != null ? String(c[3].v).toLowerCase() : 'freemium',
+            level:    c[4] && c[4].v != null ? String(c[4].v).toLowerCase() : 'all',
+            price:    c[5] && c[5].v != null ? String(c[5].v) : '',
+            desc:     c[6] && c[6].v != null ? String(c[6].v) : '',
+            usecase:  c[7] && c[7].v != null ? String(c[7].v) : '',
+            url:      c[8] && c[8].v != null ? String(c[8].v) : '#'
+          });
+        }
+        if(out.length){
+          AI_TOOLS = out;
+          populateCategoryFilter();
+          render();
+        }
+      }).catch(err => console.warn('AI tools sheet fetch failed, using fallback:', err));
+    }
 
     function budgetLabel(b) { return { free: 'Free', freemium: 'Freemium', paid: 'Paid' }[b] || b; }
     function budgetClass(b) { return { free: 'tag-free', freemium: 'tag-freemium', paid: 'tag-paid' }[b] || 'tag-cat'; }
@@ -587,7 +629,10 @@
 
     ['f-cat','f-budget','f-level'].forEach(id => $(id).addEventListener('change', render));
     $('f-search').addEventListener('input', render);
+
+    // Initial render with fallback, then refresh from sheet.
     render();
+    loadToolsFromSheet();
   </script>
 </body>
 </html>

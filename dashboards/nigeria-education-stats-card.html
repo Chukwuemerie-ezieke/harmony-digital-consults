@@ -178,152 +178,12 @@
             <span class="year">Edition: 2025</span>
           </header>
 
-          <div class="stats-grid">
-            <div class="stat dark">
-              <div>
-                <div class="num">309</div>
-                <div class="lbl">NUC-accredited universities</div>
-              </div>
-              <div class="src">NUC · 2025</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">29</div>
-                <div class="lbl">NUC-approved distance learning centres</div>
-              </div>
-              <div class="src">NUC</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">18.3M</div>
-                <div class="lbl">Out-of-school children (ages 6–15)</div>
-              </div>
-              <div class="src">UNICEF</div>
-            </div>
-            <div class="stat accent">
-              <div>
-                <div class="num">1.99M</div>
-                <div class="lbl">JAMB UTME registrations (2024)</div>
-              </div>
-              <div class="src">JAMB · 2024</div>
-            </div>
-
-            <div class="stat">
-              <div>
-                <div class="num">1.84M</div>
-                <div class="lbl">JAMB 2024 candidates with released results</div>
-              </div>
-              <div class="src">JAMB · 2024</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">194,876</div>
-                <div class="lbl">Additional basic-education teachers needed</div>
-              </div>
-              <div class="src">UBEC · 2024</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">1,107,854</div>
-                <div class="lbl">Additional classrooms needed</div>
-              </div>
-              <div class="src">UBEC · 2024</div>
-            </div>
-            <div class="stat dark">
-              <div>
-                <div class="num">44.4%</div>
-                <div class="lbl">National broadband penetration</div>
-              </div>
-              <div class="src">NCC · Dec 2024</div>
-            </div>
-
-            <div class="stat">
-              <div>
-                <div class="num">96.3M</div>
-                <div class="lbl">Active broadband connections</div>
-              </div>
-              <div class="src">NCC · Dec 2024</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">~62%</div>
-                <div class="lbl">Adult literacy rate</div>
-              </div>
-              <div class="src">World Bank</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">34.19%</div>
-                <div class="lbl">2024 headline inflation (28-year high)</div>
-              </div>
-              <div class="src">NBS</div>
-            </div>
-            <div class="stat accent">
-              <div>
-                <div class="num">~400%</div>
-                <div class="lbl">Private university fee rise 2015→2025</div>
-              </div>
-              <div class="src">BraveWood · 2025</div>
-            </div>
-
-            <div class="stat dark">
-              <div>
-                <div class="num">7.2%</div>
-                <div class="lbl">2024 federal budget share to education</div>
-              </div>
-              <div class="src">BudgIT analysis</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">26%</div>
-                <div class="lbl">UNESCO-recommended education share of budget</div>
-              </div>
-              <div class="src">UNESCO benchmark</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">~50</div>
-                <div class="lbl">Pupil–teacher ratio in public primary</div>
-              </div>
-              <div class="src">UBEC Digest</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">9 years</div>
-                <div class="lbl">Compulsory Universal Basic Education</div>
-              </div>
-              <div class="src">UBE Act 2004</div>
-            </div>
-
-            <div class="stat">
-              <div>
-                <div class="num">3</div>
-                <div class="lbl">National exam bodies (WAEC, NECO, NABTEB)</div>
-              </div>
-              <div class="src">FME</div>
-            </div>
-            <div class="stat accent">
-              <div>
-                <div class="num">~25%</div>
-                <div class="lbl">Female enrolment gap in northern states</div>
-              </div>
-              <div class="src">UNICEF Nigeria</div>
-            </div>
-            <div class="stat">
-              <div>
-                <div class="num">~30%</div>
-                <div class="lbl">Tertiary gross enrolment ratio</div>
-              </div>
-              <div class="src">UNESCO UIS</div>
-            </div>
-            <div class="stat dark">
-              <div>
-                <div class="num">14 May 2026</div>
-                <div class="lbl">Last verified update</div>
-              </div>
-              <div class="src">Harmony Digital</div>
-            </div>
+          <div class="stats-grid" id="statsGrid">
+            <!-- Stat tiles rendered from Google Sheet on page load. Fallback markup kept inline (noscript) for SEO. -->
           </div>
+          <noscript>
+            <p style="padding:1rem 2rem;color:#92400e;background:#fef3c7;margin:0">Enable JavaScript to view the live stats card. Static version: visit the source links in the Sources block below.</p>
+          </noscript>
 
           <footer class="card-foot">
             <div class="left">
@@ -408,6 +268,83 @@
 
   <script src="../js/main.js"></script>
   <script>
+    /* ============================================================
+       DATA SOURCE: Google Sheet (live)
+       Sheet: https://docs.google.com/spreadsheets/d/1FxH4hZXOLLu6GZS1AEJcGou0WjeCNU-uCzUCh7zAvoQ/edit
+       Columns: Order | Number | Label | Source | Style (plain|dark|accent)
+       To update: edit the sheet. Page reloads pull new values.
+       ============================================================ */
+    const STATS_SHEET_ID = '1FxH4hZXOLLu6GZS1AEJcGou0WjeCNU-uCzUCh7zAvoQ';
+    const STATS_SHEET_NAME = 'Stats';
+
+    // Fallback values used if sheet is unreachable
+    const FALLBACK_STATS = [
+      {n:'309',l:'NUC-accredited universities',s:'NUC · 2025',c:'dark'},
+      {n:'29',l:'NUC-approved distance learning centres',s:'NUC',c:'plain'},
+      {n:'18.3M',l:'Out-of-school children (ages 6–15)',s:'UNICEF',c:'plain'},
+      {n:'1.99M',l:'JAMB UTME registrations (2024)',s:'JAMB · 2024',c:'accent'},
+      {n:'1.84M',l:'JAMB 2024 candidates with released results',s:'JAMB · 2024',c:'plain'},
+      {n:'194,876',l:'Additional basic-education teachers needed',s:'UBEC · 2024',c:'plain'},
+      {n:'1,107,854',l:'Additional classrooms needed',s:'UBEC · 2024',c:'plain'},
+      {n:'44.4%',l:'National broadband penetration',s:'NCC · Dec 2024',c:'dark'},
+      {n:'96.3M',l:'Active broadband connections',s:'NCC · Dec 2024',c:'plain'},
+      {n:'~62%',l:'Adult literacy rate',s:'World Bank',c:'plain'},
+      {n:'34.19%',l:'2024 headline inflation (28-year high)',s:'NBS',c:'plain'},
+      {n:'~400%',l:'Private university fee rise 2015→2025',s:'BraveWood · 2025',c:'accent'},
+      {n:'7.2%',l:'2024 federal budget share to education',s:'BudgIT analysis',c:'dark'},
+      {n:'26%',l:'UNESCO-recommended education share of budget',s:'UNESCO benchmark',c:'plain'},
+      {n:'~50',l:'Pupil–teacher ratio in public primary',s:'UBEC Digest',c:'plain'},
+      {n:'9 years',l:'Compulsory Universal Basic Education',s:'UBE Act 2004',c:'plain'},
+      {n:'3',l:'National exam bodies (WAEC, NECO, NABTEB)',s:'FME',c:'plain'},
+      {n:'~25%',l:'Female enrolment gap in northern states',s:'UNICEF Nigeria',c:'accent'},
+      {n:'~30%',l:'Tertiary gross enrolment ratio',s:'UNESCO UIS',c:'plain'},
+      {n:'14 May 2026',l:'Last verified update',s:'Harmony Digital',c:'dark'}
+    ];
+
+    function escapeHtml(str){
+      if(str == null) return '';
+      return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]));
+    }
+
+    function renderStats(stats){
+      const root = document.getElementById('statsGrid');
+      root.innerHTML = stats.map(s => {
+        const cls = (s.c === 'dark' || s.c === 'accent') ? `stat ${s.c}` : 'stat';
+        return `<div class="${cls}">
+          <div>
+            <div class="num">${escapeHtml(s.n)}</div>
+            <div class="lbl">${escapeHtml(s.l)}</div>
+          </div>
+          <div class="src">${escapeHtml(s.s)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function loadStatsFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${STATS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(STATS_SHEET_NAME)}`;
+      return fetch(url).then(r => r.text()).then(txt => {
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+        const rows = json.table.rows;
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          // c[0]=Order, c[1]=Number, c[2]=Label, c[3]=Source, c[4]=Style
+          if(!c[1] || c[1].v == null) continue;
+          out.push({
+            n: c[1].v != null ? String(c[1].f || c[1].v) : '',
+            l: c[2] && c[2].v != null ? String(c[2].v) : '',
+            s: c[3] && c[3].v != null ? String(c[3].v) : '',
+            c: c[4] && c[4].v != null ? String(c[4].v).toLowerCase() : 'plain'
+          });
+        }
+        if(out.length) renderStats(out);
+      }).catch(err => console.warn('Stats sheet fetch failed, using fallback:', err));
+    }
+
+    // Render fallback immediately, then refresh from sheet.
+    renderStats(FALLBACK_STATS);
+    loadStatsFromSheet();
+
     const PAGE_URL = 'https://harmonydigitalconsults.com.ng/dashboards/nigeria-education-stats-card.html';
     const SHARE_TEXT = 'Nigeria Education in 20 Numbers (2025) — verified stats card from Harmony Digital Consults.';
 
