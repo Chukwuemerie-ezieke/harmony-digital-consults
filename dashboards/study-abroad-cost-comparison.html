@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Abroad Cost Comparison (Nigerian Students) | Harmony Digital Consults</title>
+  <meta name="description" content="Annual all-in cost of studying in 13 countries vs Nigeria — tuition, living, visa, scholarships, post-study work options.">
+  <meta name="keywords" content="study abroad Nigeria, cheapest country to study, Germany Canada UK study cost, Nigerian student abroad">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/study-abroad-cost-comparison.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Study Abroad Cost Comparison (Nigerian Students)">
+  <meta property="og:description" content="Annual all-in cost of studying in 13 countries vs Nigeria — tuition, living, visa, scholarships, post-study work options.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/study-abroad-cost-comparison.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+    .db-section { padding: var(--space-8) 0; }
+    .db-sources{background:#fafafa;border-left:3px solid #01696F;padding:1rem 1.25rem;border-radius:6px;font-size:.85rem;color:var(--color-text-muted);margin-top:2rem}
+    .db-sources p{margin:0 0 .5rem}
+    .db-sources a{color:#01696F;text-decoration:underline}
+    .cta-block{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#92400e;border-radius:14px;padding:1.5rem 1.75rem;margin-top:1.5rem}
+    .cta-block h3{color:#78350f;margin:0 0 .5rem;font-size:1.15rem}
+    .cta-block p{margin:0 0 1rem;font-size:.95rem;line-height:1.55}
+    .cta-block a{display:inline-block;background:#92400e;color:#fff;padding:.7rem 1.3rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+    .cta-block a:hover{background:#78350f;color:#fff;text-decoration:none}
+    
+.filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.25rem;padding:1rem 1.2rem;background:#fff;border:1px solid var(--color-border);border-radius:12px}
+.filter-bar .chip{background:#f1f5f9;color:#01696F;border:1.5px solid transparent;border-radius:999px;padding:.4rem .9rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.filter-bar .chip.active{background:#01696F;color:#fff}
+.fx-bar{background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.fx-bar label{font-size:.85rem;color:var(--color-text-muted);font-weight:600}
+.fx-bar input{width:140px;padding:.5rem .75rem;border:1.5px solid var(--color-border);border-radius:8px;font-family:inherit;font-size:.95rem;font-weight:700;color:#01696F;outline:none}
+.fx-bar input:focus{border-color:#01696F}
+.fx-bar .hint{font-size:.78rem;color:var(--color-text-muted);margin-left:auto}
+.country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.country-card{background:#fff;border:1px solid var(--color-border);border-top:4px solid #01696F;border-radius:12px;padding:1.2rem 1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.country-card.home{border-top-color:#A84B2F;background:linear-gradient(180deg,#fef3c7 0%,#fff 30%)}
+.country-card h3{margin:0;color:#01696F;font-size:1.15rem;display:flex;justify-content:space-between;align-items:baseline}
+.country-card h3 .region{font-size:.7rem;background:#f1f5f9;color:#475569;padding:.2rem .55rem;border-radius:999px;font-weight:600;text-transform:uppercase}
+.country-card .total{margin:.65rem 0;padding:.65rem 0;border-top:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9}
+.country-card .total .lbl{font-size:.75rem;color:#64748b;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.country-card .total .val{font-size:1.4rem;font-weight:800;color:#01696F;margin-top:.15rem}
+.country-card .total .ngn{font-size:.85rem;color:var(--color-text-muted);font-weight:500;margin-top:.2rem}
+.country-card .rowx{display:flex;justify-content:space-between;font-size:.83rem;padding:.35rem 0}
+.country-card .rowx .k{color:#64748b;font-weight:500}
+.country-card .rowx .v{color:var(--color-text);font-weight:600;text-align:right}
+.country-card .note{font-size:.78rem;color:var(--color-text-muted);margin-top:.6rem;line-height:1.45;font-style:italic}
+.country-card .note strong{color:#01696F;font-style:normal}
+.summary-bar{background:linear-gradient(135deg,#01696F 0%,#02898F 100%);color:#fff;border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+.summary-bar .stat{text-align:center}
+.summary-bar .stat .num{font-size:1.7rem;font-weight:800;line-height:1}
+.summary-bar .stat .lbl{font-size:.78rem;opacity:.9;margin-top:.25rem}
+
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../index.html">Home</a> / <a href="../insights/index.html">Insights</a> / Study Abroad Cost Comparison (Nigerian Students)</div>
+        <h1>Study Abroad Cost Comparison (Nigerian Students)</h1>
+        <p>Annual all-in cost of studying in 13 countries (plus the Nigerian private-uni baseline) — tuition, living, visa requirement, post-study work, and scholarship paths. Live FX adjustment.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+<div class="summary-bar">
+  <div class="stat"><div class="num" id="totalCountries">14</div><div class="lbl">Destinations compared</div></div>
+  <div class="stat"><div class="num" id="cheapestCountry">—</div><div class="lbl">Lowest 1-year total cost</div></div>
+  <div class="stat"><div class="num" id="freeTuition">—</div><div class="lbl">With free / near-free tuition</div></div>
+  <div class="stat"><div class="num" id="rangePremium">—</div><div class="lbl">Range vs Nigerian private uni</div></div>
+</div>
+
+<div class="fx-bar">
+  <label for="fxRate">Exchange rate ₦ per US$1</label>
+  <input id="fxRate" type="number" value="1600" min="500" max="5000" step="10">
+  <span class="hint">Adjust to your current rate; all ₦ figures recalculate live.</span>
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <button class="chip active" data-region="All">All regions</button>
+  <button class="chip" data-region="Europe">Europe</button>
+  <button class="chip" data-region="North America">North America</button>
+  <button class="chip" data-region="Asia">Asia</button>
+  <button class="chip" data-region="Home">Home (Nigeria)</button>
+</div>
+
+<div class="country-grid" id="countryGrid"></div>
+
+<div class="cta-block">
+  <h3>Want a personalised study-abroad shortlist?</h3>
+  <p>Harmony Digital Consults helps students and parents match course, country, budget, and visa pathway — including scholarship eligibility checks.</p>
+  <a href="../contact.html">Book a Study-Abroad Consultation →</a>
+</div>
+
+<div class="db-sources">
+  <p><strong>Sources:</strong> <a href="https://visatocampus.com/cost-living-comparison-2026-international-students/" target="_blank" rel="noopener">VisaToCampus Cost of Living 2026</a>; <a href="https://kampus-group.com/ng/countries-with-the-lowest-tuition-fees-for-international-students/" target="_blank" rel="noopener">Kampus Group lowest-tuition 2026</a>; <a href="https://aeccglobal.ng/blog/cost-of-studying-in-canada-for-nigerian-students" target="_blank" rel="noopener">AECC Canada guide</a>; <a href="https://www.facebook.com/lawandvisas/posts/1220212663466539/" target="_blank" rel="noopener">Law and Visas cheapest countries</a>; <a href="https://www.gooverseas.com/blog/cost-to-study-abroad" target="_blank" rel="noopener">GoOverseas 2026</a>; <a href="https://english.nye.hu/en/node/319" target="_blank" rel="noopener">Hungary NyE official tuition</a>; official university and ministry pages.</p>
+  <p>Figures are annual undergraduate ranges in USD. Tuition can vary 3-5× by programme (medicine vs arts). Living costs assume modest student lifestyle outside the most expensive cities. Visa requirements change — always check the official embassy or VAC website before applying.</p>
+  <p><strong>Last updated:</strong> 14 May 2026 · <strong>Owner:</strong> Harmony Digital Consults Ltd · <strong>Refresh cadence:</strong> Quarterly</p>
+</div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+<script>
+const SHEET_ID = '1YEPOX4evThpUbgFXy3aWyHNvaAvY5PcAfdSP_7zAi-s';
+const SHEET_NAME = 'Countries';
+
+let COUNTRIES = [{"country": "Germany", "region": "Europe", "tMin": 0, "tMax": 1500, "lMin": 9120, "lMax": 13200, "visa": "Blocked account ~\u20ac11,904/yr", "psw": "18 months Opportunity Card", "scholarship": "DAAD scholarships widely available"}, {"country": "Norway", "region": "Europe", "tMin": 0, "tMax": 0, "lMin": 12000, "lMax": 18000, "visa": "Proof of NOK 137,907/yr funds", "psw": "Up to 1 year job seeker", "scholarship": "Tuition-free at public universities"}, {"country": "Poland", "region": "Europe", "tMin": 2200, "tMax": 5500, "lMin": 4800, "lMax": "8400", "visa": "Visa-friendly for Nigerians", "psw": "Up to 9 months job seeker", "scholarship": "Polish NAWA scholarships"}, {"country": "Hungary", "region": "Europe", "tMin": 2200, "tMax": 5500, "lMin": 6000, "lMax": 9600, "visa": "Schengen student visa", "psw": "9 months post-study", "scholarship": "Stipendium Hungaricum (full ride)"}, {"country": "Italy", "region": "Europe", "tMin": 1100, "tMax": 4400, "lMin": 9600, "lMax": 14400, "visa": "Italian student visa", "psw": "12 months job seeker", "scholarship": "Income-based fee reductions"}, {"country": "France (outside Paris)", "region": "Europe", "tMin": 654, "tMax": 4000, "lMin": 9600, "lMax": 13800, "visa": "Campus France process", "psw": "1-2 years APS visa", "scholarship": "Eiffel Excellence + Campus France"}, {"country": "Finland", "region": "Europe", "tMin": 4400, "tMax": 8800, "lMin": 8400, "lMax": 12000, "visa": "Finnish residence permit", "psw": "Up to 2 years post-study", "scholarship": "Various uni-specific scholarships"}, {"country": "Malaysia", "region": "Asia", "tMin": 3000, "tMax": 6000, "lMin": 4800, "lMax": 8400, "visa": "Single Entry Visa, then SP", "psw": "Limited post-study work", "scholarship": "Affordable + British-affiliated unis"}, {"country": "India", "region": "Asia", "tMin": 1000, "tMax": 5000, "lMin": 3600, "lMax": 7200, "visa": "Indian student visa", "psw": "Limited post-study options", "scholarship": "ICCR scholarships for Africans"}, {"country": "Canada (smaller cities)", "region": "North America", "tMin": 13500, "tMax": 18750, "lMin": 12600, "lMax": 18000, "visa": "Study permit + GIC $20,635 CAD", "psw": "3-year PGWP", "scholarship": "Many province + uni scholarships"}, {"country": "UK (outside London)", "region": "Europe", "tMin": 14478, "tMax": 33020, "lMin": 14280, "lMax": 22000, "visa": "Student visa + \u00a31,023/mo proof", "psw": "2-year Graduate Route", "scholarship": "Chevening, Commonwealth"}, {"country": "USA", "region": "North America", "tMin": 20000, "tMax": 55000, "lMin": 14000, "lMax": 22000, "visa": "F-1 visa, financial proof", "psw": "OPT 12-36 months", "scholarship": "Fulbright, MasterCard Foundation"}, {"country": "Cyprus", "region": "Europe", "tMin": 3500, "tMax": 6500, "lMin": 6000, "lMax": 9600, "visa": "Pink slip + student visa", "psw": "Limited post-study work", "scholarship": "Affordable EU degree pathway"}, {"country": "Nigeria (private uni)", "region": "Home", "tMin": 3000, "tMax": 18000, "lMin": 0, "lMax": 0, "visa": "No visa needed", "psw": "Direct entry to labour market", "scholarship": "TETFund + private scholarships"}];
+
+let activeRegion = 'All';
+let fxRate = 1600;
+
+function fmtUSD(n){ return '$' + n.toLocaleString(); }
+function fmtNGN(usd){
+  const n = usd * fxRate;
+  if(n >= 1000000) return '₦' + (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+  if(n >= 1000) return '₦' + Math.round(n/1000).toLocaleString() + 'k';
+  return '₦' + Math.round(n).toLocaleString();
+}
+
+function render(){
+  const filtered = COUNTRIES.filter(c => activeRegion === 'All' || c.region === activeRegion);
+  document.getElementById('totalCountries').textContent = filtered.length;
+  // Cheapest = lowest min total
+  const ranked = [...filtered].sort((a,b) => (a.tMin + a.lMin) - (b.tMin + b.lMin));
+  document.getElementById('cheapestCountry').textContent = ranked[0] ? ranked[0].country.split(' (')[0] : '—';
+  document.getElementById('freeTuition').textContent = filtered.filter(c => c.tMin === 0).length;
+  // vs Nigerian private uni baseline = average of Nigerian min+max
+  const ng = COUNTRIES.find(c => c.region === 'Home');
+  if(ng && filtered.length){
+    const ngTotal = (ng.tMin + ng.tMax) / 2;
+    const min = Math.min(...filtered.map(c => c.tMin + c.lMin));
+    const max = Math.max(...filtered.map(c => c.tMax + c.lMax));
+    document.getElementById('rangePremium').textContent = (min/ngTotal).toFixed(1) + 'x – ' + (max/ngTotal).toFixed(1) + 'x';
+  }
+
+  const grid = document.getElementById('countryGrid');
+  grid.innerHTML = filtered.map(c => {
+    const totalMin = c.tMin + c.lMin;
+    const totalMax = c.tMax + c.lMax;
+    return `
+      <div class="country-card ${c.region === 'Home' ? 'home' : ''}">
+        <h3>${c.country} <span class="region">${c.region}</span></h3>
+        <div class="total">
+          <div class="lbl">Annual all-in</div>
+          <div class="val">${fmtUSD(totalMin)} – ${fmtUSD(totalMax)}</div>
+          <div class="ngn">≈ ${fmtNGN(totalMin)} – ${fmtNGN(totalMax)} per year</div>
+        </div>
+        <div class="rowx"><span class="k">Tuition</span><span class="v">${c.tMin === 0 && c.tMax === 0 ? 'Free' : fmtUSD(c.tMin) + ' – ' + fmtUSD(c.tMax)}</span></div>
+        <div class="rowx"><span class="k">Living</span><span class="v">${c.lMin === 0 && c.lMax === 0 ? 'At home' : fmtUSD(c.lMin) + ' – ' + fmtUSD(c.lMax)}</span></div>
+        <div class="rowx"><span class="k">Post-study work</span><span class="v">${c.psw}</span></div>
+        <p class="note"><strong>Visa:</strong> ${c.visa}<br><strong>Scholarship:</strong> ${c.scholarship}</p>
+      </div>`;
+  }).join('');
+}
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  if(e.target.matches('.chip')){
+    document.querySelectorAll('.filter-bar .chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    activeRegion = e.target.dataset.region;
+    render();
+  }
+});
+document.getElementById('fxRate').addEventListener('input', e => {
+  fxRate = +e.target.value || 1600;
+  render();
+});
+
+function loadFromSheet(){
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  return fetch(url).then(r=>r.text()).then(txt=>{
+    const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+    const rows = json.table.rows || [];
+    const v = c => c && c.v != null ? String(c.v) : '';
+    const n = c => c && c.v != null && c.v !== '' ? Number(c.v) : 0;
+    const out = rows.map(r => {
+      const c = r.c || [];
+      return { country: v(c[0]), region: v(c[1]), tMin: n(c[2]), tMax: n(c[3]), lMin: n(c[4]), lMax: n(c[5]), visa: v(c[6]), psw: v(c[7]), scholarship: v(c[8]) };
+    }).filter(c => c.country);
+    if(out.length){ COUNTRIES = out; render(); }
+  }).catch(err => console.warn('Sheet fetch failed, using fallback:', err));
+}
+
+render();
+loadFromSheet();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TVET Programme Directory (Nigeria) | Harmony Digital Consults</title>
+  <meta name="description" content="Federal Science & Technical Colleges across Nigeria — by state, region, trades offered, and the new free-tuition pilot scheme.">
+  <meta name="keywords" content="TVET Nigeria, technical vocational education Nigeria, federal technical college directory, NABTEB">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/tvet-programme-directory-nigeria.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TVET Programme Directory (Nigeria)">
+  <meta property="og:description" content="Federal Science & Technical Colleges across Nigeria — by state, region, trades offered, and the new free-tuition pilot scheme.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/tvet-programme-directory-nigeria.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+    .db-section { padding: var(--space-8) 0; }
+    .db-sources{background:#fafafa;border-left:3px solid #01696F;padding:1rem 1.25rem;border-radius:6px;font-size:.85rem;color:var(--color-text-muted);margin-top:2rem}
+    .db-sources p{margin:0 0 .5rem}
+    .db-sources a{color:#01696F;text-decoration:underline}
+    .cta-block{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#92400e;border-radius:14px;padding:1.5rem 1.75rem;margin-top:1.5rem}
+    .cta-block h3{color:#78350f;margin:0 0 .5rem;font-size:1.15rem}
+    .cta-block p{margin:0 0 1rem;font-size:.95rem;line-height:1.55}
+    .cta-block a{display:inline-block;background:#92400e;color:#fff;padding:.7rem 1.3rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+    .cta-block a:hover{background:#78350f;color:#fff;text-decoration:none}
+    
+.filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.25rem;padding:1rem 1.2rem;background:#fff;border:1px solid var(--color-border);border-radius:12px;align-items:center}
+.filter-bar .chip{background:#f1f5f9;color:#01696F;border:1.5px solid transparent;border-radius:999px;padding:.4rem .9rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.filter-bar .chip.active{background:#01696F;color:#fff}
+.filter-bar input{flex:1;min-width:200px;padding:.5rem .8rem;border:1.5px solid var(--color-border);border-radius:8px;font-family:inherit;font-size:.9rem;outline:none}
+.filter-bar input:focus{border-color:#01696F}
+.region-section{margin-bottom:1.75rem}
+.region-section h2{color:#01696F;font-size:1.2rem;margin:0 0 .65rem;padding-bottom:.4rem;border-bottom:2px solid #01696F;display:inline-block}
+.tvet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.9rem}
+.tvet-card{background:#fff;border:1px solid var(--color-border);border-left:4px solid #01696F;border-radius:10px;padding:1rem 1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.tvet-card .state-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.tvet-card .state{font-weight:700;color:#01696F;font-size:.95rem}
+.tvet-card .code{font-size:.72rem;background:#f1f5f9;color:#475569;padding:.2rem .55rem;border-radius:999px;font-weight:600}
+.tvet-card h3{margin:0 0 .55rem;font-size:1rem;color:var(--color-text)}
+.tvet-card .trades{font-size:.85rem;color:var(--color-text-muted);line-height:1.5;margin:0 0 .55rem}
+.tvet-card .tuition{font-size:.78rem;color:#92400e;background:#fef3c7;padding:.35rem .6rem;border-radius:6px;display:inline-block;font-weight:600}
+.summary-bar{background:linear-gradient(135deg,#01696F 0%,#02898F 100%);color:#fff;border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.summary-bar .stat{text-align:center}
+.summary-bar .stat .num{font-size:1.7rem;font-weight:800;line-height:1}
+.summary-bar .stat .lbl{font-size:.78rem;opacity:.9;margin-top:.25rem}
+
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../index.html">Home</a> / <a href="../insights/index.html">Insights</a> / TVET Programme Directory (Nigeria)</div>
+        <h1>TVET Programme Directory (Nigeria)</h1>
+        <p>Federal Science & Technical Colleges across Nigeria, grouped by geopolitical zone — with trades offered, college codes, and current fee status. Reflects the Federal Government's 2026 free-tuition pilot.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+<div class="summary-bar">
+  <div class="stat"><div class="num" id="totalColleges">21</div><div class="lbl">Federal colleges listed</div></div>
+  <div class="stat"><div class="num" id="totalStates">21</div><div class="lbl">States covered</div></div>
+  <div class="stat"><div class="num" id="totalRegions">6</div><div class="lbl">Geopolitical zones</div></div>
+  <div class="stat"><div class="num">+287%</div><div class="lbl">TVET enrolment 2024–2025 (NABTEB)</div></div>
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <button class="chip active" data-region="All">All regions</button>
+  <button class="chip" data-region="South West">South West</button>
+  <button class="chip" data-region="South East">South East</button>
+  <button class="chip" data-region="South South">South South</button>
+  <button class="chip" data-region="North Central">North Central</button>
+  <button class="chip" data-region="North East">North East</button>
+  <button class="chip" data-region="North West">North West</button>
+  <input id="searchBox" placeholder="Search state or trade (e.g. welding, Lagos)…" />
+</div>
+
+<div id="tvetRoot"></div>
+
+<div class="cta-block">
+  <h3>Considering TVET for your child or community programme?</h3>
+  <p>Harmony Digital Consults advises schools, foundations, and CSR teams on TVET pathway design — including digital-skills integration, equipment sourcing, and outcomes tracking.</p>
+  <a href="../contact.html">Talk to our TVET Team →</a>
+</div>
+
+<div class="db-sources">
+  <p><strong>Sources:</strong> <a href="https://nabteb.gov.ng/about-nabteb/federal-science-technical-colleges/" target="_blank" rel="noopener">NABTEB official list of Federal Science & Technical Colleges</a>; <a href="https://dailypost.ng/2025/07/09/enrollment-for-tvet-rises-to-287-76-nigerian-govt/" target="_blank" rel="noopener">NABTEB enrolment data (July 2025)</a>; <a href="https://www.bbc.com/pidgin/articles/cn5q73ly5z1o" target="_blank" rel="noopener">BBC Pidgin on newly approved trades</a>; <a href="https://www.premiumtimesng.com/news/top-news/850656-nigerian-govt-opens-application-for-free-technical-colleges.html" target="_blank" rel="noopener">Premium Times on free technical colleges (Jan 2026)</a>; <a href="https://web.nbte.gov.ng/technical%20colleges1" target="_blank" rel="noopener">NBTE technical college directory</a>.</p>
+  <p>"Sample trades" reflects commonly offered tracks; exact subject combinations vary by college and academic year. The free-tuition pilot announced in early 2026 by the Federal Ministry of Education applies to Federal Science & Technical Colleges; state and private technical colleges set their own fees.</p>
+  <p><strong>Last updated:</strong> 14 May 2026 · <strong>Owner:</strong> Harmony Digital Consults Ltd · <strong>Refresh cadence:</strong> Annually</p>
+</div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+<script>
+const SHEET_ID = '1rBDlsZwFH9BkPWjmP7lpg2Wx7i7dDEvpMKf9-N3VMPA';
+const SHEET_NAME = 'Colleges';
+
+let COLLEGES = [{"state": "Abia", "region": "South East", "name": "Federal Science & Technical College, Ohanso", "code": "504", "type": "Federal", "trades": "Electrical, Building, Mechanical, Auto Mechanics, Computer Craft", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Abuja (FCT)", "region": "North Central", "name": "Federal Science & Technical College, Orozo", "code": "502", "type": "Federal", "trades": "ICT, Welding, Electrical, Building, Catering", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Adamawa", "region": "North East", "name": "Federal Science & Technical College, Michika", "code": "519", "type": "Federal", "trades": "Electrical, Mechanical, Building, Agric", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Akwa Ibom", "region": "South South", "name": "Federal Science & Technical College, Ofot, Uyo", "code": "505", "type": "Federal", "trades": "Electrical, Building, Computer Craft, Catering", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Anambra", "region": "South East", "name": "Federal Science & Technical College, Awka", "code": "516", "type": "Federal", "trades": "Electrical, Building, ICT, Auto Mechanics", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Bayelsa", "region": "South South", "name": "Federal Science & Technical College, Tungbo", "code": "515", "type": "Federal", "trades": "Welding, Marine Engineering, Electrical, Building", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Benue", "region": "North Central", "name": "Federal Science & Technical College, Otukpo", "code": "507", "type": "Federal", "trades": "Agric Tech, Electrical, Building, Auto Mechanics", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Borno", "region": "North East", "name": "Federal Science & Technical College, Lassa", "code": "511", "type": "Federal", "trades": "Building, Electrical, Welding, Computer Craft", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Edo", "region": "South South", "name": "Federal Science & Technical College, Uromi", "code": "514", "type": "Federal", "trades": "Electrical, Building, ICT, Catering", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Ekiti", "region": "South West", "name": "Federal Science & Technical College, Usi-Ekiti", "code": "517", "type": "Federal", "trades": "Electrical, Building, Auto, Agric Tech", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Kaduna", "region": "North West", "name": "Federal Science & Technical College, Kafanchan", "code": "515", "type": "Federal", "trades": "Electrical, Mechanical, Welding, Building, ICT", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Katsina", "region": "North West", "name": "Federal Science & Technical College, Katsina", "code": "525", "type": "Federal", "trades": "Building, Electrical, Auto, Catering", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Kebbi", "region": "North West", "name": "Federal Science & Technical College, Zuru", "code": "510", "type": "Federal", "trades": "Agric Tech, Building, Electrical, Auto", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Lagos", "region": "South West", "name": "Federal Science & Technical College, Yaba", "code": "501", "type": "Federal", "trades": "ICT, Electrical, Mechanical, Welding, Catering, Fashion", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Nasarawa", "region": "North Central", "name": "Federal Science & Technical College, Doma", "code": "520", "type": "Federal", "trades": "Agric Tech, Building, Electrical", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Niger", "region": "North Central", "name": "Federal Science & Technical College, Shiroro", "code": "508", "type": "Federal", "trades": "Electrical, Building, ICT, Auto", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Ogun", "region": "South West", "name": "Federal Science & Technical College, Ijebu Mushin", "code": "512", "type": "Federal", "trades": "Electrical, Building, ICT, Catering, Fashion", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Ondo", "region": "South West", "name": "Federal Science & Technical College, Ikare Akoko", "code": "513", "type": "Federal", "trades": "Electrical, Building, ICT, Auto", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Osun", "region": "South West", "name": "Federal Science & Technical College, Ilesha", "code": "503", "type": "Federal", "trades": "Electrical, Building, ICT, Catering", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Rivers", "region": "South South", "name": "Federal Science & Technical College, Ahoada", "code": "518", "type": "Federal", "trades": "Welding, Marine, Electrical, Building", "tuition": "Subsidised; new free-tuition pilot 2026"}, {"state": "Taraba", "region": "North East", "name": "Federal Science & Technical College, Jalingo", "code": "509", "type": "Federal", "trades": "Agric Tech, Electrical, Building, Auto", "tuition": "Subsidised; new free-tuition pilot 2026"}];
+
+let activeRegion = 'All';
+let searchQ = '';
+
+function render(){
+  const q = searchQ.toLowerCase().trim();
+  const filtered = COLLEGES.filter(c =>
+    (activeRegion === 'All' || c.region === activeRegion) &&
+    (!q || (c.state + ' ' + c.name + ' ' + c.trades).toLowerCase().includes(q))
+  );
+  document.getElementById('totalColleges').textContent = filtered.length;
+  document.getElementById('totalStates').textContent = new Set(filtered.map(c => c.state)).size;
+  document.getElementById('totalRegions').textContent = new Set(filtered.map(c => c.region)).size;
+
+  // Group by region in canonical order
+  const regionOrder = ['South West','South East','South South','North Central','North East','North West'];
+  const grouped = {};
+  filtered.forEach(c => { (grouped[c.region] = grouped[c.region] || []).push(c); });
+
+  const html = regionOrder
+    .filter(r => grouped[r])
+    .map(r => `
+      <div class="region-section">
+        <h2>${r}</h2>
+        <div class="tvet-grid">
+          ${grouped[r].map(c => `
+            <div class="tvet-card">
+              <div class="state-row"><span class="state">${c.state}</span><span class="code">Code ${c.code}</span></div>
+              <h3>${c.name}</h3>
+              <p class="trades"><strong>Trades:</strong> ${c.trades}</p>
+              <span class="tuition">${c.tuition}</span>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+
+  document.getElementById('tvetRoot').innerHTML = html || '<p style="text-align:center;color:#64748b;padding:2rem">No colleges match this filter.</p>';
+}
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  if(e.target.matches('.chip')){
+    document.querySelectorAll('.filter-bar .chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    activeRegion = e.target.dataset.region;
+    render();
+  }
+});
+document.getElementById('searchBox').addEventListener('input', e => { searchQ = e.target.value; render(); });
+
+function loadFromSheet(){
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  return fetch(url).then(r=>r.text()).then(txt=>{
+    const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+    const rows = json.table.rows || [];
+    const v = c => c && c.v != null ? String(c.v) : '';
+    const out = rows.map(r => {
+      const c = r.c || [];
+      return { state: v(c[0]), region: v(c[1]), name: v(c[2]), code: v(c[3]), type: v(c[4]), trades: v(c[5]), tuition: v(c[6]) };
+    }).filter(c => c.state);
+    if(out.length){ COLLEGES = out; render(); }
+  }).catch(err => console.warn('Sheet fetch failed, using fallback:', err));
+}
+
+render();
+loadFromSheet();
+</script>
+
+</body>
+</html>

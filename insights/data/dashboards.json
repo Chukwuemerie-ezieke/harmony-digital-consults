@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "updated": "2026-05-14",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
@@ -247,6 +247,101 @@
       "featured": true,
       "cta": {
         "label": "Request a Custom Market Brief",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "waec-exam-countdown-2026",
+      "title": "WAEC Exam Countdown 2026",
+      "slug": "waec-exam-countdown-2026",
+      "url": "/dashboards/waec-exam-countdown-2026.html",
+      "summary": "Live countdown to every WAEC May/June 2026 WASSCE paper — filter by category (Languages, Sciences, Arts, Trades), see exact dates, sittings, and days remaining. Built on the official WAEC timetable.",
+      "category": "Tools & Recommenders",
+      "tags": ["WAEC", "WASSCE", "2026", "Timetable", "Countdown", "Students"],
+      "audience": ["Students", "Parents", "Teachers", "Tutorial Centres"],
+      "data_sources": ["WAEC official timetable", "MySchoolGist"],
+      "update_cadence": "Annually (after WAEC release)",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Explore Harmony Exam-Prep",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "asuu-strike-risk-tracker",
+      "title": "ASUU Strike Risk Tracker (2009–2025)",
+      "slug": "asuu-strike-risk-tracker",
+      "url": "/dashboards/asuu-strike-risk-tracker.html",
+      "summary": "Verified 16-year history of every ASUU strike — start/end dates, duration, cumulative days lost, and the issues behind each industrial action. Includes year-by-year heatmap and risk context for current academic planning.",
+      "category": "Research & Advocacy",
+      "tags": ["ASUU", "Universities", "Strikes", "Tertiary", "Nigeria", "Policy"],
+      "audience": ["Parents", "Students", "Policymakers", "Journalists", "Researchers"],
+      "data_sources": ["The Guardian Nigeria", "Provisio Services analysis", "BusinessDay", "Campus Updates NG"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Request a Custom Tertiary Brief",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "coding-bootcamp-comparison-nigeria",
+      "title": "Coding Bootcamp Comparison (Nigeria)",
+      "slug": "coding-bootcamp-comparison-nigeria",
+      "url": "/dashboards/coding-bootcamp-comparison-nigeria.html",
+      "summary": "Filterable side-by-side comparison of 12 leading Nigerian/Africa-focused coding bootcamps — cost, duration, mode, tracks, placement rate, and verdict. Covers AltSchool, Decagon, Andela, Semicolon, HNG, Utiva, and more.",
+      "category": "Tools & Recommenders",
+      "tags": ["Bootcamp", "Coding", "Tech", "Career", "Comparison", "Nigeria"],
+      "audience": ["Job Seekers", "Parents", "Career Changers", "L&D Managers"],
+      "data_sources": ["Nucamp", "Course Report", "Career Karma", "Bootcamp websites"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Career Strategy Call",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "study-abroad-cost-comparison",
+      "title": "Study Abroad Cost Comparison",
+      "slug": "study-abroad-cost-comparison",
+      "url": "/dashboards/study-abroad-cost-comparison.html",
+      "summary": "True total-cost (tuition + living + visa + flight) for 14 popular study destinations for Nigerian students — UK, Canada, US, Germany, Hungary, Malaysia, India, and more — with a live FX-rate input to convert to Naira.",
+      "category": "Tools & Recommenders",
+      "tags": ["Study Abroad", "Tuition", "Visa", "Cost", "Nigeria", "Students"],
+      "audience": ["Students", "Parents", "Education Consultants"],
+      "data_sources": ["VisaToCampus 2026", "Kampus Group", "AECC Global", "Hungary NyE"],
+      "update_cadence": "Quarterly",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Study-Abroad Strategy Call",
+        "url": "/contact.html"
+      }
+    },
+    {
+      "id": "tvet-programme-directory-nigeria",
+      "title": "TVET Programme Directory (Nigeria)",
+      "slug": "tvet-programme-directory-nigeria",
+      "url": "/dashboards/tvet-programme-directory-nigeria.html",
+      "summary": "Directory of 21 Federal Science & Technical Colleges across Nigeria's six geopolitical zones — courses offered, certification (NABTEB/NBTE), and contact details. Built for parents and students exploring vocational pathways.",
+      "category": "Tools & Recommenders",
+      "tags": ["TVET", "Vocational", "NABTEB", "Federal Colleges", "Nigeria", "Skills"],
+      "audience": ["Students", "Parents", "Career Counsellors", "Policymakers"],
+      "data_sources": ["NABTEB official", "Premium Times", "Daily Post 2025"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-14",
+      "lead_author": "Harmony Digital Consults Research Team",
+      "featured": true,
+      "cta": {
+        "label": "Request a Vocational Pathway Brief",
         "url": "/contact.html"
       }
     }

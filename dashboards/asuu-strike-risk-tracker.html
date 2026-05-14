@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASUU Strike Risk Tracker (1999–2026) | Harmony Digital Consults</title>
+  <meta name="description" content="Year-by-year record of every ASUU strike since 1999 — days lost, causes, and resolutions. Use it to weigh university calendar reliability.">
+  <meta name="keywords" content="ASUU strike history, ASUU strikes by year, Nigeria university strike, federal university calendar">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/dashboards/asuu-strike-risk-tracker.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ASUU Strike Risk Tracker (1999–2026)">
+  <meta property="og:description" content="Year-by-year record of every ASUU strike since 1999 — days lost, causes, and resolutions. Use it to weigh university calendar reliability.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/dashboards/asuu-strike-risk-tracker.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .db-hero { background: linear-gradient(135deg, #01696F 0%, #02898F 100%); color: #fff; padding: var(--space-10) 0 var(--space-8); }
+    .db-hero .db-crumb { font-size: 0.85rem; opacity: 0.85; margin-bottom: var(--space-3); }
+    .db-hero .db-crumb a { color: #fff; text-decoration: underline; }
+    .db-hero h1 { color: #fff; font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 var(--space-3); }
+    .db-hero p { max-width: 780px; opacity: 0.95; margin: 0; }
+    .db-section { padding: var(--space-8) 0; }
+    .db-sources{background:#fafafa;border-left:3px solid #01696F;padding:1rem 1.25rem;border-radius:6px;font-size:.85rem;color:var(--color-text-muted);margin-top:2rem}
+    .db-sources p{margin:0 0 .5rem}
+    .db-sources a{color:#01696F;text-decoration:underline}
+    .cta-block{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#92400e;border-radius:14px;padding:1.5rem 1.75rem;margin-top:1.5rem}
+    .cta-block h3{color:#78350f;margin:0 0 .5rem;font-size:1.15rem}
+    .cta-block p{margin:0 0 1rem;font-size:.95rem;line-height:1.55}
+    .cta-block a{display:inline-block;background:#92400e;color:#fff;padding:.7rem 1.3rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+    .cta-block a:hover{background:#78350f;color:#fff;text-decoration:none}
+    
+.summary-bar{background:linear-gradient(135deg,#01696F 0%,#02898F 100%);color:#fff;border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.summary-bar .stat{text-align:center}
+.summary-bar .stat .num{font-size:1.75rem;font-weight:800;line-height:1}
+.summary-bar .stat .lbl{font-size:.78rem;opacity:.9;margin-top:.25rem}
+.chart-card{background:#fff;border:1px solid var(--color-border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.chart-card h2{color:#01696F;font-size:1.2rem;margin:0 0 1rem}
+.chart-card .chart-wrap{position:relative;height:340px}
+.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:.45rem;margin-top:.5rem}
+.year-cell{aspect-ratio:1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;padding:.4rem;font-weight:700;cursor:default;transition:transform .15s;border:1px solid transparent}
+.year-cell:hover{transform:translateY(-2px);border-color:rgba(0,0,0,.1)}
+.year-cell .y{font-size:.95rem}
+.year-cell .d{font-size:.7rem;font-weight:600;opacity:.9;margin-top:.1rem}
+.year-cell.no-strike{background:#dcfce7;color:#166534}
+.year-cell.short{background:#fef3c7;color:#92400e}
+.year-cell.medium{background:#fed7aa;color:#9a3412}
+.year-cell.long{background:#fecaca;color:#991b1b}
+.year-cell.severe{background:#dc2626;color:#fff}
+.legend-row{display:flex;flex-wrap:wrap;gap:.75rem;font-size:.8rem;margin-top:1rem;justify-content:center}
+.legend-row .item{display:flex;align-items:center;gap:.4rem}
+.legend-row .sw{width:14px;height:14px;border-radius:3px}
+.strike-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:1rem}
+.strike-table th{background:#01696F;color:#fff;padding:.65rem .8rem;text-align:left;font-weight:600}
+.strike-table td{padding:.55rem .8rem;border-bottom:1px solid var(--color-border)}
+.strike-table tr.no-strike td{background:#f0fdf4;color:#166534}
+.strike-table tr:hover td{background:#fafafa}
+
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../process.html">Process</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="db-hero">
+      <div class="container">
+        <div class="db-crumb"><a href="../index.html">Home</a> / <a href="../insights/index.html">Insights</a> / ASUU Strike Risk Tracker (1999–2026)</div>
+        <h1>ASUU Strike Risk Tracker (1999–2026)</h1>
+        <p>Twenty-eight years of ASUU industrial actions, year-by-year — days lost, causes, and how each ended. A reference for parents and students weighing public, state, private, or study-abroad routes.</p>
+      </div>
+    </section>
+
+    <section class="db-section">
+      <div class="container">
+
+<div class="summary-bar" id="summaryBar">
+  <div class="stat"><div class="num" id="totalDays">0</div><div class="lbl">Total days lost since 1999</div></div>
+  <div class="stat"><div class="num" id="totalYears">0</div><div class="lbl">Years on strike</div></div>
+  <div class="stat"><div class="num" id="strikeFreeYears">0</div><div class="lbl">Strike-free years</div></div>
+  <div class="stat"><div class="num" id="longestYear">—</div><div class="lbl">Longest single year</div></div>
+</div>
+
+<div class="chart-card">
+  <h2>Days lost to ASUU strikes by year</h2>
+  <div class="chart-wrap"><canvas id="chartDays"></canvas></div>
+</div>
+
+<div class="chart-card">
+  <h2>Year-by-year heatmap (1999–2026)</h2>
+  <div class="year-grid" id="yearGrid"></div>
+  <div class="legend-row">
+    <span class="item"><span class="sw" style="background:#dcfce7"></span> 0 days (no strike)</span>
+    <span class="item"><span class="sw" style="background:#fef3c7"></span> 1–14 days</span>
+    <span class="item"><span class="sw" style="background:#fed7aa"></span> 15–60 days</span>
+    <span class="item"><span class="sw" style="background:#fecaca"></span> 61–150 days</span>
+    <span class="item"><span class="sw" style="background:#dc2626"></span> 150+ days</span>
+  </div>
+</div>
+
+<div class="chart-card">
+  <h2>Full strike record</h2>
+  <div style="overflow-x:auto">
+    <table class="strike-table" id="strikeTable">
+      <thead><tr><th>Year</th><th>Days</th><th>Reason</th><th>How it ended</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="cta-block">
+  <h3>Choosing a university? Strike risk should be on your checklist.</h3>
+  <p>Harmony Digital Consults helps families weigh public, state, private, and study-abroad pathways with up-to-date calendar reliability data.</p>
+  <a href="../contact.html">Talk to an Advisor →</a>
+</div>
+
+<div class="db-sources">
+  <p><strong>Sources:</strong> Federal Government statement <a href="https://guardian.ng/news/asuu-lost-five-of-10-years-to-strikes-says-fg/" target="_blank" rel="noopener">via The Guardian (March 2026)</a>; <a href="https://provisioservices.com/200-days-of-asuu-strike-analysis-of-recent-university-industrial-actions/" target="_blank" rel="noopener">Provisio Services 200-day analysis (2022)</a>; <a href="https://businessday.ng/news/article/unions-record-over-1086-days-strike-under-buhari/" target="_blank" rel="noopener">BusinessDay strike audit</a>; ASUU public communiqués; news archives 1999–2026.</p>
+  <p>"Days lost" figures are the best public estimates for each calendar year; some strikes spanned two years and the totals reflect the active days within each year.</p>
+  <p><strong>Last updated:</strong> 14 May 2026 · <strong>Owner:</strong> Harmony Digital Consults Ltd · <strong>Refresh cadence:</strong> Annually + after each new industrial action</p>
+</div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
+Chart.defaults.color = '#475569';
+
+const SHEET_ID = '1jYfWIMYUSn_Rjz8WXOiNkXdZs_SUuwW60OigablyYxc';
+const SHEET_NAME = 'Strikes';
+
+let YEARS = [{"year": 1999, "days": 150, "strike": "yes", "reason": "Salary arrears, autonomy", "resolution": "Government concession"}, {"year": 2000, "days": 0, "strike": "no", "reason": "", "resolution": ""}, {"year": 2001, "days": 90, "strike": "yes", "reason": "Re-negotiation of 2001 Agreement", "resolution": "Partial agreement"}, {"year": 2002, "days": 172, "strike": "yes", "reason": "Funding, salary, autonomy", "resolution": "MoU signed, second-longest at the time"}, {"year": 2003, "days": 14, "strike": "yes", "reason": "Implementation of 2001 Agreement", "resolution": "Short warning strike"}, {"year": 2004, "days": 13, "strike": "yes", "reason": "Stalled negotiations", "resolution": "Short warning strike"}, {"year": 2005, "days": 21, "strike": "yes", "reason": "Earned Allowances", "resolution": "Talks reopened"}, {"year": 2006, "days": 7, "strike": "yes", "reason": "Reinstatement of sacked lecturers", "resolution": "Short warning strike"}, {"year": 2007, "days": 90, "strike": "yes", "reason": "Pension and welfare", "resolution": "Partial agreement"}, {"year": 2008, "days": 7, "strike": "yes", "reason": "Pension issues continued", "resolution": "Warning strike"}, {"year": 2009, "days": 120, "strike": "yes", "reason": "2009 FGN-ASUU Agreement negotiation", "resolution": "2009 Agreement signed"}, {"year": 2010, "days": 5, "strike": "yes", "reason": "Implementation of 2009 Agreement", "resolution": "Government promise"}, {"year": 2011, "days": 90, "strike": "yes", "reason": "Non-implementation of 2009 Agreement", "resolution": "MoU signed"}, {"year": 2012, "days": 7, "strike": "yes", "reason": "Implementation gaps", "resolution": "Short action"}, {"year": 2013, "days": 165, "strike": "yes", "reason": "Implementation of 2009 Agreement", "resolution": "FGN released N200bn"}, {"year": 2014, "days": 0, "strike": "no", "reason": "", "resolution": ""}, {"year": 2015, "days": 0, "strike": "no", "reason": "", "resolution": ""}, {"year": 2016, "days": 7, "strike": "yes", "reason": "Earned Academic Allowances", "resolution": "Short warning strike"}, {"year": 2017, "days": 35, "strike": "yes", "reason": "Allowances, funding", "resolution": "Negotiations resumed"}, {"year": 2018, "days": 90, "strike": "yes", "reason": "2009 Agreement re-negotiation", "resolution": "Re-negotiation committee"}, {"year": 2019, "days": 7, "strike": "yes", "reason": "Pension funds", "resolution": "Warning strike"}, {"year": 2020, "days": 270, "strike": "yes", "reason": "IPPIS rejection, funding, UTAS adoption", "resolution": "Strike ended Dec 2020"}, {"year": 2021, "days": 0, "strike": "no", "reason": "", "resolution": ""}, {"year": 2022, "days": 200, "strike": "yes", "reason": "Re-negotiation, UTAS, revitalisation funds", "resolution": "Court-ordered end, no full deal"}, {"year": 2023, "days": 0, "strike": "no", "reason": "", "resolution": ""}, {"year": 2024, "days": 7, "strike": "yes", "reason": "Salary withholding from 2022", "resolution": "Warning strike"}, {"year": 2025, "days": 14, "strike": "yes", "reason": "Outstanding 2022 entitlements", "resolution": "Short warning strike"}, {"year": 2026, "days": 0, "strike": "no", "reason": "", "resolution": ""}];
+
+let chart;
+
+function colorFor(days){
+  if(days === 0) return '#dcfce7';
+  if(days <= 14) return '#fef3c7';
+  if(days <= 60) return '#fed7aa';
+  if(days <= 150) return '#fecaca';
+  return '#dc2626';
+}
+function cssClassFor(days){
+  if(days === 0) return 'no-strike';
+  if(days <= 14) return 'short';
+  if(days <= 60) return 'medium';
+  if(days <= 150) return 'long';
+  return 'severe';
+}
+
+function renderAll(){
+  const total = YEARS.reduce((s,y) => s + y.days, 0);
+  const strikeYrs = YEARS.filter(y => y.days > 0).length;
+  const freeYrs = YEARS.filter(y => y.days === 0).length;
+  const longest = YEARS.reduce((m,y) => y.days > m.days ? y : m, {days:0, year:'—'});
+  document.getElementById('totalDays').textContent = total.toLocaleString();
+  document.getElementById('totalYears').textContent = strikeYrs;
+  document.getElementById('strikeFreeYears').textContent = freeYrs;
+  document.getElementById('longestYear').textContent = longest.days > 0 ? `${longest.days}d (${longest.year})` : '—';
+
+  if(chart) chart.destroy();
+  chart = new Chart(document.getElementById('chartDays'), {
+    type: 'bar',
+    data: {
+      labels: YEARS.map(y => y.year),
+      datasets: [{
+        label: 'Days lost',
+        data: YEARS.map(y => y.days),
+        backgroundColor: YEARS.map(y => colorFor(y.days)),
+        borderColor: YEARS.map(y => y.days > 150 ? '#991b1b' : 'transparent'),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' days lost' } } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: 'Days lost to strikes' } } }
+    }
+  });
+
+  const grid = document.getElementById('yearGrid');
+  grid.innerHTML = YEARS.map(y => `
+    <div class="year-cell ${cssClassFor(y.days)}" title="${y.reason || 'No strike'}">
+      <span class="y">${y.year}</span>
+      <span class="d">${y.days === 0 ? 'No strike' : y.days + 'd'}</span>
+    </div>`).join('');
+
+  const tbody = document.querySelector('#strikeTable tbody');
+  tbody.innerHTML = YEARS.map(y => `
+    <tr class="${y.days === 0 ? 'no-strike' : ''}">
+      <td><strong>${y.year}</strong></td>
+      <td>${y.days === 0 ? '<span style="color:#166534;font-weight:600">0 (no strike)</span>' : y.days + ' days'}</td>
+      <td>${y.reason || '—'}</td>
+      <td>${y.resolution || '—'}</td>
+    </tr>`).join('');
+}
+
+function loadFromSheet(){
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  return fetch(url).then(r=>r.text()).then(txt=>{
+    const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+    const rows = json.table.rows || [];
+    const v = c => c && c.v != null ? String(c.v) : '';
+    const n = c => c && c.v != null && c.v !== '' ? Number(c.v) : 0;
+    const out = rows.map(r => {
+      const c = r.c || [];
+      return { year: n(c[0]), days: n(c[1]), strike: v(c[2]), reason: v(c[3]), resolution: v(c[4]) };
+    }).filter(y => y.year);
+    if(out.length){ YEARS = out; renderAll(); }
+  }).catch(err => console.warn('Sheet fetch failed, using fallback:', err));
+}
+
+renderAll();
+loadFromSheet();
+</script>
+
+</body>
+</html>
