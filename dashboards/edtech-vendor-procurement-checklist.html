@@ -216,7 +216,15 @@
 
   <script src="../js/main.js"></script>
   <script>
-    const CATEGORIES = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns (one row per item):
+         Category_ID | Category_Title | Category_Description | Item_ID | Item_Text | Critical (TRUE/FALSE)
+       ============================================================ */
+    const SHEET_ID = '1herYE7kKsejDDd6bVtzn6jhaxMWgvRHoUfPy7Q7DoVY';
+    const SHEET_NAME = 'Items';
+
+    let CATEGORIES = [
       { id:'fit', title:'1. Educational Fit & Curriculum Alignment', desc:'Will this tool actually improve teaching and learning outcomes in YOUR specific context?',
         items:[
           {id:'fit1', text:'Vendor can demonstrate the tool aligns to the Nigerian curriculum (UBEC/WAEC/NECO syllabi).', critical:true},
@@ -272,7 +280,37 @@
         ]}
     ];
 
-    const total = CATEGORIES.reduce((s,c)=>s+c.items.length,0);
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const out = [];
+        const byId = {};
+        for(const r of rows){
+          const c = r.c || [];
+          const cid = v(c[0]);
+          if(!cid) continue;
+          if(!byId[cid]){
+            byId[cid] = { id: cid, title: v(c[1]), desc: v(c[2]), items: [] };
+            out.push(byId[cid]);
+          }
+          byId[cid].items.push({
+            id: v(c[3]),
+            text: v(c[4]),
+            critical: v(c[5]).trim().toUpperCase() === 'TRUE'
+          });
+        }
+        if(out.length){
+          CATEGORIES = out;
+          total = CATEGORIES.reduce((s,c)=>s+c.items.length,0);
+          render();
+        }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
+    let total = CATEGORIES.reduce((s,c)=>s+c.items.length,0);
     const root = document.getElementById('categories');
     const state = JSON.parse(localStorage.getItem('vendor-checklist') || '{}');
 
@@ -356,6 +394,7 @@
     document.getElementById('reviewDate').valueAsDate = new Date();
 
     render();
+    loadFromSheet();
   </script>
 </body>
 </html>

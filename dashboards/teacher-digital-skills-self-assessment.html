@@ -359,7 +359,15 @@
 
   <script src="../js/main.js"></script>
   <script>
-    const SKILLS = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Name | Description.
+       Recommendation copy (RECOS) stays in code for design integrity.
+       ============================================================ */
+    const SHEET_ID = '1hFcjF6AXEeRKEj1HYIkaWsH68IjBA-Fi3eWUVFthkrg';
+    const SHEET_NAME = 'Skills';
+
+    let SKILLS = [
       { name: 'Digital Literacy', desc: 'Using a computer, smartphone, or tablet for everyday tasks — managing files, browsing safely, sending emails, joining a video call.' },
       { name: 'Content Creation', desc: 'Creating teaching materials with digital tools — slides, documents, quizzes, simple videos, infographics.' },
       { name: 'Classroom Pedagogy with Tech', desc: 'Using technology to teach, not just present — group work, peer feedback, formative assessment, differentiated instruction.' },
@@ -367,6 +375,28 @@
       { name: 'Collaboration & Communication', desc: 'Working with other teachers, parents, and students online — shared drives, comments, video meetings, parent updates.' },
       { name: 'Digital Safety & Ethics', desc: 'Keeping students safe online and modelling responsible digital behaviour — passwords, data protection, citation, AI use.' }
     ];
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!v(c[0])) continue;
+          out.push({ name: v(c[0]), desc: v(c[1]) });
+        }
+        if(out.length){
+          SKILLS = out;
+          // Reset ratings to match new skill count
+          while(ratings.length < SKILLS.length) ratings.push(null);
+          ratings.length = SKILLS.length;
+          renderSkills();
+        }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
 
     const LEVEL_DESC = {
       1: 'Novice — needs guided support to begin',
@@ -524,6 +554,7 @@
     });
 
     renderSkills();
+    loadFromSheet();
   </script>
 </body>
 </html>

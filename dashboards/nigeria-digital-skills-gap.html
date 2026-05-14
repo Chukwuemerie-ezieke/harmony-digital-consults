@@ -284,14 +284,66 @@
     Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
     Chart.defaults.color = '#475569';
 
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Sector | Annual_Demand_K | Annual_Supply_K | Mix_Percent |
+                Trend_Year | Demand_Trend | Supply_Trend |
+                Region | Trainees_K
+       Each row carries a slice of each dataset (union layout).
+       Empty cells indicate no value for that dataset on that row.
+       ============================================================ */
+    const SHEET_ID = '1B2Rcw812BQWD8UbS0pBIy37SrqVEZXvErKnU019ZEvA';
+    const SHEET_NAME = 'Sectors';
+
+    // Fallback values (mirror the sheet)
+    let SECTORS  = ['Software Eng.', 'Data & AI', 'Cybersecurity', 'Cloud & DevOps', 'Digital Marketing', 'UI/UX', 'EdTech Specialists'];
+    let DEMAND   = [420, 310, 180, 200, 260, 140, 95];
+    let SUPPLY   = [90, 55, 28, 42, 75, 32, 18];
+    let MIX_LBL  = ['Software Eng.', 'Data & AI', 'Cybersecurity', 'Cloud & DevOps', 'Digital Marketing', 'UI/UX', 'EdTech'];
+    let MIX_PCT  = [28, 19, 12, 14, 16, 7, 4];
+    let YEARS    = ['2022', '2023', '2024', '2025', '2026'];
+    let DEMTREND = [820, 1010, 1230, 1450, 1700];
+    let SUPTREND = [180, 215, 255, 290, 320];
+    let REGIONS  = ['South West', 'South East', 'South South', 'North Central', 'North West', 'North East'];
+    let TRAINEES = [128, 52, 44, 38, 35, 23];
+
+    let chartSector, chartMix, chartRegion, chartTrend;
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const n = c => c && c.v != null && c.v !== '' ? Number(c.v) : null;
+        const sec=[], dem=[], sup=[], mix=[], yrs=[], dt=[], st=[], rg=[], tr=[];
+        for(const r of rows){
+          const c = r.c || [];
+          if(v(c[0])){ sec.push(v(c[0])); dem.push(n(c[1])); sup.push(n(c[2])); mix.push(n(c[3])); }
+          if(v(c[4])){ yrs.push(v(c[4])); dt.push(n(c[5])); st.push(n(c[6])); }
+          if(v(c[7])){ rg.push(v(c[7])); tr.push(n(c[8])); }
+        }
+        if(sec.length){ SECTORS = sec; DEMAND = dem; SUPPLY = sup; MIX_LBL = sec; MIX_PCT = mix; }
+        if(yrs.length){ YEARS = yrs; DEMTREND = dt; SUPTREND = st; }
+        if(rg.length){ REGIONS = rg; TRAINEES = tr; }
+        renderAll();
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
+    function renderAll(){
+      [chartSector, chartMix, chartRegion, chartTrend].forEach(c => c && c.destroy());
+      buildCharts();
+    }
+
+    function buildCharts(){
     // Sector demand vs supply
-    new Chart(document.getElementById('chart-sector'), {
+    chartSector = new Chart(document.getElementById('chart-sector'), {
       type: 'bar',
       data: {
-        labels: ['Software Eng.', 'Data & AI', 'Cybersecurity', 'Cloud & DevOps', 'Digital Marketing', 'UI/UX', 'EdTech Specialists'],
+        labels: SECTORS,
         datasets: [
-          { label: 'Annual demand (k)', backgroundColor: '#01696F', data: [420, 310, 180, 200, 260, 140, 95] },
-          { label: 'Annual supply (k)', backgroundColor: '#F59E0B', data: [90, 55, 28, 42, 75, 32, 18] }
+          { label: 'Annual demand (k)', backgroundColor: '#01696F', data: DEMAND },
+          { label: 'Annual supply (k)', backgroundColor: '#F59E0B', data: SUPPLY }
         ]
       },
       options: {
@@ -302,11 +354,11 @@
     });
 
     // Skill mix doughnut
-    new Chart(document.getElementById('chart-mix'), {
+    chartMix = new Chart(document.getElementById('chart-mix'), {
       type: 'doughnut',
       data: {
-        labels: ['Software Eng.', 'Data & AI', 'Cybersecurity', 'Cloud & DevOps', 'Digital Marketing', 'UI/UX', 'EdTech'],
-        datasets: [{ data: [28, 19, 12, 14, 16, 7, 4], backgroundColor: HARMONY_PALETTE }]
+        labels: MIX_LBL,
+        datasets: [{ data: MIX_PCT, backgroundColor: HARMONY_PALETTE }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
@@ -315,11 +367,11 @@
     });
 
     // Regional distribution
-    new Chart(document.getElementById('chart-region'), {
+    chartRegion = new Chart(document.getElementById('chart-region'), {
       type: 'bar',
       data: {
-        labels: ['South West', 'South East', 'South South', 'North Central', 'North West', 'North East'],
-        datasets: [{ label: 'Trainees (thousands)', backgroundColor: '#02898F', data: [128, 52, 44, 38, 35, 23] }]
+        labels: REGIONS,
+        datasets: [{ label: 'Trainees (thousands)', backgroundColor: '#02898F', data: TRAINEES }]
       },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
@@ -329,13 +381,13 @@
     });
 
     // Trend
-    new Chart(document.getElementById('chart-trend'), {
+    chartTrend = new Chart(document.getElementById('chart-trend'), {
       type: 'line',
       data: {
-        labels: ['2022', '2023', '2024', '2025', '2026'],
+        labels: YEARS,
         datasets: [
-          { label: 'Demand', borderColor: '#01696F', backgroundColor: 'rgba(1,105,111,0.15)', tension: 0.35, fill: true, data: [820, 1010, 1230, 1450, 1700] },
-          { label: 'Supply', borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,0.15)', tension: 0.35, fill: true, data: [180, 215, 255, 290, 320] }
+          { label: 'Demand', borderColor: '#01696F', backgroundColor: 'rgba(1,105,111,0.15)', tension: 0.35, fill: true, data: DEMTREND },
+          { label: 'Supply', borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,0.15)', tension: 0.35, fill: true, data: SUPTREND }
         ]
       },
       options: {
@@ -344,6 +396,10 @@
         scales: { y: { beginAtZero: true, title: { display: true, text: 'Thousands of roles' } } }
       }
     });
+    }
+
+    buildCharts();
+    loadFromSheet();
   </script>
 </body>
 </html>

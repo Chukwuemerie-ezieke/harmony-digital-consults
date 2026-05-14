@@ -382,73 +382,133 @@
     Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
     Chart.defaults.color = '#475569';
 
-    // Top 10 states
-    new Chart(document.getElementById('chart-states'), {
-      type: 'bar',
-      data: {
-        labels: ['Kebbi','Sokoto','Zamfara','Katsina','Jigawa','Yobe','Bauchi','Kano','Borno','Adamawa'],
-        datasets: [{
-          label: '% of children 6–15 out of school',
-          backgroundColor: ['#DC2626','#DC2626','#EA580C','#EA580C','#F59E0B','#F59E0B','#F59E0B','#F59E0B','#FCD34D','#FCD34D'],
-          data: [67.6, 66.4, 62, 58, 57, 55, 52, 48, 45, 42]
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.x + '%' } } },
-        scales: { x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
-      }
-    });
+    const SHEET_ID = '1aftdpUGdEicGHbrnIYnkLBLt4zHgkrh2nQsPVDjnB6Q';
+    const SHEET_NAME = 'Data';
 
-    // Age split
-    new Chart(document.getElementById('chart-age'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Primary age (10.2M)', 'Secondary age (8.1M)'],
-        datasets: [{ data: [10.2, 8.1], backgroundColor: ['#01696F', '#DC2626'] }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ' — ' + ctx.parsed + 'M' } } }
-      }
-    });
+    // Fallback data (used if sheet fetch fails or sheet not shared)
+    let STATES = { labels: ['Kebbi','Sokoto','Zamfara','Katsina','Jigawa','Yobe','Bauchi','Kano','Borno','Adamawa'], data: [67.6, 66.4, 62, 58, 57, 55, 52, 48, 45, 42] };
+    let AGES = { labels: ['Primary age','Secondary age'], data: [10.2, 8.1] };
+    let REGIONS = { labels: ['North West','North East','North Central','South West','South East','South South'], data: [42, 26, 14, 8, 5, 5] };
+    let COUNTRIES = { labels: ['India','Nigeria','Pakistan','Ethiopia'], data: [30, 20.2, 22.7, 10.5] };
 
-    // Regional concentration
-    new Chart(document.getElementById('chart-region'), {
-      type: 'bar',
-      data: {
-        labels: ['North West','North East','North Central','South West','South East','South South'],
-        datasets: [{
-          label: 'Share of out-of-school children (%)',
-          backgroundColor: ['#DC2626','#EA580C','#F59E0B','#01696F','#02898F','#5BC2C7'],
-          data: [42, 26, 14, 8, 5, 5]
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + '%' } } },
-        scales: { y: { beginAtZero: true, max: 50, ticks: { callback: v => v + '%' } } }
-      }
-    });
+    let chartStates, chartAge, chartRegion, chartGlobal;
 
-    // Global context
-    new Chart(document.getElementById('chart-global'), {
-      type: 'bar',
-      data: {
-        labels: ['India','Nigeria','Pakistan','Ethiopia'],
-        datasets: [{
-          label: 'Out-of-school (millions)',
-          backgroundColor: ['#5BC2C7','#01696F','#5BC2C7','#5BC2C7'],
-          data: [30, 20.2, 22.7, 10.5]
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + 'M children & youth' } } },
-        scales: { y: { beginAtZero: true, title: { display: true, text: 'Millions (ages 6–18)' } } }
-      }
-    });
+    function stateColors(n){
+      const palette = ['#DC2626','#DC2626','#EA580C','#EA580C','#F59E0B','#F59E0B','#F59E0B','#F59E0B','#FCD34D','#FCD34D','#FCD34D','#FCD34D'];
+      return Array.from({length:n}, (_,i)=>palette[i] || '#FCD34D');
+    }
+    function regionColors(n){
+      const palette = ['#DC2626','#EA580C','#F59E0B','#01696F','#02898F','#5BC2C7','#7BD3D7','#9BE0E3'];
+      return Array.from({length:n}, (_,i)=>palette[i] || '#5BC2C7');
+    }
+    function countryColors(labels){
+      return labels.map(l => l.toLowerCase() === 'nigeria' ? '#01696F' : '#5BC2C7');
+    }
+
+    function buildCharts(){
+      chartStates = new Chart(document.getElementById('chart-states'), {
+        type: 'bar',
+        data: {
+          labels: STATES.labels,
+          datasets: [{
+            label: '% of children 6–15 out of school',
+            backgroundColor: stateColors(STATES.labels.length),
+            data: STATES.data
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.x + '%' } } },
+          scales: { x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
+        }
+      });
+
+      chartAge = new Chart(document.getElementById('chart-age'), {
+        type: 'doughnut',
+        data: {
+          labels: AGES.labels.map((l,i)=>`${l} (${AGES.data[i]}M)`),
+          datasets: [{ data: AGES.data, backgroundColor: ['#01696F', '#DC2626','#EA580C','#F59E0B'] }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ' — ' + ctx.parsed + 'M' } } }
+        }
+      });
+
+      chartRegion = new Chart(document.getElementById('chart-region'), {
+        type: 'bar',
+        data: {
+          labels: REGIONS.labels,
+          datasets: [{
+            label: 'Share of out-of-school children (%)',
+            backgroundColor: regionColors(REGIONS.labels.length),
+            data: REGIONS.data
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + '%' } } },
+          scales: { y: { beginAtZero: true, max: 50, ticks: { callback: v => v + '%' } } }
+        }
+      });
+
+      chartGlobal = new Chart(document.getElementById('chart-global'), {
+        type: 'bar',
+        data: {
+          labels: COUNTRIES.labels,
+          datasets: [{
+            label: 'Out-of-school (millions)',
+            backgroundColor: countryColors(COUNTRIES.labels),
+            data: COUNTRIES.data
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + 'M children & youth' } } },
+          scales: { y: { beginAtZero: true, title: { display: true, text: 'Millions (ages 6–18)' } } }
+        }
+      });
+    }
+
+    function renderAll(){
+      [chartStates, chartAge, chartRegion, chartGlobal].forEach(c => c && c.destroy());
+      buildCharts();
+    }
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows || [];
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const n = c => c && c.v != null && c.v !== '' ? Number(c.v) : null;
+        const states = {labels:[], data:[]};
+        const ages = {labels:[], data:[]};
+        const regions = {labels:[], data:[]};
+        const countries = {labels:[], data:[]};
+        rows.forEach(r=>{
+          const cells = r.c || [];
+          // Columns: State|Percent_Out|Age_Group|Age_Millions|Region|Region_Share_Percent|Country|Country_Millions
+          const st = v(cells[0]), stPct = n(cells[1]);
+          const ag = v(cells[2]), agM = n(cells[3]);
+          const rg = v(cells[4]), rgPct = n(cells[5]);
+          const co = v(cells[6]), coM = n(cells[7]);
+          if(st && stPct != null){ states.labels.push(st); states.data.push(stPct); }
+          if(ag && agM != null){ ages.labels.push(ag); ages.data.push(agM); }
+          if(rg && rgPct != null){ regions.labels.push(rg); regions.data.push(rgPct); }
+          if(co && coM != null){ countries.labels.push(co); countries.data.push(coM); }
+        });
+        if(states.labels.length) STATES = states;
+        if(ages.labels.length) AGES = ages;
+        if(regions.labels.length) REGIONS = regions;
+        if(countries.labels.length) COUNTRIES = countries;
+        renderAll();
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
+    buildCharts();
+    loadFromSheet();
   </script>
 </body>
 </html>

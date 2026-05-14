@@ -298,7 +298,14 @@
     // Rankings: LMS, Online Programmes, E-Library, Digital Admissions scored 0-25 each (max total 100).
     // Sources verified May 2026: institutional websites + NUC registry + NUC distance-learning centres list.
     // Disclosure: scores reflect visible, publicly verifiable infrastructure — not student usage rates.
-    const DATA = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Name | Type | LMS | Online | ELib | Adm
+       ============================================================ */
+    const SHEET_ID = '17BNfHR5o7evWZ9h79DDJc-sYB76uweU-yb3xVcSOmq4';
+    const SHEET_NAME = 'Universities';
+
+    let DATA = [
       { name:'University of Lagos (UNILAG)', type:'Federal', lms:22, online:23, elib:22, adm:23 },
       { name:'Covenant University', type:'Private', lms:24, online:20, elib:24, adm:24 },
       { name:'University of Ibadan (UI)', type:'Federal', lms:22, online:22, elib:23, adm:22 },
@@ -331,7 +338,30 @@
       { name:'Enugu State University of Sci & Tech (ESUT)', type:'State', lms:16, online:18, elib:15, adm:17 }
     ];
 
-    DATA.forEach(d => d.total = d.lms + d.online + d.elib + d.adm);
+    function applyTotals(){ DATA.forEach(d => d.total = d.lms + d.online + d.elib + d.adm); }
+    applyTotals();
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const n = c => c && c.v != null ? Number(c.v) : 0;
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!v(c[0])) continue;
+          out.push({ name:v(c[0]), type:v(c[1]), lms:n(c[2]), online:n(c[3]), elib:n(c[4]), adm:n(c[5]) });
+        }
+        if(out.length){
+          DATA = out;
+          applyTotals();
+          render();
+          rebuildAggregates();
+        }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
 
     const tbody = document.getElementById('rankBody');
     const typeFilter = document.getElementById('typeFilter');
@@ -364,31 +394,36 @@
     [typeFilter,sortBy,searchBox].forEach(el=>el.addEventListener('input',render));
     render();
 
-    // Type distribution chart
+    let typeChart, dimChart;
     const types = ['Federal','State','Private'];
-    const avgByType = types.map(t=>{
-      const list = DATA.filter(d=>d.type===t);
-      return list.length ? Math.round(list.reduce((s,d)=>s+d.total,0)/list.length) : 0;
-    });
-    new Chart(document.getElementById('typeChart').getContext('2d'),{
-      type:'bar',
-      data:{labels:types, datasets:[{label:'Average Index Score (out of 100)', data:avgByType, backgroundColor:['#01696F','#02898F','#A84B2F'], borderRadius:6}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,ticks:{font:{family:'Plus Jakarta Sans'}}},x:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
-    });
-
-    // Dimension chart
     const dims = ['LMS Use','Online Programmes','E-Library','Digital Admissions'];
-    const avgDim = [
-      Math.round(DATA.reduce((s,d)=>s+d.lms,0)/DATA.length),
-      Math.round(DATA.reduce((s,d)=>s+d.online,0)/DATA.length),
-      Math.round(DATA.reduce((s,d)=>s+d.elib,0)/DATA.length),
-      Math.round(DATA.reduce((s,d)=>s+d.adm,0)/DATA.length)
-    ];
-    new Chart(document.getElementById('dimChart').getContext('2d'),{
-      type:'bar',
-      data:{labels:dims, datasets:[{label:'Average score (out of 25)', data:avgDim, backgroundColor:'#01696F', borderRadius:6}]},
-      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:25,ticks:{font:{family:'Plus Jakarta Sans'}}},y:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
-    });
+
+    function rebuildAggregates(){
+      if(typeChart) typeChart.destroy();
+      if(dimChart) dimChart.destroy();
+      const avgByType = types.map(t=>{
+        const list = DATA.filter(d=>d.type===t);
+        return list.length ? Math.round(list.reduce((s,d)=>s+d.total,0)/list.length) : 0;
+      });
+      typeChart = new Chart(document.getElementById('typeChart').getContext('2d'),{
+        type:'bar',
+        data:{labels:types, datasets:[{label:'Average Index Score (out of 100)', data:avgByType, backgroundColor:['#01696F','#02898F','#A84B2F'], borderRadius:6}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,ticks:{font:{family:'Plus Jakarta Sans'}}},x:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
+      });
+      const avgDim = [
+        Math.round(DATA.reduce((s,d)=>s+d.lms,0)/DATA.length),
+        Math.round(DATA.reduce((s,d)=>s+d.online,0)/DATA.length),
+        Math.round(DATA.reduce((s,d)=>s+d.elib,0)/DATA.length),
+        Math.round(DATA.reduce((s,d)=>s+d.adm,0)/DATA.length)
+      ];
+      dimChart = new Chart(document.getElementById('dimChart').getContext('2d'),{
+        type:'bar',
+        data:{labels:dims, datasets:[{label:'Average score (out of 25)', data:avgDim, backgroundColor:'#01696F', borderRadius:6}]},
+        options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:25,ticks:{font:{family:'Plus Jakarta Sans'}}},y:{ticks:{font:{family:'Plus Jakarta Sans',weight:'600'}}}}}
+      });
+    }
+    rebuildAggregates();
+    loadFromSheet();
   </script>
 </body>
 </html>

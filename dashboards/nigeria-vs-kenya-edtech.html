@@ -310,73 +310,121 @@
     const NG = '#01696F';
     const KE = '#BB0000';
 
-    // Funding trend
-    new Chart(document.getElementById('chart-funding'), {
-      type: 'bar',
-      data: {
-        labels: ['2021','2022','2023','2024','2025'],
-        datasets: [
-          { label: 'Nigeria', backgroundColor: NG, data: [22, 35, 41, 28, 48] },
-          { label: 'Kenya',   backgroundColor: KE, data: [18, 27, 24, 19, 31] }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true, title: { display: true, text: 'USD millions' } } }
-      }
-    });
+    const SHEET_ID = '1AIB-1HoLhtSiVRulF1ZYZS5IhrtzC8Yfy7qqVFn2ENg';
+    const SHEET_NAME = 'Metrics';
 
-    // Sub-sector mix (grouped bar)
-    new Chart(document.getElementById('chart-subsector'), {
-      type: 'bar',
-      data: {
-        labels: ['K-12 Content','Tutoring','LMS/SMS','Workforce/Upskilling','Test Prep','Higher Ed'],
-        datasets: [
-          { label: 'Nigeria %', backgroundColor: NG, data: [32, 18, 14, 15, 13, 8] },
-          { label: 'Kenya %',   backgroundColor: KE, data: [22, 12, 22, 20, 10, 14] }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true, ticks: { callback: v => v + '%' } } }
-      }
-    });
+    // Fallback data (used if sheet fetch fails or sheet not shared)
+    let FUNDING = { labels: ['2021','2022','2023','2024','2025'], ng: [22, 35, 41, 28, 48], ke: [18, 27, 24, 19, 31] };
+    let SUBSECTOR = { labels: ['K-12 Content','Tutoring','LMS/SMS','Workforce/Upskilling','Test Prep','Higher Ed'], ng: [32, 18, 14, 15, 13, 8], ke: [22, 12, 22, 20, 10, 14] };
+    let REACH = { labels: ['Internet %','Smartphone %','Electricity %','Mobile money %','Schools w/ICT %'], ng: [46, 52, 60, 47, 28], ke: [42, 61, 75, 81, 41] };
+    let SPEND = { labels: ['K-12 Students (millions)', 'EdTech Spend per Student (USD/yr)'], ng: [46, 1.0], ke: [14, 2.2] };
 
-    // Reach indicators
-    new Chart(document.getElementById('chart-reach'), {
-      type: 'radar',
-      data: {
-        labels: ['Internet %','Smartphone %','Electricity %','Mobile money %','Schools w/ICT %'],
-        datasets: [
-          { label: 'Nigeria', borderColor: NG, backgroundColor: 'rgba(1,105,111,0.2)', data: [46, 52, 60, 47, 28] },
-          { label: 'Kenya',   borderColor: KE, backgroundColor: 'rgba(187,0,0,0.15)', data: [42, 61, 75, 81, 41] }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { r: { suggestedMin: 0, suggestedMax: 100 } }
-      }
-    });
+    let chartFunding, chartSub, chartReach, chartSpend;
 
-    // Spend per student bubble
-    new Chart(document.getElementById('chart-spend'), {
-      type: 'bar',
-      data: {
-        labels: ['K-12 Students (millions)', 'EdTech Spend per Student (USD/yr)'],
-        datasets: [
-          { label: 'Nigeria', backgroundColor: NG, data: [46, 1.0] },
-          { label: 'Kenya',   backgroundColor: KE, data: [14, 2.2] }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true } }
-      }
-    });
+    function buildCharts(){
+      chartFunding = new Chart(document.getElementById('chart-funding'), {
+        type: 'bar',
+        data: {
+          labels: FUNDING.labels,
+          datasets: [
+            { label: 'Nigeria', backgroundColor: NG, data: FUNDING.ng },
+            { label: 'Kenya',   backgroundColor: KE, data: FUNDING.ke }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: { y: { beginAtZero: true, title: { display: true, text: 'USD millions' } } }
+        }
+      });
+
+      chartSub = new Chart(document.getElementById('chart-subsector'), {
+        type: 'bar',
+        data: {
+          labels: SUBSECTOR.labels,
+          datasets: [
+            { label: 'Nigeria %', backgroundColor: NG, data: SUBSECTOR.ng },
+            { label: 'Kenya %',   backgroundColor: KE, data: SUBSECTOR.ke }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: { y: { beginAtZero: true, ticks: { callback: v => v + '%' } } }
+        }
+      });
+
+      chartReach = new Chart(document.getElementById('chart-reach'), {
+        type: 'radar',
+        data: {
+          labels: REACH.labels,
+          datasets: [
+            { label: 'Nigeria', borderColor: NG, backgroundColor: 'rgba(1,105,111,0.2)', data: REACH.ng },
+            { label: 'Kenya',   borderColor: KE, backgroundColor: 'rgba(187,0,0,0.15)', data: REACH.ke }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: { r: { suggestedMin: 0, suggestedMax: 100 } }
+        }
+      });
+
+      chartSpend = new Chart(document.getElementById('chart-spend'), {
+        type: 'bar',
+        data: {
+          labels: SPEND.labels,
+          datasets: [
+            { label: 'Nigeria', backgroundColor: NG, data: SPEND.ng },
+            { label: 'Kenya',   backgroundColor: KE, data: SPEND.ke }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    function renderAll(){
+      [chartFunding, chartSub, chartReach, chartSpend].forEach(c => c && c.destroy());
+      buildCharts();
+    }
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows || [];
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const n = c => c && c.v != null && c.v !== '' ? Number(c.v) : null;
+        // Columns: Year|Funding_NG|Funding_KE|Subsector|Sub_NG|Sub_KE|Reach|Reach_NG|Reach_KE|Spend|Spend_NG|Spend_KE
+        const funding = {labels:[], ng:[], ke:[]};
+        const sub = {labels:[], ng:[], ke:[]};
+        const reach = {labels:[], ng:[], ke:[]};
+        const spend = {labels:[], ng:[], ke:[]};
+        rows.forEach(r=>{
+          const c = r.c || [];
+          const yr = v(c[0]), fNg = n(c[1]), fKe = n(c[2]);
+          const ss = v(c[3]), sNg = n(c[4]), sKe = n(c[5]);
+          const rch = v(c[6]), rNg = n(c[7]), rKe = n(c[8]);
+          const sp = v(c[9]), spNg = n(c[10]), spKe = n(c[11]);
+          if(yr && fNg != null && fKe != null){ funding.labels.push(yr); funding.ng.push(fNg); funding.ke.push(fKe); }
+          if(ss && sNg != null && sKe != null){ sub.labels.push(ss); sub.ng.push(sNg); sub.ke.push(sKe); }
+          if(rch && rNg != null && rKe != null){ reach.labels.push(rch); reach.ng.push(rNg); reach.ke.push(rKe); }
+          if(sp && spNg != null && spKe != null){ spend.labels.push(sp); spend.ng.push(spNg); spend.ke.push(spKe); }
+        });
+        if(funding.labels.length) FUNDING = funding;
+        if(sub.labels.length) SUBSECTOR = sub;
+        if(reach.labels.length) REACH = reach;
+        if(spend.labels.length) SPEND = spend;
+        renderAll();
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
+    buildCharts();
+    loadFromSheet();
   </script>
 </body>
 </html>

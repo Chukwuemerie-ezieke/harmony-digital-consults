@@ -390,7 +390,15 @@
 
   <script src="../js/main.js"></script>
   <script>
-    const PLATFORMS = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Name | Use | Budget | Host | Pricing | Best | Highlights | URL
+       Use/Highlights are pipe-delimited (|) within a single cell.
+       ============================================================ */
+    const SHEET_ID = '1GdWmkN5sPIfQivzkjRzHxUMKHQueqGpe263Nl5VcoaE';
+    const SHEET_NAME = 'Platforms';
+
+    let PLATFORMS = [
       { name: 'Moodle', use: ['school','higher','corporate'], budget: 'free', host: 'self',
         pricing: 'Free (self-host); MoodleCloud from $130/year',
         best: 'Schools & universities wanting full control',
@@ -443,6 +451,31 @@
         url: 'https://instructure.com/canvas' }
     ];
 
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!v(c[0])) continue;
+          out.push({
+            name: v(c[0]),
+            use: v(c[1]).split('|').map(s=>s.trim()).filter(Boolean),
+            budget: v(c[2]),
+            host: v(c[3]),
+            pricing: v(c[4]),
+            best: v(c[5]),
+            highlights: v(c[6]).split('|').map(s=>s.trim()).filter(Boolean),
+            url: v(c[7])
+          });
+        }
+        if(out.length){ PLATFORMS = out; render(); }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
     function budgetLabel(b) {
       return { free: 'Free / Freemium', low: 'Low (<$30/mo)', mid: 'Mid ($30–$150/mo)', high: 'High ($150+/mo)' }[b] || b;
     }
@@ -486,6 +519,7 @@
     document.getElementById('f-host').addEventListener('change', render);
     document.getElementById('f-search').addEventListener('input', render);
     render();
+    loadFromSheet();
 
     // Recommender
     document.getElementById('reco-btn').addEventListener('click', () => {

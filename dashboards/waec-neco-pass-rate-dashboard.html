@@ -320,11 +320,48 @@
     Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
     Chart.defaults.color = '#475569';
 
-    const YEARS = ['2019', '2020', '2021', '2022', '2023', '2024', '2025'];
-    const WAEC = [64.18, 65.24, 81.70, 76.36, 79.81, 72.12, 62.96];
-    const NECO = [null, null, null, 60.00, 61.60, 60.55, 60.26];
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       To update: edit the sheet. Page reloads pull new values.
+       Columns: Year | WAEC_Percent | NECO_Percent | WAEC_Candidates_Millions
+       ============================================================ */
+    const SHEET_ID = '1qWdEp-BXT3vxhEU9S0ckPFVwBpSi_ZaMhhqLnegdWlM';
+    const SHEET_NAME = 'Rates';
 
-    new Chart(document.getElementById('chart-trend'), {
+    // Fallback values (mirror the sheet)
+    let YEARS = ['2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+    let WAEC = [64.18, 65.24, 81.70, 76.36, 79.81, 72.12, 62.96];
+    let NECO = [null, null, null, 60.00, 61.60, 60.55, 60.26];
+    let WAEC_VOL = [1.59, 1.54, 1.56, 1.60, 1.60, 1.81, 1.97];
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const num = c => c && c.v != null && c.v !== '' ? Number(c.v) : null;
+        const txtv = c => c && c.v != null ? String(c.v) : null;
+        const ys=[], wa=[], ne=[], vol=[];
+        for(const r of rows){
+          const c = r.c || [];
+          const y = txtv(c[0]); if(!y) continue;
+          ys.push(y); wa.push(num(c[1])); ne.push(num(c[2])); vol.push(num(c[3]));
+        }
+        if(ys.length){ YEARS=ys; WAEC=wa; NECO=ne; WAEC_VOL=vol; renderAll(); }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
+    let trendChart, volChart;
+
+    function renderAll(){
+      if(trendChart) trendChart.destroy();
+      if(volChart) volChart.destroy();
+      buildTrend();
+      buildVolume();
+    }
+
+    function buildTrend(){
+    trendChart = new Chart(document.getElementById('chart-trend'), {
       type: 'line',
       data: {
         labels: YEARS,
@@ -345,12 +382,15 @@
       }
     });
 
-    new Chart(document.getElementById('chart-volume'), {
+    }
+
+    function buildVolume(){
+    volChart = new Chart(document.getElementById('chart-volume'), {
       type: 'bar',
       data: {
         labels: YEARS,
         datasets: [{ label: 'WAEC candidates (millions)', backgroundColor: '#02898F',
-          data: [1.59, 1.54, 1.56, 1.60, 1.60, 1.81, 1.97] }]
+          data: WAEC_VOL }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
@@ -358,6 +398,10 @@
         scales: { y: { beginAtZero: true, title: { display: true, text: 'Candidates (millions)' } } }
       }
     });
+    }
+
+    renderAll();
+    loadFromSheet();
   </script>
 </body>
 </html>

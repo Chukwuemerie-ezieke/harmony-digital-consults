@@ -326,7 +326,19 @@
 
   <script src="../js/main.js"></script>
   <script>
-    const QUESTIONS = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Category | Question | Hint |
+                Option1_Label | Option1_Score |
+                Option2_Label | Option2_Score |
+                Option3_Label | Option3_Score |
+                Option4_Label | Option4_Score
+       Tiers and recommendations stay in code for design integrity.
+       ============================================================ */
+    const SHEET_ID = '1ACAeS45RzCgD7kdIJMv0qJ8k1nb56PiWAgxookhZF1Q';
+    const SHEET_NAME = 'Questions';
+
+    let QUESTIONS = [
       { cat: 'Devices', text: 'How many functional student devices (laptop, tablet, or shared computer) does the school have per 10 students?',
         hint: 'Count devices in regular educational use this term.',
         options: [
@@ -408,6 +420,41 @@
           { label: 'Leadership sets ICT strategy and tracks KPIs', score: 10 } ]
       }
     ];
+
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const n = c => c && c.v != null ? Number(c.v) : 0;
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!v(c[0])) continue;
+          out.push({
+            cat: v(c[0]),
+            text: v(c[1]),
+            hint: v(c[2]),
+            options: [
+              { label: v(c[3]),  score: n(c[4]) },
+              { label: v(c[5]),  score: n(c[6]) },
+              { label: v(c[7]),  score: n(c[8]) },
+              { label: v(c[9]),  score: n(c[10]) }
+            ]
+          });
+        }
+        if(out.length){
+          QUESTIONS = out;
+          // Reset assessment state
+          while(answers.length < QUESTIONS.length) answers.push(null);
+          answers.length = QUESTIONS.length;
+          for(let i=0;i<answers.length;i++) answers[i] = null;
+          idx = 0;
+          renderQuestion();
+        }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
 
     const TIERS = [
       { min: 0,  max: 30,  name: 'Emerging',    cls: 'tier-emerging',
@@ -537,6 +584,7 @@
     });
 
     renderQuestion();
+    loadFromSheet();
   </script>
 </body>
 </html>

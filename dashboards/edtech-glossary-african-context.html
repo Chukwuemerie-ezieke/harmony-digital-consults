@@ -194,7 +194,14 @@
   <script src="../js/main.js"></script>
   <script>
     // Tag types: pedagogy | tech | policy
-    const TERMS = [
+    /* ============================================================
+       Data source: Google Sheet (anyone-with-link read-only).
+       Columns: Term | Tag (pedagogy|tech|policy) | Definition
+       ============================================================ */
+    const SHEET_ID = '1bP6HRx_R3jYm8pDa0dLv6KmjtRNTeriwEG_laEqS1m0';
+    const SHEET_NAME = 'Terms';
+
+    let TERMS = [
       // A
       {t:'Adaptive Learning',tag:'tech',d:'Software that adjusts content difficulty and sequence in real time based on each learner\'s performance — often used in maths and language platforms.'},
       {t:'Andragogy',tag:'pedagogy',d:'The theory and methods of teaching adults — relevant for university distance learning, professional development, and TVET programmes.'},
@@ -314,6 +321,25 @@
       {t:'Zero-Rating',tag:'policy',d:'When a telecom operator allows access to specific educational sites without consuming a user\'s data plan. Has been piloted in Nigeria for COVID-era learning portals.'},
     ];
 
+    function loadFromSheet(){
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      return fetch(url).then(r=>r.text()).then(txt=>{
+        const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        const rows = json.table.rows;
+        const v = c => c && c.v != null ? String(c.v) : '';
+        const out = [];
+        for(const r of rows){
+          const c = r.c || [];
+          if(!v(c[0])) continue;
+          out.push({ t: v(c[0]), tag: v(c[1]), d: v(c[2]) });
+        }
+        if(out.length){
+          TERMS = out.sort((a,b) => a.t.localeCompare(b.t));
+          render(document.getElementById('searchBox').value || '');
+        }
+      }).catch(err=>console.warn('Sheet fetch failed, using fallback:', err));
+    }
+
     // Group by letter
     function groupByLetter(list){
       const groups={};
@@ -377,6 +403,7 @@
 
     document.getElementById('searchBox').addEventListener('input', e => render(e.target.value));
     render();
+    loadFromSheet();
   </script>
 </body>
 </html>
