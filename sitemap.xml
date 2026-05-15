@@ -105,6 +105,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ACIF — AI Content Integrity Framework -->
+  <url>
+    <loc>https://harmonydigitalconsults.com.ng/acif.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Harmony TimeGrid -->
   <url>
     <loc>https://harmonydigitalconsults.com.ng/timegrid.html</loc>
