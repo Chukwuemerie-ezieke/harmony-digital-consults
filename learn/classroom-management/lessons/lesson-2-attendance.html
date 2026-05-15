@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 2: Attendance & Punctuality · Harmony Learn</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/course.css">
+</head>
+<body>
+  <div id="hlTopbar"></div>
+  <div class="hl-layout">
+    <div id="hlSidebarMount"></div>
+    <main class="hl-main">
+      <nav class="hl-breadcrumb">
+        <a href="../../../index.html">Home</a>
+        <span class="hl-breadcrumb__sep">/</span>
+        <a href="../index.html">Classroom Management</a>
+        <span class="hl-breadcrumb__sep">/</span>
+        <span>Unit 2</span>
+      </nav>
+
+      <span class="hl-eyebrow">Unit 2 of 7</span>
+      <h1 class="hl-h1">Attendance & Punctuality</h1>
+      <p class="hl-lead">Replace the 7-minute morning roll call with a 30-second digital check-in. Spot late-coming patterns before they become habits. Send a same-day text to any parent whose child is absent — automatically.</p>
+      <div class="hl-meta">
+        <span class="hl-meta__item">⏱ 50 minutes</span>
+        <span class="hl-meta__item">📊 Beginner</span>
+        <span class="hl-meta__item">🎯 4 learning objectives</span>
+      </div>
+
+      <article class="hl-content">
+
+        <section id="objectives">
+          <h2>Learning objectives</h2>
+          <ol>
+            <li>Run digital attendance in under one minute per period.</li>
+            <li>Spot punctuality patterns using a simple spreadsheet.</li>
+            <li>Build a same-day "your child is absent" parent workflow.</li>
+            <li>Handle the most common attendance edge cases (sickness, school events, exam days).</li>
+          </ol>
+        </section>
+
+        <section id="why-attendance">
+          <h2>Why attendance is a management problem, not a paperwork problem</h2>
+          <p>Every minute of roll call is a minute pupils are unsupervised. Most behaviour incidents in primary and JSS classrooms happen in the first 10 minutes — exactly when teachers are still calling names. Cut roll-call to 30 seconds and you reclaim 4 hours per week.</p>
+          <p>More importantly: late-coming and absenteeism are leading indicators of disengagement. A pupil who comes late 3 days in one week needs a conversation. A pupil who comes late 8 days in one term may need a home visit.</p>
+        </section>
+
+        <section id="form-method">
+          <h2>The Google Form method — 30 seconds, every period</h2>
+          <ol>
+            <li>Create one Google Form titled "JSS1A Attendance".</li>
+            <li>Question 1: Date (auto-fill with today).</li>
+            <li>Question 2: Period (dropdown — Morning, After Break, Afternoon).</li>
+            <li>Question 3: <em>Multiple choice grid</em> — rows = pupil names, columns = Present, Absent, Late.</li>
+            <li>Link the Form to a Google Sheet — every submission becomes a row automatically.</li>
+            <li>Pin the Form link on your phone home screen. Tap, fill, submit — 30 seconds.</li>
+          </ol>
+          <div class="hl-callout">
+            <p class="hl-callout__title">💡 Pro tip</p>
+            <p>Get your class prefect to fill it during morning prayer. They love the responsibility, and you keep the master record on Drive.</p>
+          </div>
+        </section>
+
+        <section id="patterns">
+          <h2>Reading the patterns</h2>
+          <p>Once a week, open the linked Google Sheet. Use a pivot table (Insert → Pivot table) to ask one question:</p>
+          <blockquote>"How many times has each pupil been Late or Absent in the last 7 days?"</blockquote>
+          <p>Three numbers to act on:</p>
+          <ul>
+            <li><strong>0–1 late/absent days:</strong> No action.</li>
+            <li><strong>2–3 late/absent days:</strong> Quick chat with pupil. Note the reason.</li>
+            <li><strong>4+ late/absent days:</strong> Phone the parent. Document the call in your incident log (Unit 4).</li>
+          </ul>
+        </section>
+
+        <section id="parent-workflow">
+          <h2>Same-day "your child is absent" workflow</h2>
+          <p>Parents should know <em>the same day</em>, not at the next PTA. Two ways:</p>
+          <ol>
+            <li><strong>Manual (5 minutes):</strong> Filter the sheet for "Absent" rows today. Copy each parent's name into a WhatsApp Business template: <em>"Good morning Mrs Adeyemi — Tunde was absent from school today. Please let us know if he is well. — JSS1A teacher."</em></li>
+            <li><strong>Automated (advanced):</strong> Use a free Google Sheets script (or Zapier free tier) that sends an SMS via Termii or BulkSMSNigeria whenever an "Absent" row is added. We cover the setup in Unit 5.</li>
+          </ol>
+        </section>
+
+        <section id="edge-cases">
+          <h2>Edge cases you'll meet every term</h2>
+          <table>
+            <thead><tr><th>Situation</th><th>How to mark it</th></tr></thead>
+            <tbody>
+              <tr><td>Pupil sick (parent informed)</td><td>"Absent — Excused". Note reason in a second column.</td></tr>
+              <tr><td>School-approved event (sports, debate)</td><td>"Present — Off-site". Counts towards attendance.</td></tr>
+              <tr><td>Late by 5–10 minutes</td><td>"Late". Counts as present, but tracked for pattern detection.</td></tr>
+              <tr><td>Late after 30 minutes</td><td>"Absent — Late entry". Pupil signs into the late book; parent notified.</td></tr>
+              <tr><td>Exam day, pupil absent</td><td>Standard "Absent" plus a flag in your incident log — exam absences are formal.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="demo">
+          <div class="hl-callout hl-callout--demo">
+            <p class="hl-callout__title">🎬 Demo — 5-minute setup</p>
+            <p><strong>Step 1:</strong> Open <a href="https://forms.google.com" target="_blank" rel="noopener">forms.google.com</a>, create a new form. Title it "JSS1A Attendance". 30 seconds.</p>
+            <p><strong>Step 2:</strong> Add a "Multiple choice grid" with pupil names as rows and Present/Absent/Late as columns. 2 minutes.</p>
+            <p><strong>Step 3:</strong> Click <em>Responses</em> tab → green Sheets icon → "Create new spreadsheet". 30 seconds.</p>
+            <p><strong>Step 4:</strong> Copy the form link → save as a bookmark on your phone home screen. 1 minute.</p>
+            <p><strong>Total:</strong> 4 minutes. From tomorrow morning, attendance takes 30 seconds.</p>
+          </div>
+        </section>
+
+        <section id="exercise">
+          <div class="hl-callout hl-callout--exercise">
+            <p class="hl-callout__title">✍ Exercise 2.1 — Build your attendance system</p>
+            <p>Before next Monday:</p>
+            <ol>
+              <li>Build the attendance Form for one class.</li>
+              <li>Link it to a Sheet.</li>
+              <li>Run it for one full week.</li>
+              <li>On Friday, open the Sheet and identify any pupil with 2+ late/absent days. Plan your follow-up.</li>
+            </ol>
+            <p><strong>Deliverable:</strong> A screenshot of your Friday pivot summary saved to your "Term 1 — culture pack" folder.</p>
+          </div>
+        </section>
+
+        <section id="knowledge-check">
+          <h2>Knowledge check</h2>
+          <div class="hl-quiz" data-pass-mark="75" data-on-pass="mark-lesson">
+            <div class="hl-quiz__head"><span class="hl-quiz__badge">⚡ Knowledge check</span></div>
+            <h3 class="hl-quiz__title">Unit 2 — Attendance & Punctuality</h3>
+            <p class="hl-quiz__intro">4 questions. Choose the best answer for each.</p>
+
+            <div class="hl-q" data-correct="C">
+              <p class="hl-q__num">Question 1 of 4</p>
+              <p class="hl-q__text">According to this unit, attendance is primarily:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q1" value="A"> <span>A government paperwork requirement only</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="B"> <span>A way to please school inspectors</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="C"> <span>A management problem that signals engagement</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="D"> <span>Not the teacher's responsibility</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is C."></div>
+            </div>
+
+            <div class="hl-q" data-correct="B">
+              <p class="hl-q__num">Question 2 of 4</p>
+              <p class="hl-q__text">Which Google Form question type works best for marking a whole class at once?</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q2" value="A"> <span>Paragraph</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="B"> <span>Multiple choice grid</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="C"> <span>File upload</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="D"> <span>Linear scale</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is B."></div>
+            </div>
+
+            <div class="hl-q" data-correct="A">
+              <p class="hl-q__num">Question 3 of 4</p>
+              <p class="hl-q__text">A pupil has been late 4 times in one week. The right action is:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q3" value="A"> <span>Phone the parent and log the call</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="B"> <span>Ignore — they are still attending</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="C"> <span>Suspend the pupil from school</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="D"> <span>Wait until the end of term</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is A."></div>
+            </div>
+
+            <div class="hl-q" data-correct="D">
+              <p class="hl-q__num">Question 4 of 4</p>
+              <p class="hl-q__text">A pupil who arrives 40 minutes after school start is best marked as:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q4" value="A"> <span>Present</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="B"> <span>Late only</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="C"> <span>Truant</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="D"> <span>Absent — Late entry, with parent notified</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is D."></div>
+            </div>
+
+            <div class="hl-quiz__submit">
+              <button class="hl-btn hl-quiz__submit-btn" type="button">Check my answers</button>
+              <button class="hl-btn hl-btn--outline hl-quiz__reset-btn" type="button">Reset</button>
+              <span class="hl-quiz__result"></span>
+            </div>
+          </div>
+        </section>
+
+        <section id="summary">
+          <h2>Unit summary</h2>
+          <ul>
+            <li>Roll call should take 30 seconds, not 7 minutes.</li>
+            <li>A Google Form + linked Sheet does the job for free.</li>
+            <li>Weekly pivot table = pattern detection in under a minute.</li>
+            <li>Same-day parent notification turns attendance into prevention.</li>
+          </ul>
+          <div style="margin-top:20px;">
+            <button id="hlMarkComplete" class="hl-btn">Mark this unit complete</button>
+          </div>
+        </section>
+
+      </article>
+
+      <div id="hlPagerMount"></div>
+    </main>
+    <div id="hlRightbarMount"></div>
+  </div>
+
+  <script src="../js/course.js"></script>
+  <script>
+    HarmonyLearn.initLesson('lesson-2-attendance', [
+      { id: 'objectives', title: 'Learning objectives' },
+      { id: 'why-attendance', title: 'Why it matters' },
+      { id: 'form-method', title: 'The Google Form method' },
+      { id: 'patterns', title: 'Reading the patterns' },
+      { id: 'parent-workflow', title: 'Parent workflow' },
+      { id: 'edge-cases', title: 'Edge cases' },
+      { id: 'demo', title: 'Demo' },
+      { id: 'exercise', title: 'Exercise 2.1' },
+      { id: 'knowledge-check', title: 'Knowledge check' },
+      { id: 'summary', title: 'Unit summary' }
+    ]);
+  </script>
+</body>
+</html>
