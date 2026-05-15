@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 2: Prompt Engineering for Teachers · Harmony Learn</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/course.css">
+</head>
+<body>
+  <div id="hlTopbar"></div>
+  <div class="hl-layout">
+    <div id="hlSidebarMount"></div>
+    <main class="hl-main">
+      <nav class="hl-breadcrumb">
+        <a href="../../../index.html">Home</a>
+        <span class="hl-breadcrumb__sep">/</span>
+        <a href="../index.html">AI in Education</a>
+        <span class="hl-breadcrumb__sep">/</span>
+        <span>Unit 2</span>
+      </nav>
+
+      <span class="hl-eyebrow">Unit 2 of 6</span>
+      <h1 class="hl-h1">Prompt Engineering for Teachers</h1>
+      <p class="hl-lead">Most teachers get poor results from AI because their prompts are too vague. In this unit you'll learn a four-part framework that turns a one-line request into a classroom-ready response, every time.</p>
+      <div class="hl-meta">
+        <span class="hl-meta__item">⏱ 55 minutes</span>
+        <span class="hl-meta__item">📊 Beginner</span>
+        <span class="hl-meta__item">🎯 4 learning objectives</span>
+      </div>
+
+      <article class="hl-content">
+
+        <section id="objectives">
+          <h2>Learning objectives</h2>
+          <ol>
+            <li>Write clear, specific prompts that produce classroom-ready output.</li>
+            <li>Apply the R.O.C.C. framework (Role, Objective, Context, Constraints).</li>
+            <li>Refine and iterate prompts to improve quality.</li>
+            <li>Save and reuse prompt templates.</li>
+          </ol>
+        </section>
+
+        <section id="bad-prompts">
+          <h2>Why most teachers get bad results</h2>
+          <p>Vague prompts produce vague answers. Look at the difference:</p>
+          <table>
+            <thead><tr><th>Weak prompt</th><th>What you get</th></tr></thead>
+            <tbody>
+              <tr><td>"Write a lesson on fractions."</td><td>A generic, American-style, 25-minute lesson with no examples your students will recognise.</td></tr>
+              <tr><td>"Make a quiz on electricity."</td><td>10 random questions, no answer key, no difficulty levels, written for whom?</td></tr>
+              <tr><td>"Explain photosynthesis."</td><td>A textbook paragraph in adult English with no concrete example.</td></tr>
+            </tbody>
+          </table>
+          <p>The fix isn't a better AI tool. It's a better prompt.</p>
+        </section>
+
+        <section id="rocc">
+          <h2>The R.O.C.C. framework</h2>
+          <p>Every prompt should include these four pieces, in roughly this order:</p>
+          <h3>R — Role</h3>
+          <p>Who should the AI be? Give it a job title.</p>
+          <p><em>"Act as a JSS2 Biology teacher in Lagos…"</em></p>
+
+          <h3>O — Objective</h3>
+          <p>What exactly do you want it to produce? Be concrete.</p>
+          <p><em>"…create a 40-minute lesson plan…"</em></p>
+
+          <h3>C — Context</h3>
+          <p>Who are your students? What's the setting?</p>
+          <p><em>"…for a class of 45 students with mixed ability, in a school with limited materials…"</em></p>
+
+          <h3>C — Constraints</h3>
+          <p>What rules must it follow? Length, language, format, examples.</p>
+          <p><em>"…use only locally available materials, simple English, 3 group activities, and end with 5 evaluation questions in Nigerian context."</em></p>
+
+          <div class="hl-callout">
+            <p class="hl-callout__title">💡 Putting it together</p>
+            <p>"Act as a Primary 5 Mathematics teacher in Nigeria. Create a 35-minute lesson plan on adding fractions with the same denominator. My class has 50 pupils. Include learning objectives, materials (chalk, cardboard, bottle caps), 3 activities, and 5 evaluation questions. Use Nigerian Naira and local food examples like jollof rice portions."</p>
+          </div>
+        </section>
+
+        <section id="iterative">
+          <h2>Iterative prompting</h2>
+          <p>Treat AI like a junior assistant. The first draft is rarely the last draft. After you get a response, just keep talking to it:</p>
+          <ul>
+            <li>"Now make the activities harder."</li>
+            <li>"Add 3 more questions, this time at Bloom's <em>Apply</em> level."</li>
+            <li>"Rewrite the lesson plan to fit 30 minutes instead of 40."</li>
+            <li>"Now produce the same lesson plan as a one-page student note."</li>
+          </ul>
+          <p>Each follow-up costs you 10 seconds and saves you 15 minutes of editing.</p>
+        </section>
+
+        <section id="few-shot">
+          <h2>Few-shot prompting (advanced)</h2>
+          <p>If you have an example of <em>exactly</em> what you want, paste it in:</p>
+          <blockquote>"Write a 5-question quiz on the topic 'Living and Non-living Things' for JSS1. Format each question exactly like this example: <br><em>1. Which of the following is a living thing? (a) Stone (b) Cassava plant (c) Cup (d) Pen</em>"</blockquote>
+          <p>The AI will copy your format precisely. This is the fastest way to get consistent output across many quizzes or worksheets.</p>
+        </section>
+
+        <section id="library">
+          <h2>Building your prompt library</h2>
+          <p>Save your best prompts in one place — a Google Doc, Notion page, or even a WhatsApp note to yourself. Group them by purpose:</p>
+          <ul>
+            <li><strong>Lesson plan</strong> (one per subject)</li>
+            <li><strong>Quiz / worksheet</strong> (with answer key)</li>
+            <li><strong>Rubric</strong></li>
+            <li><strong>Parent letter / progress update</strong></li>
+            <li><strong>Scheme of work expansion</strong></li>
+            <li><strong>Student note / handout</strong></li>
+          </ul>
+          <p>Over six months, you'll build a library of 20–30 reusable prompts. Monday morning planning then takes 25 minutes instead of 3 hours.</p>
+        </section>
+
+        <section id="demo">
+          <div class="hl-callout hl-callout--demo">
+            <p class="hl-callout__title">🎬 Demo — Side-by-side comparison</p>
+            <p>Open ChatGPT. Submit the weak prompt first, then the strong one:</p>
+            <p><strong>Weak:</strong> "Write a lesson on fractions."</p>
+            <p><strong>Strong (R.O.C.C.):</strong> "Act as a Primary 5 Mathematics teacher in Nigeria. Create a 35-minute lesson plan on adding fractions with the same denominator. My class has 50 pupils. Include learning objectives, materials (chalk, cardboard, bottle caps), 3 activities, and 5 evaluation questions. Use Nigerian Naira and local food examples like jollof rice portions."</p>
+            <p>Compare the two outputs. The R.O.C.C. version will be 3–4× longer and immediately usable. That's the gap that costs teachers hours every week.</p>
+          </div>
+        </section>
+
+        <section id="exercise">
+          <div class="hl-callout hl-callout--exercise">
+            <p class="hl-callout__title">✍ Exercise 2.1 — Prompt makeover</p>
+            <p>Rewrite each weak prompt using the R.O.C.C. framework:</p>
+            <ol>
+              <li>"Write a quiz on Civic Education."</li>
+              <li>"Explain electricity."</li>
+              <li>"Make a poem for children."</li>
+            </ol>
+            <p><strong>Deliverable:</strong> 3 rewritten prompts + the AI output for one of them, in your workbook.</p>
+          </div>
+        </section>
+
+        <section id="knowledge-check">
+          <h2>Knowledge check</h2>
+          <div class="hl-quiz" data-pass-mark="75" data-on-pass="mark-lesson">
+            <div class="hl-quiz__head"><span class="hl-quiz__badge">⚡ Knowledge check</span></div>
+            <h3 class="hl-quiz__title">Unit 2 — Prompt Engineering</h3>
+            <p class="hl-quiz__intro">4 questions. Choose the best answer for each.</p>
+
+            <div class="hl-q" data-correct="B">
+              <p class="hl-q__num">Question 1 of 4</p>
+              <p class="hl-q__text">The R.O.C.C. framework stands for:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q1" value="A"> <span>Read, Output, Check, Confirm</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="B"> <span>Role, Objective, Context, Constraints</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="C"> <span>Repeat, Order, Create, Copy</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q1" value="D"> <span>Review, Organise, Compare, Conclude</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is B — Role, Objective, Context, Constraints."></div>
+            </div>
+
+            <div class="hl-q" data-correct="C">
+              <p class="hl-q__num">Question 2 of 4</p>
+              <p class="hl-q__text">A teacher writes: "Write a quiz on photosynthesis." This prompt is weak mainly because it lacks:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q2" value="A"> <span>Politeness</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="B"> <span>Grammar</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="C"> <span>Role, context, and constraints</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q2" value="D"> <span>An exclamation mark</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right — it has only an objective." data-wrong-msg="The correct answer is C. The prompt names an objective but provides no role, context, or constraints."></div>
+            </div>
+
+            <div class="hl-q" data-correct="A">
+              <p class="hl-q__num">Question 3 of 4</p>
+              <p class="hl-q__text">Few-shot prompting means:</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q3" value="A"> <span>Giving the AI an example of the output format you want</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="B"> <span>Only writing short prompts</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="C"> <span>Asking the AI to be brief</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q3" value="D"> <span>Using the AI only a few times per day</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right." data-wrong-msg="The correct answer is A. Few-shot means providing one or more examples so the AI mimics your desired format."></div>
+            </div>
+
+            <div class="hl-q" data-correct="D">
+              <p class="hl-q__num">Question 4 of 4</p>
+              <p class="hl-q__text">After receiving an AI lesson plan, you realise it's too long. What should you do?</p>
+              <div class="hl-q__opts">
+                <label class="hl-q__opt"><input type="radio" name="q4" value="A"> <span>Start a new prompt from scratch</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="B"> <span>Give up and write it yourself</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="C"> <span>Ask a different AI tool</span></label>
+                <label class="hl-q__opt"><input type="radio" name="q4" value="D"> <span>Reply: "Now shorten this to fit 30 minutes."</span></label>
+              </div>
+              <div class="hl-q__feedback" data-correct-msg="✓ Right — that's iterative prompting." data-wrong-msg="The correct answer is D. Iterative follow-ups are faster than restarting."></div>
+            </div>
+
+            <div class="hl-quiz__submit">
+              <button class="hl-btn hl-quiz__submit-btn" type="button">Check my answers</button>
+              <button class="hl-btn hl-btn--outline hl-quiz__reset-btn" type="button">Reset</button>
+              <span class="hl-quiz__result"></span>
+            </div>
+          </div>
+        </section>
+
+        <section id="summary">
+          <h2>Unit summary</h2>
+          <ul>
+            <li>R.O.C.C. = Role, Objective, Context, Constraints — use it on every prompt.</li>
+            <li>Iterative prompting beats starting over.</li>
+            <li>Few-shot examples force consistent formatting.</li>
+            <li>A personal prompt library compounds into real time-savings.</li>
+          </ul>
+          <div style="margin-top:20px;">
+            <button id="hlMarkComplete" class="hl-btn">Mark this unit complete</button>
+          </div>
+        </section>
+
+      </article>
+
+      <div id="hlPagerMount"></div>
+    </main>
+    <div id="hlRightbarMount"></div>
+  </div>
+
+  <script src="../js/course.js"></script>
+  <script>
+    HarmonyLearn.initLesson('lesson-2-prompt-engineering', [
+      { id: 'objectives', title: 'Learning objectives' },
+      { id: 'bad-prompts', title: 'Why most teachers get bad results' },
+      { id: 'rocc', title: 'The R.O.C.C. framework' },
+      { id: 'iterative', title: 'Iterative prompting' },
+      { id: 'few-shot', title: 'Few-shot prompting' },
+      { id: 'library', title: 'Building your prompt library' },
+      { id: 'demo', title: 'Demo' },
+      { id: 'exercise', title: 'Exercise 2.1' },
+      { id: 'knowledge-check', title: 'Knowledge check' },
+      { id: 'summary', title: 'Unit summary' }
+    ]);
+  </script>
+</body>
+</html>

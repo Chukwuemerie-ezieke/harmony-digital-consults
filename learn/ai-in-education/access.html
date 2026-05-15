@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Course · AI in Education · Harmony Learn</title>
+  <meta name="description" content="Enter your access code to start the AI-Assisted Content Creation course.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/course.css">
+</head>
+<body>
+  <main class="hl-gate">
+    <div class="hl-gate__card">
+      <div class="hl-gate__logo">
+        <img src="../../images/logo.png" alt="Harmony">
+        <span>Harmony Learn</span>
+      </div>
+      <h1>Access your course</h1>
+      <p>Enter the access code from your welcome email to start learning. The code unlocks this course on this device only — you can use the same code on as many devices as you like.</p>
+      <div class="hl-gate__error" id="hlGateError" role="alert"></div>
+      <form id="hlGateForm" autocomplete="off">
+        <div class="hl-gate__field">
+          <label for="hlGateCode">Access code</label>
+          <input id="hlGateCode" type="text" placeholder="HDC-AI-XXXXXX" required autofocus spellcheck="false">
+        </div>
+        <button type="submit" class="hl-btn hl-gate__btn">Start learning →</button>
+      </form>
+      <div class="hl-gate__footer">
+        Don't have a code? <a href="../../ai-in-education-program.html#register">Register for the programme</a> or <a href="../../contact.html">contact us</a>.
+      </div>
+    </div>
+  </main>
+  <script src="js/course.js"></script>
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const ret = params.get('return');
+      HarmonyLearn.initGate(ret);
+    })();
+  </script>
+</body>
+</html>
