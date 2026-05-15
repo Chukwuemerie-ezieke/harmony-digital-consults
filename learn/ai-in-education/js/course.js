@@ -71,6 +71,9 @@
     initLesson,
     initIndex,
     initAssessment,
+    applyLessonOverlay,
+    applyIndexOverlay,
+    loadSheetOverlay,
     gradeQuiz,
     progressPercent,
     getFinalScore,
@@ -98,6 +101,124 @@
     return true;
   }
   function revokeAccess() { localStorage.removeItem(STORAGE_KEY); }
+
+  // ============================================================
+  // 4b. CONTENT OVERLAY — Google Sheets CMS (graceful fallback to HTML)
+  // ============================================================
+  const SHEET_ID = '1cKH__Mts1ATjXI1ESjEqmiB0Nn8qp0-d6E8hwBwvoSk';
+  const SHEET_GID = '0';
+  // Use the gviz JSON endpoint — works on any sheet shared "anyone with link can view".
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+  const SHEET_CACHE_KEY = 'hdc-ai-edu-sheet-cache';
+  const SHEET_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  function readSheetCache() {
+    try {
+      const raw = localStorage.getItem(SHEET_CACHE_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || !obj.at || (Date.now() - obj.at) > SHEET_CACHE_TTL_MS) return null;
+      return obj.rows || null;
+    } catch (e) { return null; }
+  }
+  function writeSheetCache(rows) {
+    try { localStorage.setItem(SHEET_CACHE_KEY, JSON.stringify({ at: Date.now(), rows })); } catch (e) {}
+  }
+
+  // Parse Google's gviz response — it wraps JSON in a JS callback wrapper.
+  function parseGviz(text) {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    if (start < 0 || end < 0) return null;
+    try { return JSON.parse(text.substring(start, end + 1)); } catch (e) { return null; }
+  }
+
+  function loadSheetOverlay() {
+    // Return a promise that resolves to an array of row objects (or [] on failure).
+    const cached = readSheetCache();
+    if (cached) return Promise.resolve(cached);
+    if (!('fetch' in window)) return Promise.resolve([]);
+    return fetch(SHEET_URL, { credentials: 'omit' })
+      .then(r => r.ok ? r.text() : '')
+      .then(text => {
+        if (!text) return [];
+        const data = parseGviz(text);
+        if (!data || !data.table || !data.table.rows) return [];
+        const cols = (data.table.cols || []).map(c => (c.label || c.id || '').trim().toLowerCase());
+        const rows = data.table.rows.map(r => {
+          const obj = {};
+          (r.c || []).forEach((cell, i) => {
+            const key = cols[i] || ('col' + i);
+            obj[key] = cell ? (cell.f != null ? cell.f : cell.v) : '';
+            if (obj[key] == null) obj[key] = '';
+          });
+          return obj;
+        });
+        writeSheetCache(rows);
+        return rows;
+      })
+      .catch(() => []);
+  }
+
+  // Public: apply sheet overlay to a lesson page (renders an optional notice banner).
+  function applyLessonOverlay(slug) {
+    loadSheetOverlay().then(rows => {
+      if (!rows.length) return; // Silent fallback — hardcoded HTML stands.
+      const lessonRow = rows.find(r => (r.lesson_slug || '').trim() === slug);
+      const globalRow = rows.find(r => (r.lesson_slug || '').trim() === '_global');
+      const notices = [];
+      if (globalRow && globalRow.notice) notices.push({ text: globalRow.notice, type: globalRow.notice_type || 'info', scope: 'global' });
+      if (lessonRow && lessonRow.notice) notices.push({ text: lessonRow.notice, type: lessonRow.notice_type || 'info', scope: 'unit' });
+      if (notices.length) renderNoticeBanner(notices);
+    });
+  }
+
+  function renderNoticeBanner(notices) {
+    const main = document.querySelector('.hl-main');
+    if (!main) return;
+    // Insert just after the breadcrumb / before the eyebrow
+    const html = notices.map(n => {
+      const color = n.type === 'warn' ? '#b45309' : (n.type === 'success' ? '#15803d' : '#0f172a');
+      const bg = n.type === 'warn' ? '#fffbeb' : (n.type === 'success' ? '#f0fdf4' : '#f1f5f9');
+      const border = n.type === 'warn' ? '#fcd34d' : (n.type === 'success' ? '#86efac' : '#cbd5e1');
+      return `<div class="hl-overlay-notice" data-scope="${n.scope}" style="border:1px solid ${border};background:${bg};color:${color};padding:12px 14px;border-radius:10px;margin:0 0 14px;font-size:0.94rem;line-height:1.45;"><strong style="margin-right:6px;">${n.scope === 'global' ? '📢 Announcement:' : '📌 Unit update:'}</strong>${escapeHtmlSimple(n.text)}</div>`;
+    }).join('');
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html;
+    const bc = main.querySelector('.hl-breadcrumb');
+    if (bc && bc.nextSibling) bc.parentNode.insertBefore(wrap, bc.nextSibling);
+    else main.insertBefore(wrap, main.firstChild);
+  }
+
+  function escapeHtmlSimple(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[c]);
+  }
+
+  // Public: apply overlay to the course index (override titles/durations + show global notice).
+  function applyIndexOverlay() {
+    loadSheetOverlay().then(rows => {
+      if (!rows.length) return;
+      let touched = false;
+      rows.forEach(r => {
+        const slug = (r.lesson_slug || '').trim();
+        if (!slug || slug === '_global') return;
+        const lesson = COURSE.lessons.find(l => l.slug === slug);
+        if (!lesson) return;
+        if (r.title_override && String(r.title_override).trim()) { lesson.title = String(r.title_override).trim(); touched = true; }
+        if (r.duration_override && String(r.duration_override).trim()) { lesson.duration = String(r.duration_override).trim(); touched = true; }
+      });
+      if (touched) {
+        const unitsHost = document.querySelector('.hl-units');
+        if (unitsHost) unitsHost.outerHTML = renderUnits();
+        const sb = document.getElementById('hlSidebarMount');
+        if (sb) sb.innerHTML = renderSidebar(null);
+      }
+      const globalRow = rows.find(r => (r.lesson_slug || '').trim() === '_global');
+      if (globalRow && globalRow.notice) renderNoticeBanner([{ text: globalRow.notice, type: globalRow.notice_type || 'info', scope: 'global' }]);
+    });
+  }
 
   // ============================================================
   // 5. PROGRESS
@@ -337,6 +458,7 @@
     document.getElementById('hlTopbar').innerHTML = renderTopbar();
     document.getElementById('hlHero').innerHTML = renderHero();
     document.getElementById('hlUnits').innerHTML = renderUnits();
+    try { applyIndexOverlay(); } catch (e) {}
   }
 
   function initLesson(slug, anchorList) {
@@ -392,6 +514,9 @@
         if (result) { result.textContent = ''; result.classList.remove('pass', 'fail'); }
       });
     });
+
+    // Sheet overlay (silent fallback if sheet unreachable)
+    try { applyLessonOverlay(slug); } catch (e) {}
 
     // Active anchor highlighting on scroll
     if (anchorList && anchorList.length) {
@@ -481,6 +606,9 @@
 
     // If previously passed, show the cert UI immediately
     if (existing && existing.passed) renderCertSection(existing.score);
+
+    // Sheet overlay (silent fallback if sheet unreachable)
+    try { applyLessonOverlay('final-assessment'); } catch (e) {}
   }
 
   function renderCertSection(percent) {
