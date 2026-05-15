@@ -189,7 +189,7 @@
           <div class="service-card service-card--large reveal reveal-delay-3">
             <div class="service-card__icon"><i data-lucide="laptop"></i></div>
             <h3 class="service-card__title">Live Web Tool</h3>
-            <p class="service-card__desc">A browser-based companion with six modules — Dashboard, Risk Classifier, Verification Pipeline, Age Checker, Hallucination Log, and Content Registry — to run ACIF on real content in real time. Free, no signup.</p>
+            <p class="service-card__desc">A browser-based companion with six modules &mdash; Dashboard, Risk Classifier, Verification Pipeline, Age Checker (with Flesch-Kincaid reading-level scorer), Hallucination Log, and Content Registry &mdash; to run ACIF on real content in real time. Free, no signup, installable as a PWA, works offline, with dark mode and Cmd/Ctrl+K quick search.</p>
           </div>
         </div>
       </div>
@@ -229,6 +229,44 @@
       </div>
     </section>
 
+    <!-- How the Tool Handles Your Data -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Privacy by Design</span>
+          <h2 class="section-title">How the Live Tool Handles Your Data</h2>
+          <p class="section-desc">ACIF is a single-user, privacy-first tool. Knowing where your data lives is part of the framework.</p>
+        </div>
+
+        <div class="product-detail__grid reveal">
+          <div class="product-detail__card">
+            <div class="product-detail__card-icon"><i data-lucide="shield"></i></div>
+            <h3 class="product-detail__card-title">Browser-Only Storage</h3>
+            <p class="product-detail__card-desc">Every entry you log &mdash; institution profile, content registry, hallucination log, settings &mdash; lives only inside the browser on the device you are using. Nothing is uploaded to a server, and Harmony Digital Consults cannot see your records.</p>
+          </div>
+          <div class="product-detail__card">
+            <div class="product-detail__card-icon"><i data-lucide="user-check"></i></div>
+            <h3 class="product-detail__card-title">Single-User by Design</h3>
+            <p class="product-detail__card-desc">Two people opening the tool on different devices &mdash; even at the same school &mdash; will each keep their own separate dataset. There is no shared registry, no live collaboration, and no chance of two users overwriting one another&rsquo;s work.</p>
+          </div>
+          <div class="product-detail__card">
+            <div class="product-detail__card-icon"><i data-lucide="download-cloud"></i></div>
+            <h3 class="product-detail__card-title">Portable JSON Backups</h3>
+            <p class="product-detail__card-desc">Use Export JSON Backup on the Dashboard to move your work between devices, hand it to a colleague, or archive it for audit. Restore replaces the current dataset; Clear All Data wipes the browser store after a two-step confirmation.</p>
+          </div>
+          <div class="product-detail__card">
+            <div class="product-detail__card-icon"><i data-lucide="alert-triangle"></i></div>
+            <h3 class="product-detail__card-title">What To Watch For</h3>
+            <p class="product-detail__card-desc">Clearing browser data, using private/incognito mode, switching browsers, or uninstalling the PWA will erase your local ACIF data. Always export a JSON backup before any of these &mdash; and before handing the device to someone else.</p>
+          </div>
+        </div>
+
+        <div class="reveal" style="margin-top: var(--space-6); padding: var(--space-5); background: var(--color-accent-soft, #E8F4F5); border-left: 4px solid #01696F; border-radius: 10px;">
+          <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>Need a shared, multi-user registry across staff or schools?</strong> The current ACIF tool is intentionally single-user and offline-capable. A hosted, multi-user edition with accounts, role-based access, and a shared audit trail is on our roadmap for institutions and EdTech partners. <a href="contact.html" style="color:#01696F; font-weight:600;">Talk to us</a> if you&rsquo;d like early access.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- How to Use -->
     <section class="section section--alt">
       <div class="container">
@@ -242,7 +280,7 @@
           <div class="service-card service-card--large reveal reveal-delay-1">
             <div class="service-card__icon"><i data-lucide="mouse-pointer-click"></i></div>
             <h3 class="service-card__title">1. Run the Live Tool</h3>
-            <p class="service-card__desc">Open the free web tool, classify a piece of AI-generated content, walk it through the Five-Gate pipeline, and decide whether to release it — all in your browser.</p>
+            <p class="service-card__desc">Open the free web tool, classify a piece of AI-generated content, walk it through the Five-Gate pipeline, and decide whether to release it &mdash; all in your browser. Single-user, no signup, your data never leaves your device.</p>
             <a href="https://chukwuemerie-ezieke.github.io/acif-framework/" target="_blank" rel="noopener" class="product-card__link" style="margin-top: var(--space-4); display: inline-flex;">Launch Tool <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           </div>
           <div class="service-card service-card--large reveal reveal-delay-2">
