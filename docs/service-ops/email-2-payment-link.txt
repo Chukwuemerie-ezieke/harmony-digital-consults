@@ -1,0 +1,24 @@
+Subject: Your invoice — {{service}}
+From: Harmony Digital Consults <info@harmonydigitalconsults.com.ng>
+
+Hi {{first_name}},
+
+Thanks for confirming you'd like to proceed with the {{service}}.
+
+Here is your secure payment link:
+{{paystack_link}}
+
+Amount: ₦{{amount}}
+Reference: {{reference}}
+
+What happens after payment
+1. You'll receive an automatic receipt from Paystack.
+2. Within 2 working hours we'll send you the calendar link to book your slot (or, for briefs, the scope-confirmation email).
+3. We deliver the agreed output by the date in our reply.
+
+Refund policy: 100% refund if you change your mind within 24 hours of payment, or if we determine your need is outside our scope.
+
+Questions? Reply directly to this email or WhatsApp +234 810 097 8587.
+
+Warmly,
+The Harmony Team

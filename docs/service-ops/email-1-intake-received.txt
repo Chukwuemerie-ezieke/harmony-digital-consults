@@ -1,0 +1,16 @@
+Subject: We received your request — Harmony Digital Consults
+From: Harmony Digital Consults <info@harmonydigitalconsults.com.ng>
+
+Hi {{first_name}},
+
+Thank you for reaching out — we have your {{service}} request and a member of our team will reply within 24 hours with next steps.
+
+If you don't hear from us by tomorrow, please reply to this email or WhatsApp +234 810 097 8587.
+
+While you wait:
+• Browse our free dashboards: https://harmonydigitalconsults.com.ng/insights
+• Read our latest insights: https://harmonydigitalconsults.com.ng/blog.html
+
+Talk soon,
+The Harmony Team
+RC 8949899 · Ekwulobia, Anambra

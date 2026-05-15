@@ -1,0 +1,23 @@
+Subject: Your {{deliverable}} from Harmony Digital Consults
+From: Harmony Digital Consults <info@harmonydigitalconsults.com.ng>
+
+Hi {{first_name}},
+
+Attached is your {{deliverable}} as agreed.
+
+Highlights
+• {{highlight_1}}
+• {{highlight_2}}
+• {{highlight_3}}
+
+Your follow-up window
+You have until {{followup_deadline}} to ask {{followup_count}} short follow-up question(s) by replying to this email — no extra cost.
+
+Was this useful? A one-line reply helps us improve.
+
+If you'd like to go deeper — application support, full TVET programme design, or a recurring research retainer — let us know and we'll send a tailored scope.
+
+Best,
+{{advisor_name}}
+Harmony Digital Consults
+RC 8949899

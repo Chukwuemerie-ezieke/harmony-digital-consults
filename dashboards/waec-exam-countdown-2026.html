@@ -138,8 +138,9 @@
 
 <div class="cta-block">
   <h3>Need a study plan around this timetable?</h3>
-  <p>Harmony Digital Consults coaches WAEC/NECO/JAMB candidates with structured revision schedules, mock exams, and parent-facing progress reports.</p>
-  <a href="../contact.html">Book a Free Discovery Call →</a>
+  <p>Get our free weekly WAEC revision email — sent every Sunday during exam season. Or book a paid 1-on-1 strategy call.</p>
+  <a href="#waec-signup">Subscribe Free →</a>
+  &nbsp;<a href="../services/career-strategy-call.html" style="background:transparent;border:1px solid #fff;color:#fff;margin-left:.4rem;">Book a paid call →</a>
 </div>
 
 <div class="db-sources">
@@ -150,6 +151,91 @@
 
       </div>
     </section>
+
+<section id="waec-signup" class="db-section" style="background:#eaf6f6;">
+  <div class="container">
+    <div style="display:grid; grid-template-columns: 1.1fr .9fr; gap: var(--space-6); align-items:center; max-width:980px; margin:0 auto;">
+      <div>
+        <h2 style="margin:0 0 var(--space-3); color:#01696F;">Get a free weekly WAEC revision email</h2>
+        <p style="margin:0 0 var(--space-3); color:#1a3942;">Each Sunday we send a 5-minute revision digest with: the papers in the coming week, 3 high-yield past-question topics, and one free practice link. No spam. Unsubscribe anytime.</p>
+        <p style="margin:0; font-size:.85rem; color:#3d5359;">Trusted by SS3 students, parents and tutorial centres across Nigeria.</p>
+      </div>
+      <div>
+        <form id="formWaecSignup" novalidate style="background:#fff; border:1px solid #cbd6d7; border-radius:12px; padding: var(--space-4);">
+          <div style="display:grid; gap:.55rem; margin-bottom: var(--space-3);">
+            <label style="font-size:.88rem; font-weight:600; color:#1a3942;">Name *</label>
+            <input name="Name" required style="padding:.65rem .8rem; border:1px solid #cbd6d7; border-radius:8px; font-family:inherit;">
+          </div>
+          <div style="display:grid; gap:.55rem; margin-bottom: var(--space-3);">
+            <label style="font-size:.88rem; font-weight:600; color:#1a3942;">Email *</label>
+            <input type="email" name="Email" required style="padding:.65rem .8rem; border:1px solid #cbd6d7; border-radius:8px; font-family:inherit;">
+          </div>
+          <div style="display:grid; gap:.55rem; margin-bottom: var(--space-3);">
+            <label style="font-size:.88rem; font-weight:600; color:#1a3942;">I'm a…</label>
+            <select name="Role" style="padding:.65rem .8rem; border:1px solid #cbd6d7; border-radius:8px; font-family:inherit;">
+              <option>SS3 student</option><option>Parent / guardian</option><option>Teacher / tutor</option><option>School admin</option><option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" data-label="Subscribe free" style="background:#01696F; color:#fff; padding:.85rem 1.3rem; border:none; border-radius:9px; font-weight:700; cursor:pointer; width:100%;">Subscribe free</button>
+          <div class="form-msg" role="status" style="margin-top:.8rem; padding:.7rem; border-radius:8px; display:none; font-size:.9rem;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Endpoint set in /js/config.js – falls back to mailto if missing.
+  const FORM_ENDPOINT = (window.HARMONY_CONFIG && window.HARMONY_CONFIG.formEndpoint) || '';
+
+  function handleSubmit(formEl, serviceName){
+    formEl.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const msgEl = formEl.querySelector('.form-msg');
+      const btn = formEl.querySelector('button[type=submit]');
+      const data = Object.fromEntries(new FormData(formEl).entries());
+      data.service = serviceName;
+      data.timestamp = new Date().toISOString();
+      data.source = location.pathname;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        if (FORM_ENDPOINT) {
+          // mode:'no-cors' lets the Apps Script accept the POST without CORS preflight.
+          await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
+            body: JSON.stringify(data)
+          });
+          msgEl.className = 'form-msg ok';
+          msgEl.style.display = 'block';
+          msgEl.innerHTML = '<strong>Received.</strong> We will reply within 24 hours with next steps. If you do not see our email, check Spam.';
+          formEl.reset();
+        } else {
+          // Fallback – open email client
+          const body = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
+          const subject = `New ${serviceName} request — ${data.Name || data.name || 'no name'}`;
+          window.location.href = `mailto:info@harmonydigitalconsults.com.ng?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          msgEl.className = 'form-msg ok';
+          msgEl.style.display = 'block';
+          msgEl.innerHTML = 'Opening your email app… If nothing happens, email <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a> directly.';
+        }
+      } catch(err) {
+        msgEl.className = 'form-msg err';
+        msgEl.style.display = 'block';
+        msgEl.innerHTML = 'Could not submit. Please email <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a> or WhatsApp +234 810 097 8587.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.label || 'Submit';
+      }
+    });
+  }
+</script>
+
+<script>handleSubmit(document.getElementById('formWaecSignup'),'WAEC Revision Email');</script>
+
   </main>
 
   <footer class="footer">
@@ -190,6 +276,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/config.js"></script>
 
 <script>
 const SHEET_ID = '1sh_oamh8D7oHe6CEuhZw4C_xY_0QBVHlMC2olHear4k';
