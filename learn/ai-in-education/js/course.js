@@ -59,6 +59,18 @@
   const STORAGE_KEY = 'hdc-ai-edu-access';
   const PROGRESS_KEY = 'hdc-ai-edu-progress';
 
+  // Google Apps Script web app endpoint that issues + verifies certificates.
+  // Source: /admin/apps-script-certificates.gs in this repo.
+  // PASTE the deployed Web App URL below (ends in /exec). Leave '' to disable email + register.
+  const CERT_API_URL = '';
+  // Director signature shown on certificates and verification page.
+  const SIGNATORY = 'Mr Chukwuemerie Ezieke';
+  const SIGNATORY_TITLE = 'Director';
+  // Brand contact (shown on cert footer).
+  const BRAND_NAME = 'Harmony Digital Consults';
+  const BRAND_EMAIL = 'info@harmonydigitalconsults.com.ng';
+  const SITE_BASE = 'https://harmonydigitalconsults.com.ng';
+
   // ============================================================
   // 3. PUBLIC API exposed for inline script use
   // ============================================================
@@ -91,7 +103,9 @@
     saveFinalScore,
     getLearnerName,
     setLearnerName,
-    generateCertificate
+    generateCertificate,
+    verifyCertificate,
+    issueCertificate
   };
 
   // ============================================================
@@ -704,25 +718,99 @@
       return;
     }
     const existingName = getLearnerName();
+    const existingEmail = (function () { try { return localStorage.getItem('hdc-learner-email') || ''; } catch (e) { return ''; } })();
     mount.innerHTML = `
       <div class="hl-callout" style="border-color:#16a34a;background:#f0fdf4;margin-top:24px;">
-        <p class="hl-callout__title" style="color:#15803d;">🎓 Congratulations — you passed</p>
-        <p>Enter the name you would like to appear on your certificate:</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
-          <input id="hlCertName" type="text" placeholder="Full name as it should appear" value="${escapeHtml(existingName)}" style="flex:1;min-width:240px;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font:inherit;">
-          <button class="hl-btn" id="hlCertBtn" type="button">Generate certificate</button>
+        <p class="hl-callout__title" style="color:#15803d;">\u{1F393} Congratulations \u2014 you passed</p>
+        <p>Fill in your details and we will email your certificate as a PDF. The same certificate is verifiable any time at our verify page.</p>
+        <div style="display:grid;gap:10px;margin-top:10px;">
+          <input id="hlCertName" type="text" placeholder="Full name as it should appear on the certificate" value="${escapeHtml(existingName)}" style="padding:11px 13px;border:1px solid #d1d5db;border-radius:8px;font:inherit;">
+          <input id="hlCertEmail" type="email" placeholder="Email address (we email the PDF here)" value="${escapeHtml(existingEmail)}" style="padding:11px 13px;border:1px solid #d1d5db;border-radius:8px;font:inherit;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="hl-btn" id="hlCertBtn" type="button">Generate &amp; email my certificate</button>
+            <button class="hl-btn hl-btn--outline" id="hlCertViewBtn" type="button">View only (no email)</button>
+          </div>
+          <p id="hlCertStatus" style="margin:0;font-size:0.9rem;color:#475569;"></p>
         </div>
-        <p style="margin-top:8px;font-size:0.9rem;color:#475569;">Score recorded: ${percent}% &middot; HDT-207 &middot; ${new Date().toLocaleDateString()}</p>
+        <p style="margin-top:14px;font-size:0.85rem;color:#64748b;">Score recorded: ${percent}% &middot; HDT-207 &middot; ${new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}</p>
       </div>
     `;
     const nameInput = document.getElementById('hlCertName');
+    const emailInput = document.getElementById('hlCertEmail');
     const btn = document.getElementById('hlCertBtn');
+    const viewBtn = document.getElementById('hlCertViewBtn');
+    const status = document.getElementById('hlCertStatus');
+
+    function readInputs() {
+      return {
+        name: (nameInput.value || '').trim(),
+        email: (emailInput.value || '').trim()
+      };
+    }
+
     btn && btn.addEventListener('click', function () {
-      const name = (nameInput.value || '').trim();
-      if (!name) { nameInput.focus(); return; }
-      setLearnerName(name);
-      generateCertificate(name, percent);
+      const v = readInputs();
+      if (!v.name) { nameInput.focus(); status.textContent = 'Please enter your full name first.'; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) { emailInput.focus(); status.textContent = 'Please enter a valid email address so we can send the PDF.'; return; }
+      setLearnerName(v.name);
+      try { localStorage.setItem('hdc-learner-email', v.email); } catch (e) {}
+      const certId = 'HDC-AI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      btn.disabled = true; status.textContent = 'Issuing your certificate\u2026';
+      issueCertificate({ cert_id: certId, learner_name: v.name, email: v.email, score: percent })
+        .then(function (r) {
+          btn.disabled = false;
+          if (r && r.ok) {
+            status.innerHTML = '\u2713 Issued. Check your inbox \u2014 we have emailed the PDF to <strong>' + escapeHtml(v.email) + '</strong>. The certificate is also opening in a new tab now.';
+          } else if (r && r.error === 'not_configured') {
+            status.innerHTML = '\u26A0 Email sender is not yet configured. Your certificate is opening in a new tab \u2014 please save the PDF from there.';
+          } else {
+            status.innerHTML = '\u26A0 We could not email the certificate just now (' + escapeHtml((r && r.error) || 'unknown') + '). It is opening in a new tab \u2014 please save the PDF from there.';
+          }
+          generateCertificate(v.name, percent, certId, v.email);
+        });
     });
+    viewBtn && viewBtn.addEventListener('click', function () {
+      const v = readInputs();
+      if (!v.name) { nameInput.focus(); status.textContent = 'Please enter your full name first.'; return; }
+      setLearnerName(v.name);
+      const certId = 'HDC-AI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      status.textContent = 'Opening preview\u2026 (not registered \u2014 click "Generate & email" above to officially issue.)';
+      generateCertificate(v.name, percent, certId, v.email, true);
+    });
+  }
+
+  // Calls the Apps Script web app to register + email a certificate.
+  // Returns Promise<{ok:true, cert_id, verify_url} | {ok:false, error}>
+  function issueCertificate(payload) {
+    if (!CERT_API_URL) return Promise.resolve({ ok: false, error: 'not_configured' });
+    const body = {
+      cert_id: payload.cert_id,
+      learner_name: payload.learner_name,
+      email: payload.email,
+      course: THIS_COURSE,
+      course_title: COURSE && COURSE.title || THIS_COURSE,
+      score: payload.score
+    };
+    return fetch(CERT_API_URL, {
+      method: 'POST',
+      // Use text/plain to avoid CORS preflight against Apps Script (it parses JSON either way).
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    })
+      .then(function (r) { return r.json(); })
+      .catch(function (err) { return { ok: false, error: String(err && err.message || err) }; });
+  }
+
+  // Public verifier used by /verify.html. Resolves to:
+  //   { ok:true, valid:true, learner_name, course, score, issued_at, cert_id }
+  //   { ok:true, valid:false }
+  //   { ok:false, error }
+  function verifyCertificate(certId) {
+    if (!CERT_API_URL) return Promise.resolve({ ok: false, error: 'not_configured' });
+    const url = CERT_API_URL + (CERT_API_URL.indexOf('?') === -1 ? '?' : '&') + 'action=verify&id=' + encodeURIComponent(certId);
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .catch(function (err) { return { ok: false, error: String(err && err.message || err) }; });
   }
 
   function escapeHtml(s) {
@@ -731,42 +819,70 @@
     })[c]);
   }
 
-  function generateCertificate(name, score) {
+  function generateCertificate(name, score, certId, email, isPreview) {
     const dateStr = new Date().toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
-    const certId = 'HDC-AI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    certId = certId || ('HDC-AI-' + Math.random().toString(36).substring(2, 8).toUpperCase());
+    const verifyUrl = SITE_BASE + '/learn/ai-in-education/verify.html?id=' + encodeURIComponent(certId);
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=110x110&margin=2&data=' + encodeURIComponent(verifyUrl);
+    const logoUrl = SITE_BASE + '/images/logo.png';
+    const linkedinTitle = encodeURIComponent(COURSE.title + ' (' + THIS_COURSE + ')');
+    const linkedinOrg = encodeURIComponent(BRAND_NAME);
+    const issueYear = new Date().getFullYear();
+    const issueMonth = new Date().getMonth() + 1;
+    const linkedinUrl = 'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME'
+      + '&name=' + linkedinTitle
+      + '&organizationName=' + linkedinOrg
+      + '&issueYear=' + issueYear
+      + '&issueMonth=' + issueMonth
+      + '&certUrl=' + encodeURIComponent(verifyUrl)
+      + '&certId=' + encodeURIComponent(certId);
     const html = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <title>HDT-207 Certificate — ${escapeHtml(name)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   body { margin:0; padding:40px 20px; background:#f1f5f9; font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
-  .cert { max-width: 1000px; margin: 0 auto; background: #fff; padding: 60px 60px; border: 2px solid #0f172a; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
-  .cert::before { content:''; position:absolute; inset:14px; border:1px solid #b45309; pointer-events:none; }
+  .cert { max-width: 1040px; margin: 0 auto; background: #fff; padding: 56px 60px 44px; border: 2px solid #0f172a; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.12); overflow:hidden; }
+  .cert::before { content:''; position:absolute; inset:14px; border:1px solid #b45309; pointer-events:none; z-index:1; }
+  /* Watermark — large faint logo behind the content */
+  .cert__watermark { position:absolute; left:50%; top:54%; transform:translate(-50%,-50%); width:520px; height:520px; opacity:0.05; background-image:url('${logoUrl}'); background-size:contain; background-position:center; background-repeat:no-repeat; pointer-events:none; z-index:0; }
+  .cert > *:not(.cert__watermark) { position:relative; z-index:2; }
   .cert__head { text-align:center; }
   .cert__brand { letter-spacing: 4px; font-size: 14px; color:#b45309; font-weight:700; text-transform:uppercase; }
-  .cert__title { font-family:'Playfair Display', serif; font-size:48px; margin:8px 0 4px; color:#0f172a; font-weight:900; }
-  .cert__sub { color:#475569; font-size:15px; margin-bottom:32px; }
-  .cert__awarded { text-align:center; color:#475569; margin-top:24px; font-size:15px; }
-  .cert__name { font-family:'Playfair Display', serif; font-size:56px; font-weight:700; color:#0f172a; text-align:center; margin:14px 0 4px; border-bottom: 2px solid #b45309; display:inline-block; padding: 0 30px 6px; }
+  .cert__title { font-family:'Playfair Display', serif; font-size:46px; margin:8px 0 4px; color:#0f172a; font-weight:900; }
+  .cert__sub { color:#475569; font-size:15px; margin-bottom:24px; }
+  .cert__awarded { text-align:center; color:#475569; margin-top:18px; font-size:15px; }
+  .cert__name { font-family:'Playfair Display', serif; font-size:52px; font-weight:700; color:#0f172a; text-align:center; margin:10px 0 4px; border-bottom: 2px solid #b45309; display:inline-block; padding: 0 30px 4px; }
   .cert__name-wrap { text-align:center; }
-  .cert__for { text-align:center; color:#0f172a; margin: 28px auto 0; max-width: 760px; font-size:17px; line-height: 1.55; }
+  .cert__for { text-align:center; color:#0f172a; margin: 22px auto 0; max-width: 780px; font-size:16px; line-height: 1.55; }
   .cert__course { font-weight:700; }
-  .cert__row { display:flex; justify-content: space-between; margin-top: 60px; gap: 40px; }
+  .cert__row { display:flex; justify-content: space-between; margin-top: 44px; gap: 32px; align-items: flex-end; }
   .cert__block { flex:1; text-align:center; }
-  .cert__block-line { border-top: 1.5px solid #0f172a; padding-top: 8px; font-size:13px; color:#0f172a; font-weight:600; letter-spacing: 0.5px; text-transform: uppercase; }
-  .cert__block-name { font-family:'Playfair Display',serif; font-size:20px; color:#0f172a; margin-bottom: 4px; }
-  .cert__meta { text-align:center; margin-top:36px; font-size:12px; color:#64748b; letter-spacing: 1px; }
-  .cert__seal { position:absolute; right: 50px; top: 50px; width:96px; height:96px; border-radius:50%; background: linear-gradient(135deg, #b45309, #f59e0b); color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; text-align:center; line-height:1.2; font-weight:700; box-shadow: 0 8px 20px rgba(180,83,9,0.35); padding: 8px; }
-  .actions { max-width:1000px; margin: 24px auto 0; text-align:center; }
-  .btn { background:#0f172a; color:#fff; border:none; padding: 12px 22px; border-radius:8px; font: 600 14px/1 'Plus Jakarta Sans',sans-serif; cursor:pointer; margin: 0 6px; }
-  @media print { body{background:#fff;padding:0;} .actions{display:none;} .cert{box-shadow:none; border-color:#0f172a;} }
+  .cert__block-line { border-top: 1.5px solid #0f172a; padding-top: 6px; font-size:12px; color:#0f172a; font-weight:600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .cert__block-name { font-family:'Playfair Display',serif; font-size:18px; color:#0f172a; margin-bottom: 2px; }
+  .cert__sig { font-family:'Great Vibes', cursive; font-size:34px; color:#0f172a; line-height:1; margin-bottom:2px; }
+  .cert__meta { text-align:center; margin-top:24px; font-size:11px; color:#64748b; letter-spacing: 1px; }
+  /* Top-right logo seal */
+  .cert__seal { position:absolute; right: 46px; top: 46px; width:96px; height:96px; border-radius:50%; background:#fff; border:3px solid #b45309; display:flex; align-items:center; justify-content:center; box-shadow: 0 8px 20px rgba(180,83,9,0.25); padding: 6px; z-index:3; }
+  .cert__seal img { max-width: 100%; max-height: 100%; display:block; }
+  /* QR code bottom-right */
+  .cert__qr { position:absolute; right: 30px; bottom: 30px; text-align:center; z-index:3; }
+  .cert__qr img { width: 96px; height: 96px; display:block; border: 4px solid #fff; background:#fff; }
+  .cert__qr small { display:block; margin-top:4px; font-size:10px; color:#64748b; letter-spacing: 0.5px; }
+  .actions { max-width:1040px; margin: 24px auto 0; text-align:center; }
+  .btn { background:#0f172a; color:#fff; border:none; padding: 12px 22px; border-radius:8px; font: 600 14px/1 'Plus Jakarta Sans',sans-serif; cursor:pointer; margin: 0 6px 6px; text-decoration:none; display:inline-block; }
+  .btn--linkedin { background:#0a66c2; }
+  .preview-banner { max-width:1040px; margin: 0 auto 16px; background:#fefce8; border:1px solid #ca8a04; color:#713f12; padding:12px 16px; border-radius:8px; font-size:14px; text-align:center; }
+  @media print { body{background:#fff;padding:0;} .actions, .preview-banner{display:none;} .cert{box-shadow:none; border-color:#0f172a;} }
 </style></head>
 <body>
+  ${isPreview ? '<div class="preview-banner">Preview only \u2014 this certificate has not been registered. Close this tab and use "Generate &amp; email my certificate" to officially issue.</div>' : ''}
   <div class="cert">
-    <div class="cert__seal">HARMONY<br>VERIFIED<br>HDT-207</div>
+    <div class="cert__watermark"></div>
+    <div class="cert__seal"><img src="${logoUrl}" alt=""></div>
     <div class="cert__head">
-      <div class="cert__brand">Harmony Digital Consults</div>
+      <div class="cert__brand">${BRAND_NAME}</div>
       <h1 class="cert__title">Certificate of Completion</h1>
       <div class="cert__sub">Teachers Training Programme &middot; Course Code HDT-207</div>
     </div>
@@ -776,12 +892,14 @@
     <div class="cert__row">
       <div class="cert__block"><div class="cert__block-name">${dateStr}</div><div class="cert__block-line">Date of Award</div></div>
       <div class="cert__block"><div class="cert__block-name">${certId}</div><div class="cert__block-line">Certificate ID</div></div>
-      <div class="cert__block"><div class="cert__block-name">Harmony Digital Consults</div><div class="cert__block-line">Issuing Organisation</div></div>
+      <div class="cert__block"><div class="cert__sig">${escapeHtml(SIGNATORY)}</div><div class="cert__block-line">${escapeHtml(SIGNATORY + ' \u00b7 ' + SIGNATORY_TITLE)}</div></div>
     </div>
-    <div class="cert__meta">harmonydigitalconsults.com.ng &nbsp;·&nbsp; info@harmonydigitalconsults.com.ng</div>
+    <div class="cert__qr"><img src="${qrUrl}" alt="Verify"><small>SCAN TO VERIFY</small></div>
+    <div class="cert__meta">${BRAND_NAME} &nbsp;·&nbsp; harmonydigitalconsults.com.ng &nbsp;·&nbsp; ${BRAND_EMAIL} &nbsp;·&nbsp; Verify: ${verifyUrl}</div>
   </div>
   <div class="actions">
     <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <a class="btn btn--linkedin" href="${linkedinUrl}" target="_blank" rel="noopener">Add to LinkedIn</a>
     <button class="btn" onclick="window.close()">Close</button>
   </div>
 </body></html>`;

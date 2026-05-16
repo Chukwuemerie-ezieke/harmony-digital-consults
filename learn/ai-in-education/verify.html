@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify a Certificate · Harmony Digital Consults</title>
+  <link rel="icon" type="image/png" href="../../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:40px 20px; background:#f1f5f9; font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:#0f172a; min-height:100vh; }
+    .wrap { max-width:640px; margin:0 auto; }
+    .brand { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+    .brand img { height:36px; }
+    .brand-text { font-weight:700; letter-spacing:0.5px; }
+    .card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:32px; box-shadow: 0 10px 30px rgba(15,23,42,0.06); }
+    h1 { font-family:'Playfair Display', serif; margin:0 0 4px; font-size:28px; }
+    .lead { color:#475569; margin:0 0 24px; }
+    .field { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+    input[type=text] { flex:1; min-width:220px; padding:12px 14px; border:1px solid #cbd5e1; border-radius:10px; font:inherit; }
+    button { background:#0f172a; color:#fff; border:none; padding:12px 22px; border-radius:10px; font:600 14px/1 inherit; cursor:pointer; }
+    button[disabled] { opacity:0.5; cursor:not-allowed; }
+    .result { margin-top:24px; padding:20px; border-radius:12px; display:none; }
+    .result.show { display:block; }
+    .result.ok { background:#f0fdf4; border:1px solid #16a34a; color:#14532d; }
+    .result.bad { background:#fef2f2; border:1px solid #dc2626; color:#7f1d1d; }
+    .result.err { background:#fefce8; border:1px solid #ca8a04; color:#713f12; }
+    .result h2 { margin:0 0 8px; font-size:20px; }
+    .row { display:grid; grid-template-columns: 160px 1fr; gap:6px 16px; margin-top:12px; font-size:15px; }
+    .row dt { color:#475569; }
+    .row dd { margin:0; font-weight:600; }
+    .footer { margin-top:36px; font-size:13px; color:#64748b; text-align:center; }
+    .footer a { color:#64748b; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img src="../../images/logo.png" alt="Harmony Digital Consults">
+      <span class="brand-text">Harmony Digital Consults</span>
+    </div>
+
+    <div class="card">
+      <h1>Verify a certificate</h1>
+      <p class="lead">Enter the Certificate ID shown on a Harmony Learn certificate (for example <code>HDC-AI-A7K9P2</code>) to confirm it is genuine.</p>
+
+      <form id="verifyForm">
+        <div class="field">
+          <input type="text" id="certId" placeholder="HDC-AI-XXXXXX" autocomplete="off" required>
+          <button type="submit" id="verifyBtn">Verify</button>
+        </div>
+      </form>
+
+      <div id="result" class="result"></div>
+    </div>
+
+    <p class="footer">
+      <a href="../../index.html">harmonydigitalconsults.com.ng</a> &middot; info@harmonydigitalconsults.com.ng
+    </p>
+  </div>
+
+  <script src="js/course.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('verifyForm');
+      var input = document.getElementById('certId');
+      var btn = document.getElementById('verifyBtn');
+      var result = document.getElementById('result');
+
+      // Auto-fill if ?id= present in URL
+      var params = new URLSearchParams(window.location.search);
+      var pre = (params.get('id') || '').trim();
+      if (pre) {
+        input.value = pre;
+        // auto-submit on next tick
+        setTimeout(function () { form.dispatchEvent(new Event('submit', { cancelable: true })); }, 0);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var id = (input.value || '').trim().toUpperCase();
+        if (!id) return;
+        result.className = 'result';
+        btn.disabled = true; var t = btn.textContent; btn.textContent = 'Checking…';
+
+        HarmonyLearn.verifyCertificate(id).then(function (r) {
+          btn.disabled = false; btn.textContent = t;
+          if (!r.ok) {
+            result.className = 'result err show';
+            result.innerHTML = '<h2>Unable to check right now</h2><p>We could not reach our verification register. Please try again in a moment.</p>';
+            return;
+          }
+          if (!r.valid) {
+            result.className = 'result bad show';
+            result.innerHTML = '<h2>✗ Not a valid certificate</h2><p>The Certificate ID <strong>' + esc(id) + '</strong> is not on our register. If you received this from someone, please ask them to re-share the original PDF or verification link.</p>';
+            return;
+          }
+          var issued = r.issued_at ? new Date(r.issued_at).toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' }) : '';
+          result.className = 'result ok show';
+          result.innerHTML = '<h2>✓ Authentic certificate</h2>' +
+            '<p>This certificate is genuine and was issued by Harmony Digital Consults.</p>' +
+            '<dl class="row">' +
+              '<dt>Learner</dt><dd>' + esc(r.learner_name) + '</dd>' +
+              '<dt>Course</dt><dd>' + esc(r.course) + '</dd>' +
+              '<dt>Final score</dt><dd>' + esc(r.score) + '%</dd>' +
+              '<dt>Issued</dt><dd>' + esc(issued) + '</dd>' +
+              '<dt>Certificate ID</dt><dd>' + esc(r.cert_id) + '</dd>' +
+            '</dl>';
+        });
+      });
+
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
