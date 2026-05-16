@@ -37,14 +37,24 @@
   // ============================================================
   // Each enrolled teacher gets a unique code. To revoke, remove from this list.
   // Format suggestion: HDC-AI-XXXXXX (6 alphanumeric chars)
-  const ACCESS_CODES = new Set([
-    // Demo / preview codes:
+  // Demo / preview codes — always work, even with the sheet unreachable.
+  // Real learner codes live in the Google Sheet (see CODES_SHEET_ID below).
+  const DEMO_CODES = new Set([
     'HDC-AI-DEMO01',
     'HDC-AI-PREVUE',
-    // Add enrolled teacher codes here after they pay:
-    // 'HDC-AI-9X7K2P',
-    // 'HDC-AI-A4B8M1',
+    'HDC-BUNDLE-DEMO1'
   ]);
+  // Accepted prefixes for HDT-207 access (course-only and bundle).
+  const ACCEPTED_PREFIXES = ['HDC-AI-', 'HDC-BUNDLE-'];
+  // Course code this file represents — used when matching the sheet's `course` column.
+  const THIS_COURSE = 'HDT-207';
+
+  // Google Sheet that stores live access codes (Phase A — manual entry; Phase B — Paystack will write here automatically).
+  // Sheet must be shared "Anyone with the link · Viewer".
+  // Columns expected: code, course, learner_name, email, phone, issued_date, expires_date, status, paystack_ref, notes
+  const CODES_SHEET_ID = '1P96xJ6P9j4Xdsycny5fGs2wC9NUkejHNJf0JSMTmYzc';
+  const CODES_SHEET_GID = '1754233707';
+  const CODES_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CODES_SHEET_ID}/gviz/tq?tqx=out:json&gid=${CODES_SHEET_GID}`;
 
   const STORAGE_KEY = 'hdc-ai-edu-access';
   const PROGRESS_KEY = 'hdc-ai-edu-progress';
@@ -56,6 +66,7 @@
     course: COURSE,
     hasAccess,
     grantAccess,
+    grantAccessAsync,
     revokeAccess,
     getProgress,
     markComplete,
@@ -86,20 +97,79 @@
   // ============================================================
   // 4. ACCESS GATE
   // ============================================================
+  // Synchronous gate — reads localStorage only (set by a previous successful grant).
   function hasAccess() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return false;
       const data = JSON.parse(raw);
-      return data && data.code && ACCESS_CODES.has(data.code);
+      return !!(data && data.code);
     } catch (e) { return false; }
   }
+
+  // Synchronous — only grants for hardcoded demo codes. Used as offline fallback.
   function grantAccess(code) {
     const normalised = (code || '').trim().toUpperCase();
-    if (!ACCESS_CODES.has(normalised)) return false;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ code: normalised, since: new Date().toISOString() }));
+    if (!DEMO_CODES.has(normalised)) return false;
+    if (!ACCEPTED_PREFIXES.some(p => normalised.startsWith(p))) return false;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ code: normalised, since: new Date().toISOString(), source: 'demo' }));
     return true;
   }
+
+  // Async — validates against the Google Sheet (strict mode). Resolves to a result object:
+  //   { ok: true, code, learner }                          // access granted
+  //   { ok: false, reason: 'format' | 'not_found' | 'revoked' | 'expired' | 'wrong_course' | 'sheet_unreachable' }
+  function grantAccessAsync(code) {
+    const normalised = (code || '').trim().toUpperCase();
+    if (!ACCEPTED_PREFIXES.some(p => normalised.startsWith(p))) {
+      return Promise.resolve({ ok: false, reason: 'format' });
+    }
+    if (DEMO_CODES.has(normalised)) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ code: normalised, since: new Date().toISOString(), source: 'demo' }));
+      return Promise.resolve({ ok: true, code: normalised, learner: 'DEMO' });
+    }
+    if (!('fetch' in window)) return Promise.resolve({ ok: false, reason: 'sheet_unreachable' });
+    return fetch(CODES_SHEET_URL, { credentials: 'omit' })
+      .then(r => r.ok ? r.text() : Promise.reject(new Error('http ' + r.status)))
+      .then(text => {
+        const data = parseGviz(text);
+        if (!data || !data.table || !data.table.rows) return { ok: false, reason: 'sheet_unreachable' };
+        const cols = (data.table.cols || []).map(c => (c.label || c.id || '').trim().toLowerCase());
+        const rows = data.table.rows.map(r => {
+          const obj = {};
+          (r.c || []).forEach((cell, i) => {
+            const key = cols[i] || ('col' + i);
+            obj[key] = cell ? (cell.f != null ? cell.f : (cell.v != null ? cell.v : '')) : '';
+          });
+          return obj;
+        });
+        const match = rows.find(r => (r.code || '').toString().trim().toUpperCase() === normalised);
+        if (!match) return { ok: false, reason: 'not_found' };
+        const status = (match.status || '').toString().trim().toLowerCase();
+        if (status === 'revoked') return { ok: false, reason: 'revoked' };
+        if (status !== 'active') return { ok: false, reason: 'not_found' };
+        const courseField = (match.course || '').toString().trim().toUpperCase();
+        if (courseField && courseField !== 'BUNDLE' && courseField !== THIS_COURSE) {
+          return { ok: false, reason: 'wrong_course' };
+        }
+        const exp = (match.expires_date || '').toString().trim();
+        if (exp && exp.toLowerCase() !== 'never') {
+          const d = new Date(exp);
+          if (!isNaN(d.getTime()) && d.getTime() < Date.now()) {
+            return { ok: false, reason: 'expired' };
+          }
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          code: normalised,
+          since: new Date().toISOString(),
+          source: 'sheet',
+          learner: match.learner_name || ''
+        }));
+        return { ok: true, code: normalised, learner: match.learner_name || '' };
+      })
+      .catch(() => ({ ok: false, reason: 'sheet_unreachable' }));
+  }
+
   function revokeAccess() { localStorage.removeItem(STORAGE_KEY); }
 
   // ============================================================
@@ -432,15 +502,30 @@
     const form = document.getElementById('hlGateForm');
     const input = document.getElementById('hlGateCode');
     const err = document.getElementById('hlGateError');
+    const submitBtn = form.querySelector('button[type="submit"], .hl-btn');
+    const originalBtnText = submitBtn ? submitBtn.textContent : '';
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       err.classList.remove('show');
-      if (grantAccess(input.value)) {
-        window.location.replace(returnTo || './index.html');
-      } else {
+      const raw = input.value;
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Checking\u2026'; }
+      grantAccessAsync(raw).then(function (result) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalBtnText; }
+        if (result && result.ok) {
+          window.location.replace(returnTo || './index.html');
+          return;
+        }
         err.classList.add('show');
-        err.textContent = 'That access code is not recognised. Please check the code and try again, or contact us.';
-      }
+        const messages = {
+          format: 'That code format is not valid. Codes start with HDC-AI- or HDC-BUNDLE-.',
+          not_found: 'That access code is not on our register. Please double-check, or contact us if you have just paid.',
+          revoked: 'That access code has been revoked. Please contact us if you believe this is in error.',
+          expired: 'That access code has expired. Please contact us to renew.',
+          wrong_course: 'That code is for a different course. Please use a code issued for this course or a bundle code.',
+          sheet_unreachable: 'We could not reach our access register just now. Please check your connection and try again.'
+        };
+        err.textContent = messages[result && result.reason] || messages.not_found;
+      });
     });
   }
 
