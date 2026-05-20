@@ -160,9 +160,34 @@
           </div>
 
           <div class="cta-block">
-            <h3>Build planning around this number</h3>
-            <p>If you run a private institution, scholarship programme, EdTech product, or are a parent making 2026 university decisions \u2014 this forecast turns guesswork into a planning input. Get the weekly delta delivered to your inbox.</p>
-            <a href="../contact.html?topic=Strike-Forecast-Subscription" class="btn">Subscribe to the weekly digest</a>
+            <h3>Get this in your inbox every Friday</h3>
+            <p>One short email per week: the new probability, the move, and what changed. Used by private-school heads, scholarship managers, EdTech founders, and parents planning 2026.</p>
+            <form id="digestForm" novalidate style="max-width:520px;margin:0 auto;display:grid;gap:.6rem;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+                <input type="text" name="Name" placeholder="Your name" required style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;">
+                <input type="email" name="Email" placeholder="Email address" required style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;">
+              </div>
+              <select name="Role" style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;background:#fff;color:#1a3942;">
+                <option value="">I am a… (helps us segment)</option>
+                <option>Parent</option>
+                <option>Student</option>
+                <option>University / School administrator</option>
+                <option>Scholarship / NGO programme officer</option>
+                <option>EdTech founder / operator</option>
+                <option>Journalist / Researcher</option>
+                <option>Other</option>
+              </select>
+              <button type="submit" class="btn" style="border:none;cursor:pointer;font-family:inherit;font-size:.98rem;">Subscribe to the weekly digest</button>
+              <div id="digestMsg" role="status" aria-live="polite" style="display:none;background:#fff;color:#01696F;padding:.7rem;border-radius:8px;font-size:.9rem;"></div>
+              <p style="font-size:.78rem;color:#eaf6f6;margin:.3rem 0 0;">Unsubscribe in one click. No spam. We never share your email.</p>
+            </form>
+          </div>
+
+          <div style="background:#fbfaf6;border:1px solid #e8e3d4;border-radius:12px;padding:var(--space-5);margin-top:var(--space-5);">
+            <h3 style="margin:0 0 var(--space-2);color:#01696F;font-size:1.05rem;">Two related Harmony insights</h3>
+            <p style="color:#3d5359;margin:0 0 var(--space-3);font-size:.93rem;line-height:1.5;">This forecast is one component of the broader Harmony Education Confidence Index. If you make decisions for students or parents, you may also want:</p>
+            <a href="../tools/confidence-index.html" style="display:inline-block;color:#01696F;text-decoration:none;font-weight:700;margin-right:1rem;">Harmony Education Confidence Index →</a>
+            <a href="../tools/japa-readiness.html" style="display:inline-block;color:#01696F;text-decoration:none;font-weight:700;">JAPA Readiness Score →</a>
           </div>
 
           <p class="editor-note">Editor\u2019s note: this is a forecasting tool, not a prediction. Probabilities reflect Harmony\u2019s read of public signals; actual outcomes depend on negotiations we cannot observe. Use as one input among several.</p>
@@ -208,6 +233,7 @@
     </div>
   </footer>
 
+  <script src="../js/config.js"></script>
   <script src="../js/main.js"></script>
   <script>
   /* ============================================================
@@ -291,6 +317,41 @@
   document.getElementById('takeawayText').textContent = band.take;
 
   const list = document.getElementById('sigList');
+  /* ---- Digest signup ---- */
+  const FORM_ENDPOINT = (window.HARMONY_CONFIG && window.HARMONY_CONFIG.formEndpoint) || '';
+  document.addEventListener('DOMContentLoaded', () => {
+    const df = document.getElementById('digestForm');
+    if (!df) return;
+    df.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const msg = document.getElementById('digestMsg');
+      const btn = df.querySelector('button[type=submit]');
+      const data = Object.fromEntries(new FormData(df).entries());
+      data.service = 'Strike-Digest';
+      data.timestamp = new Date().toISOString();
+      data.source = location.pathname;
+      data.CurrentProbability = probability + '%';
+      data.CurrentBand = band.text;
+      btn.disabled = true; const oldBtn = btn.textContent; btn.textContent = 'Subscribing…';
+      try {
+        if (FORM_ENDPOINT) {
+          await fetch(FORM_ENDPOINT, { method:'POST', mode:'no-cors',
+            headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data) });
+          msg.style.display = 'block';
+          msg.innerHTML = '<b>You are in.</b> First digest arrives this Friday.';
+          df.reset();
+        } else {
+          const body = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
+          window.location.href = `mailto:info@harmonydigitalconsults.com.ng?subject=${encodeURIComponent('Strike Forecast Digest Subscription')}&body=${encodeURIComponent(body)}`;
+        }
+      } catch (err) {
+        msg.style.display = 'block';
+        msg.style.background = '#fdecec'; msg.style.color = '#8b1a1a';
+        msg.textContent = 'Could not subscribe. Please email info@harmonydigitalconsults.com.ng.';
+      } finally { btn.disabled = false; btn.textContent = oldBtn; }
+    });
+  });
+
   list.innerHTML = FORECAST.signals.map(s => `
     <div class="sig-row">
       <div class="sig-name">${s.name}

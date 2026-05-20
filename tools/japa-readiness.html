@@ -188,9 +188,23 @@
               <div id="gapList"></div>
             </div>
 
+            <div id="crossLinkBlock" style="display:none;background:#fbfaf6;border:1px solid #e8e3d4;border-radius:12px;padding:var(--space-5);margin-bottom:var(--space-5);">
+              <h3 style="color:#01696F;margin:0 0 var(--space-2);font-size:1.1rem;" id="crossLinkTitle">—</h3>
+              <p style="color:#3d5359;margin:0 0 var(--space-3);font-size:.95rem;line-height:1.55;" id="crossLinkText">—</p>
+              <a id="crossLinkBtn" href="#" style="display:inline-block;background:#01696F;color:#fff;padding:.65rem 1.2rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.92rem;">—</a>
+            </div>
+
+            <!-- Direct booking (shown when score >= 50) -->
+            <div id="bookingBlock" style="display:none;background:#fff;border:1px solid #c6e2e3;border-radius:14px;padding:var(--space-6);margin-bottom:var(--space-5);">
+              <h3 style="color:#01696F;margin:0 0 var(--space-2);font-size:1.25rem;">Book your Study-Abroad Strategy Call</h3>
+              <p style="color:#3d5359;margin:0 0 var(--space-4);">Your score says you’re ready (or nearly so). Lock in a 60-minute call with a Harmony advisor — we’ll turn this result into a step-by-step plan within 48 hours.</p>
+              <a href="https://cal.com/harmonydigitalconsults/study-abroad-strategy-call" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block;text-decoration:none;padding:.95rem 1.6rem;">Pick a time on Cal.com &rarr;</a>
+              <p style="font-size:.82rem;color:#5b6b6e;margin-top:var(--space-3);">₦35,000 · 60-minute Zoom · written 2-page shortlist PDF within 48 hrs</p>
+            </div>
+
             <div class="cta-block lead-form-wrap">
-              <h3>Want a personal action plan from a Harmony advisor?</h3>
-              <p>Book a 45-minute Study-Abroad Strategy Call. We turn this score into a step-by-step plan tailored to your finances, course, and target country.</p>
+              <h3 id="leadFormTitle">Want a personal action plan from a Harmony advisor?</h3>
+              <p id="leadFormSub">Get your score, dimension breakdown, and tailored next steps by email — plus an optional follow-up from an advisor.</p>
               <form id="leadForm" novalidate>
                 <div class="form-grid-2">
                   <div class="form-row"><label for="lf_name">Full name</label><input type="text" id="lf_name" name="Name" required></div>
@@ -493,6 +507,28 @@
     document.getElementById('resultWrap').classList.add('active');
     document.getElementById('progressBar').style.width = '100%';
     window.scrollTo({ top: document.querySelector('.tool-section').offsetTop - 40, behavior: 'smooth' });
+
+    // Score-aware CTA routing
+    const bookBlock = document.getElementById('bookingBlock');
+    const crossBlock = document.getElementById('crossLinkBlock');
+    const leadTitle = document.getElementById('leadFormTitle');
+    const leadSub = document.getElementById('leadFormSub');
+    if (total >= 50) {
+      // High/medium scorer — push directly to booking
+      bookBlock.style.display = 'block';
+      leadTitle.textContent = total >= 75 ? 'Prefer email first? Get your full action plan' : 'Or get a written 30-day prep plan by email';
+      leadSub.textContent = 'We’ll email your score breakdown, weak-area fixes, and a tailored next-step plan within 24 hours.';
+    } else {
+      // Low scorer — nurture, show Confidence Index context
+      crossBlock.style.display = 'block';
+      document.getElementById('crossLinkTitle').textContent = 'Context: it’s a tough season to leave';
+      document.getElementById('crossLinkText').textContent = 'Our Education Confidence Index shows the macro environment is currently strained. Use the next 6–12 months to fix your weakest areas — you’ll be far more competitive.';
+      const cb = document.getElementById('crossLinkBtn');
+      cb.href = '/tools/confidence-index.html';
+      cb.textContent = 'See the Confidence Index →';
+      leadTitle.textContent = 'Get your free 12-month readiness roadmap';
+      leadSub.textContent = 'We’ll email a month-by-month plan to lift your weakest areas — no call required, no charge.';
+    }
 
     // Stash for submission
     window.__JAPA_RESULT__ = { total, band, dimPct, answers: Object.fromEntries(Object.entries(answers).map(([k,v]) => [k, v.label])) };

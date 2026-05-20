@@ -186,9 +186,35 @@
           </div>
 
           <div class="cta-block">
-            <h3>Get the index in your inbox every first Friday</h3>
+            <h3>Get the Index in your inbox every first Friday</h3>
             <p>One short email per month: the new number, the move, the why, and what to watch next. Used by EdTech founders, journalists, foundations, and parents.</p>
-            <a href="../contact.html?topic=Confidence-Index-Subscription" class="btn">Subscribe to the monthly digest</a>
+            <form id="digestForm" novalidate style="max-width:520px;margin:0 auto;display:grid;gap:.6rem;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+                <input type="text" name="Name" placeholder="Your name" required style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;">
+                <input type="email" name="Email" placeholder="Email address" required style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;">
+              </div>
+              <select name="Role" style="padding:.85rem 1rem;border:none;border-radius:9px;font-family:inherit;font-size:.95rem;background:#fff;color:#1a3942;">
+                <option value="">I am a… (helps us segment)</option>
+                <option>Journalist / Researcher</option>
+                <option>Ministry / Government officer</option>
+                <option>Donor / Foundation officer</option>
+                <option>EdTech founder / Investor</option>
+                <option>University / School administrator</option>
+                <option>Parent</option>
+                <option>Student</option>
+                <option>Other</option>
+              </select>
+              <button type="submit" class="btn" style="border:none;cursor:pointer;font-family:inherit;font-size:.98rem;">Subscribe to the monthly digest</button>
+              <div id="digestMsg" role="status" aria-live="polite" style="display:none;background:#fff;color:#01696F;padding:.7rem;border-radius:8px;font-size:.9rem;"></div>
+              <p style="font-size:.78rem;color:#eaf6f6;margin:.3rem 0 0;">Unsubscribe in one click. No spam. We never share your email.</p>
+            </form>
+          </div>
+
+          <div style="background:#fbfaf6;border:1px solid #e8e3d4;border-radius:12px;padding:var(--space-5);margin-top:var(--space-5);">
+            <h3 style="margin:0 0 var(--space-2);color:#01696F;font-size:1.05rem;">Two related Harmony insights</h3>
+            <p style="color:#3d5359;margin:0 0 var(--space-3);font-size:.93rem;line-height:1.5;">The Index aggregates inputs we publish individually too. To go deeper:</p>
+            <a href="../tools/strike-probability.html" style="display:inline-block;color:#01696F;text-decoration:none;font-weight:700;margin-right:1rem;">ASUU Strike Probability Forecast →</a>
+            <a href="../tools/japa-readiness.html" style="display:inline-block;color:#01696F;text-decoration:none;font-weight:700;">JAPA Readiness Score →</a>
           </div>
         </div>
       </div>
@@ -232,6 +258,7 @@
     </div>
   </footer>
 
+  <script src="../js/config.js"></script>
   <script src="../js/main.js"></script>
   <script>
   /* ============================================================
@@ -338,6 +365,38 @@
       <text x="${x(HISTORY.length-1)}" y="${H-2}" font-size="10" fill="#5b6b6e" text-anchor="middle">${CURRENT.month}</text>
     `;
   })();
+
+  /* ---- Digest signup ---- */
+  const FORM_ENDPOINT = (window.HARMONY_CONFIG && window.HARMONY_CONFIG.formEndpoint) || '';
+  document.getElementById('digestForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const f = e.currentTarget;
+    const msg = document.getElementById('digestMsg');
+    const btn = f.querySelector('button[type=submit]');
+    const data = Object.fromEntries(new FormData(f).entries());
+    data.service = 'Confidence-Digest';
+    data.timestamp = new Date().toISOString();
+    data.source = location.pathname;
+    data.CurrentIndex = computed;
+    data.CurrentBand = band.text;
+    btn.disabled = true; const oldBtn = btn.textContent; btn.textContent = 'Subscribing…';
+    try {
+      if (FORM_ENDPOINT) {
+        await fetch(FORM_ENDPOINT, { method:'POST', mode:'no-cors',
+          headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data) });
+        msg.style.display = 'block';
+        msg.innerHTML = '<b>You are in.</b> First digest arrives the first Friday of next month.';
+        f.reset();
+      } else {
+        const body = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
+        window.location.href = `mailto:info@harmonydigitalconsults.com.ng?subject=${encodeURIComponent('Confidence Index Digest Subscription')}&body=${encodeURIComponent(body)}`;
+      }
+    } catch (err) {
+      msg.style.display = 'block';
+      msg.style.background = '#fdecec'; msg.style.color = '#8b1a1a';
+      msg.textContent = 'Could not subscribe. Please email info@harmonydigitalconsults.com.ng.';
+    } finally { btn.disabled = false; btn.textContent = oldBtn; }
+  });
 
   // History table — newest first
   const tbody = document.querySelector('#histTbl tbody');
