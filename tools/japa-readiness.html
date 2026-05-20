@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAPA Readiness Score | Harmony Digital Consults</title>
+  <meta name="description" content="Free 12-question self-assessment. See your honest readiness to study or work abroad — and the three things most likely to stop you.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/tools/japa-readiness.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JAPA Readiness Score">
+  <meta property="og:description" content="Free 12-question self-assessment. See your honest readiness to study or work abroad — and the three things most likely to stop you.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/tools/japa-readiness.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .tool-hero { background: linear-gradient(135deg,#01696F 0%, #02898F 100%); color:#fff; padding: var(--space-10) 0 var(--space-8); }
+    .tool-hero .crumb { font-size:.85rem; opacity:.85; margin-bottom: var(--space-3); }
+    .tool-hero .crumb a { color:#fff; text-decoration:underline; }
+    .tool-hero h1 { color:#fff; font-size:clamp(1.8rem,3.4vw,2.6rem); margin:0 0 var(--space-3); }
+    .tool-hero p.lede { font-size:1.05rem; opacity:.95; max-width: 60ch; }
+    .tool-section { padding: var(--space-8) 0; }
+    .quiz-card { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-6); box-shadow: 0 2px 8px rgba(0,0,0,.04); max-width: 760px; margin: 0 auto; }
+    .progress-wrap { background:#eaf6f6; height:8px; border-radius:999px; overflow:hidden; margin-bottom: var(--space-5); }
+    .progress-bar { background: linear-gradient(90deg,#01696F,#02898F); height:100%; width:0%; transition: width .35s ease; }
+    .q-step { display:none; }
+    .q-step.active { display:block; animation: fade .25s ease; }
+    @keyframes fade { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+    .q-num { font-size:.82rem; font-weight:700; color:#5b6b6e; letter-spacing:.05em; text-transform:uppercase; margin-bottom: var(--space-2); }
+    .q-text { font-size:1.15rem; font-weight:700; color:#1a3942; margin: 0 0 var(--space-4); line-height:1.4; }
+    .opt-row { display:grid; gap:.55rem; }
+    .opt {
+      display:flex; align-items:center; gap:.7rem;
+      border:1.5px solid #d4d1ca; background:#fbfaf6;
+      border-radius:10px; padding: .85rem 1rem; cursor:pointer;
+      font-size:.95rem; color:#1a3942; transition: all .15s ease;
+    }
+    .opt:hover { border-color:#01696F; background:#eaf6f6; }
+    .opt input { accent-color:#01696F; }
+    .opt.selected { border-color:#01696F; background:#eaf6f6; box-shadow: inset 0 0 0 1px #01696F; }
+    .form-row { display:grid; gap:.35rem; margin-bottom: var(--space-3); }
+    .form-row label { font-size:.88rem; font-weight:600; color:#1a3942; }
+    .form-row input, .form-row select {
+      padding:.7rem .85rem; border:1px solid #cbd6d7; border-radius:8px; font-family:inherit; font-size:.95rem;
+    }
+    .form-grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    @media(max-width:600px){ .form-grid-2 { grid-template-columns: 1fr; } }
+    .nav-row { display:flex; justify-content:space-between; gap: var(--space-3); margin-top: var(--space-5); }
+    .btn-primary { background:#01696F; color:#fff; padding:.85rem 1.5rem; border:none; border-radius:9px; font-weight:700; cursor:pointer; font-size:.98rem; }
+    .btn-primary:hover { background:#02898F; }
+    .btn-primary:disabled { background:#aebec0; cursor:not-allowed; }
+    .btn-ghost { background:transparent; color:#01696F; padding:.85rem 1.2rem; border:1.5px solid #01696F; border-radius:9px; font-weight:600; cursor:pointer; font-size:.98rem; }
+    .btn-ghost:hover { background:#eaf6f6; }
+    .btn-ghost:disabled { color:#aebec0; border-color:#dcdcdc; cursor:not-allowed; }
+
+    /* Result */
+    .result-wrap { display:none; }
+    .result-wrap.active { display:block; }
+    .score-hero {
+      background: linear-gradient(135deg,#eaf6f6 0%, #f9f8f5 100%);
+      border:1px solid #c6e2e3; border-radius:14px;
+      padding: var(--space-6); text-align:center; margin-bottom: var(--space-5);
+    }
+    .score-num { font-size: clamp(3.5rem, 7vw, 5rem); font-weight: 800; color:#01696F; line-height:1; }
+    .score-num small { font-size:1.5rem; color:#5b6b6e; font-weight:600; }
+    .score-band {
+      display:inline-block; margin-top: var(--space-3);
+      padding:.4rem 1rem; border-radius:999px; font-weight:700; font-size:.92rem;
+    }
+    .band-green { background:#daf3df; color:#1d6b2b; }
+    .band-amber { background:#fcf1d3; color:#7a5a0c; }
+    .band-red { background:#fbe1e1; color:#8b1a1a; }
+    .score-caption { color:#3d5359; margin-top: var(--space-3); font-size:.98rem; max-width: 56ch; margin-left:auto; margin-right:auto; }
+
+    .breakdown { display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-5); }
+    @media(max-width:680px){ .breakdown { grid-template-columns: 1fr; } }
+    .dim-card { background:#fff; border:1px solid #e2e8e9; border-radius:12px; padding: var(--space-4); }
+    .dim-card h4 { margin:0 0 .4rem; font-size:.95rem; color:#1a3942; }
+    .dim-bar { background:#eef2f3; height:8px; border-radius:999px; overflow:hidden; margin: .5rem 0 .4rem; }
+    .dim-bar > span { display:block; height:100%; background:#01696F; border-radius:999px; transition: width .5s ease; }
+    .dim-card .dim-val { font-size:.85rem; color:#5b6b6e; font-weight:600; }
+
+    .gaps { background:#fff; border:1px solid #e2e8e9; border-radius:12px; padding: var(--space-5); margin-bottom: var(--space-5); }
+    .gaps h3 { margin: 0 0 var(--space-3); color:#01696F; font-size:1.1rem; }
+    .gap-item { padding: var(--space-3) 0; border-bottom: 1px solid #eef2f3; }
+    .gap-item:last-child { border-bottom: none; }
+    .gap-item h5 { margin: 0 0 .3rem; color:#1a3942; font-size:.98rem; }
+    .gap-item p { margin: 0; color:#3d5359; font-size:.92rem; line-height:1.5; }
+
+    .cta-block {
+      background: linear-gradient(135deg,#01696F 0%, #02898F 100%);
+      color:#fff; border-radius:14px; padding: var(--space-6); text-align:center;
+    }
+    .cta-block h3 { color:#fff; margin:0 0 var(--space-2); font-size:1.3rem; }
+    .cta-block p { color:#eaf6f6; margin: 0 0 var(--space-4); }
+    .cta-block .btn-primary { background:#fff; color:#01696F; }
+    .cta-block .btn-primary:hover { background:#eaf6f6; }
+
+    .form-msg { margin-top: var(--space-3); padding: var(--space-3); border-radius:8px; display:none; }
+    .form-msg.ok { background:#e7f5e9; color:#1d6b2b; border:1px solid #b8e0c1; }
+    .form-msg.err { background:#fdecec; color:#8b1a1a; border:1px solid #f5c1c1; }
+
+    .micro { font-size:.82rem; color:#5b6b6e; margin-top: var(--space-3); text-align:center; }
+    .micro a { color:#01696F; }
+
+    @media print {
+      .tool-hero, .header, .footer, .nav-row, .cta-block, .lead-form-wrap { display:none !important; }
+      .quiz-card { box-shadow:none; border:none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="tool-hero">
+      <div class="container">
+        <div class="crumb"><a href="../index.html">Home</a> &rsaquo; <a href="../insights/index.html">Insights Hub</a> &rsaquo; JAPA Readiness Score</div>
+        <h1>JAPA Readiness Score</h1>
+        <p class="lede">Twelve honest questions. One number out of 100 telling you how prepared you really are to study or work abroad — and the three weakest areas to fix first. Free, no signup to start. ~3 minutes.</p>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <div class="container">
+        <div class="quiz-card">
+          <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+          <!-- QUIZ -->
+          <div id="quizWrap">
+            <!-- Steps rendered by JS -->
+          </div>
+
+          <!-- RESULT -->
+          <div id="resultWrap" class="result-wrap">
+            <div class="score-hero">
+              <div class="score-num"><span id="scoreNum">0</span><small> / 100</small></div>
+              <div class="score-band" id="scoreBand">—</div>
+              <p class="score-caption" id="scoreCaption">—</p>
+            </div>
+
+            <div class="breakdown" id="breakdown"></div>
+
+            <div class="gaps">
+              <h3>Your three weakest areas — fix these first</h3>
+              <div id="gapList"></div>
+            </div>
+
+            <div class="cta-block lead-form-wrap">
+              <h3>Want a personal action plan from a Harmony advisor?</h3>
+              <p>Book a 45-minute Study-Abroad Strategy Call. We turn this score into a step-by-step plan tailored to your finances, course, and target country.</p>
+              <form id="leadForm" novalidate>
+                <div class="form-grid-2">
+                  <div class="form-row"><label for="lf_name">Full name</label><input type="text" id="lf_name" name="Name" required></div>
+                  <div class="form-row"><label for="lf_email">Email</label><input type="email" id="lf_email" name="Email" required></div>
+                </div>
+                <div class="form-grid-2">
+                  <div class="form-row"><label for="lf_phone">WhatsApp / phone</label><input type="tel" id="lf_phone" name="Phone"></div>
+                  <div class="form-row"><label for="lf_target">Target country (top pick)</label><input type="text" id="lf_target" name="TargetCountry" placeholder="e.g. UK, Canada"></div>
+                </div>
+                <button type="submit" class="btn-primary" data-label="Send my action plan">Send my action plan</button>
+                <div class="form-msg" id="leadMsg" role="status" aria-live="polite"></div>
+              </form>
+              <p class="micro" style="color:#eaf6f6;">Or skip the call — <button type="button" id="printBtn" class="btn-ghost" style="background:transparent;border-color:#fff;color:#fff;padding:.55rem 1rem;font-size:.85rem;margin-left:.5rem;">Print my result</button></p>
+            </div>
+
+            <p class="micro">Score is illustrative, based on patterns we see in 200+ Harmony consultations. It's a starting point — not a guarantee of visa approval.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025–2026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+  /* ===========================================================
+     JAPA Readiness Score — client-side scoring
+     12 questions across 4 dimensions, each 25 pts max.
+     Dimensions: Finance (F), Academic (A), Documentation (D), Intent & Plan (I)
+     =========================================================== */
+
+  const QUESTIONS = [
+    { id:'F1', dim:'Finance', text:'How much liquid savings (cash / bank balance / fixed deposit) do you have today for the journey?',
+      options:[
+        {label:'Under ₦2M',                points:0},
+        {label:'₦2M – ₦5M',                points:3},
+        {label:'₦5M – ₦10M',               points:6},
+        {label:'Over ₦10M',                points:9},
+      ]},
+    { id:'F2', dim:'Finance', text:'Who is funding the move?',
+      options:[
+        {label:'Still figuring it out',                       points:0},
+        {label:'Family will sell an asset / take a loan',     points:3},
+        {label:'Confirmed family sponsor with steady income', points:6},
+        {label:'I have a scholarship or full self-funding',   points:8},
+      ]},
+    { id:'F3', dim:'Finance', text:'Can you show 6 months of statements proving the funds are stable (not just a one-week deposit)?',
+      options:[
+        {label:'No',                                  points:0},
+        {label:'Maybe, but it would look suspicious', points:2},
+        {label:'Yes — funds have been sitting steady', points:8},
+      ]},
+
+    { id:'A1', dim:'Academic', text:'What is your highest completed academic qualification (or expected in the next 6 months)?',
+      options:[
+        {label:'SSCE / WAEC only',                points:2},
+        {label:'OND / NCE / Diploma',             points:4},
+        {label:'Bachelor\u2019s degree (2:2 / Pass)', points:6},
+        {label:'Bachelor\u2019s degree (2:1 / First Class) or Master\u2019s', points:9},
+      ]},
+    { id:'A2', dim:'Academic', text:'English-language test status (IELTS / TOEFL / Duolingo / PTE):',
+      options:[
+        {label:'Not taken; not booked',         points:0},
+        {label:'Booked or self-studying',       points:3},
+        {label:'Taken — score is below target', points:5},
+        {label:'Taken — score meets my school\u2019s requirement', points:8},
+      ]},
+    { id:'A3', dim:'Academic', text:'How closely does your background match the course you want to study abroad?',
+      options:[
+        {label:'Completely different field',                                  points:1},
+        {label:'Related field, will need a conversion / foundation year',      points:4},
+        {label:'Same field — direct match',                                    points:8},
+      ]},
+
+    { id:'D1', dim:'Documentation', text:'International passport status:',
+      options:[
+        {label:'Do not have one yet',                          points:0},
+        {label:'Application in progress',                      points:3},
+        {label:'Have one — expires in under 12 months',        points:4},
+        {label:'Have one — valid for 12+ more months',         points:7},
+      ]},
+    { id:'D2', dim:'Documentation', text:'Have you obtained your degree / NYSC certificate, transcript, and reference letters?',
+      options:[
+        {label:'None of them ready',                          points:0},
+        {label:'Some are ready; others I have not started',    points:3},
+        {label:'All of them ready and notarised where needed', points:8},
+      ]},
+    { id:'D3', dim:'Documentation', text:'Have you been refused a visa by any country in the past 5 years?',
+      options:[
+        {label:'Yes — within the last 12 months', points:0},
+        {label:'Yes — more than 2 years ago',     points:4},
+        {label:'No prior refusals',               points:10},
+      ]},
+
+    { id:'I1', dim:'Intent & Plan', text:'How clear is your reason for going abroad?',
+      options:[
+        {label:'Honestly, mostly to leave Nigeria',                points:0},
+        {label:'For a better life — details still vague',          points:3},
+        {label:'Specific career outcome I can describe in one sentence', points:8},
+      ]},
+    { id:'I2', dim:'Intent & Plan', text:'Have you chosen 3 specific schools / employers and confirmed their requirements?',
+      options:[
+        {label:'Not yet',                                       points:0},
+        {label:'One or two; haven\u2019t checked requirements yet',  points:3},
+        {label:'Three+ shortlisted with requirements matched',   points:8},
+      ]},
+    { id:'I3', dim:'Intent & Plan', text:'Do you have a written 12-month timeline (applications, tests, funds, visa)?',
+      options:[
+        {label:'No timeline',                       points:0},
+        {label:'Rough mental plan',                 points:3},
+        {label:'Written plan with monthly targets', points:7},
+      ]},
+  ];
+
+  // Dimension max = sum of best option in each question of that dim
+  const DIM_MAX = {};
+  QUESTIONS.forEach(q => {
+    const best = Math.max(...q.options.map(o => o.points));
+    DIM_MAX[q.dim] = (DIM_MAX[q.dim] || 0) + best;
+  });
+
+  /* ----- Render quiz steps ----- */
+  const wrap = document.getElementById('quizWrap');
+  let current = 0;
+  const answers = {}; // { F1: {label, points}, ... }
+
+  function render() {
+    wrap.innerHTML = '';
+    QUESTIONS.forEach((q, idx) => {
+      const step = document.createElement('div');
+      step.className = 'q-step' + (idx === current ? ' active' : '');
+      step.dataset.idx = idx;
+      const sel = answers[q.id] ? answers[q.id].label : null;
+      step.innerHTML = `
+        <div class="q-num">Question ${idx+1} of ${QUESTIONS.length} &middot; ${q.dim}</div>
+        <h2 class="q-text">${q.text}</h2>
+        <div class="opt-row">
+          ${q.options.map((o,i) => `
+            <label class="opt${sel === o.label ? ' selected' : ''}">
+              <input type="radio" name="${q.id}" value="${i}" ${sel === o.label ? 'checked' : ''}>
+              <span>${o.label}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div class="nav-row">
+          <button type="button" class="btn-ghost" ${idx===0 ? 'disabled' : ''} data-act="back">&larr; Back</button>
+          <button type="button" class="btn-primary" data-act="next" ${sel ? '' : 'disabled'}>
+            ${idx === QUESTIONS.length - 1 ? 'See my score' : 'Next →'}
+          </button>
+        </div>
+      `;
+      wrap.appendChild(step);
+    });
+    updateProgress();
+    bindStep();
+  }
+
+  function updateProgress() {
+    const pct = Math.round(((current) / QUESTIONS.length) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function bindStep() {
+    const step = wrap.querySelector('.q-step.active');
+    if (!step) return;
+    const q = QUESTIONS[Number(step.dataset.idx)];
+    step.querySelectorAll('input[type=radio]').forEach(inp => {
+      inp.addEventListener('change', () => {
+        const idx = Number(inp.value);
+        answers[q.id] = { label: q.options[idx].label, points: q.options[idx].points };
+        step.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
+        inp.closest('.opt').classList.add('selected');
+        step.querySelector('[data-act=next]').disabled = false;
+      });
+    });
+    step.querySelector('[data-act=back]').addEventListener('click', () => {
+      if (current > 0) { current--; render(); }
+    });
+    step.querySelector('[data-act=next]').addEventListener('click', () => {
+      if (current < QUESTIONS.length - 1) { current++; render(); }
+      else { finish(); }
+    });
+  }
+
+  /* ----- Scoring + result ----- */
+  function finish() {
+    const dimRaw = { Finance:0, Academic:0, Documentation:0, 'Intent & Plan':0 };
+    QUESTIONS.forEach(q => { dimRaw[q.dim] += (answers[q.id] && answers[q.id].points) || 0; });
+
+    // Normalise each dim to 25 pts; total 100
+    const dimPct = {};
+    Object.keys(dimRaw).forEach(d => {
+      dimPct[d] = Math.round((dimRaw[d] / DIM_MAX[d]) * 25);
+    });
+    const total = Object.values(dimPct).reduce((a,b)=>a+b,0);
+
+    // Band + caption
+    let band, bandClass, caption;
+    if (total >= 75) {
+      band = 'Ready to launch';
+      bandClass = 'band-green';
+      caption = 'You are in the top tier of applicants we see. Lock in your timeline and start submitting — the window is open.';
+    } else if (total >= 50) {
+      band = 'Almost there — close the gaps';
+      bandClass = 'band-amber';
+      caption = 'You have the foundation. Two or three focused fixes (below) move you from hopeful to highly competitive.';
+    } else {
+      band = 'Build the base first';
+      bandClass = 'band-red';
+      caption = 'Going abroad right now would likely fail or burn savings. Spend 6–12 months strengthening the weakest areas — the smart move.';
+    }
+
+    document.getElementById('scoreNum').textContent = total;
+    const bandEl = document.getElementById('scoreBand');
+    bandEl.textContent = band;
+    bandEl.className = 'score-band ' + bandClass;
+    document.getElementById('scoreCaption').textContent = caption;
+
+    // Dimension cards
+    const bd = document.getElementById('breakdown');
+    bd.innerHTML = Object.keys(dimPct).map(d => {
+      const pct = Math.round((dimPct[d] / 25) * 100);
+      return `
+        <div class="dim-card">
+          <h4>${d}</h4>
+          <div class="dim-bar"><span style="width:${pct}%"></span></div>
+          <div class="dim-val">${dimPct[d]} / 25 &middot; ${pct}%</div>
+        </div>
+      `;
+    }).join('');
+
+    // Bottom 3 weakest questions by % of max
+    const ranked = QUESTIONS.map(q => {
+      const a = answers[q.id];
+      const got = a ? a.points : 0;
+      const max = Math.max(...q.options.map(o => o.points));
+      return { q, got, max, ratio: got/max };
+    }).sort((x,y) => x.ratio - y.ratio).slice(0,3);
+
+    const RECS = {
+      F1: 'Open a dedicated savings goal account today; automate transfers monthly. Visa officers look for stability over 6+ months, not big last-minute deposits.',
+      F2: 'Put your sponsor on paper — sponsor letter + their 6-month bank statement + proof of income. Vague funding stories are the #1 visa refusal reason.',
+      F3: 'Start now. Even ₦500k held steady for 6 months looks better than ₦5M deposited yesterday. Stability beats size.',
+      A1: 'Strengthen your academic profile: enrol in a relevant short certificate (Coursera / Google) and finish 2 in the next 90 days to compensate.',
+      A2: 'Book IELTS / Duolingo within 30 days. Aim for IELTS 6.5+ (Duolingo 110+). It is the cheapest single boost to your score.',
+      A3: 'Pick courses that match your background, or budget for a 1-year conversion / foundation programme. Mismatch = expensive rejections.',
+      D1: 'Apply for / renew your passport this week. Nothing else can move until this is sorted.',
+      D2: 'Request transcripts and references now — Nigerian institutions take 4–12 weeks. Do not wait for school offers first.',
+      D3: 'Be transparent about prior refusals in every new application. Hidden refusals get caught and banned for life.',
+      I1: 'Write one specific career outcome in one sentence: "I want to be a registered nurse in Ontario within 3 years." Vague reasons get vague results.',
+      I2: 'Shortlist 3 schools or employers in the next 14 days. Use our Study-Abroad Cost dashboard and tuition pages to filter realistically.',
+      I3: 'Block 90 minutes this weekend to write a month-by-month plan to T-12. We have a free template — ask in the form below.',
+    };
+
+    document.getElementById('gapList').innerHTML = ranked.map(r => `
+      <div class="gap-item">
+        <h5>${r.q.dim} &middot; ${r.q.text}</h5>
+        <p><strong>Your answer:</strong> ${answers[r.q.id].label}<br><strong>Fix:</strong> ${RECS[r.q.id]}</p>
+      </div>
+    `).join('');
+
+    document.getElementById('quizWrap').style.display = 'none';
+    document.getElementById('resultWrap').classList.add('active');
+    document.getElementById('progressBar').style.width = '100%';
+    window.scrollTo({ top: document.querySelector('.tool-section').offsetTop - 40, behavior: 'smooth' });
+
+    // Stash for submission
+    window.__JAPA_RESULT__ = { total, band, dimPct, answers: Object.fromEntries(Object.entries(answers).map(([k,v]) => [k, v.label])) };
+  }
+
+  /* ----- Lead form submission (uses existing intake endpoint) ----- */
+  const FORM_ENDPOINT = (window.HARMONY_CONFIG && window.HARMONY_CONFIG.formEndpoint) || '';
+  document.getElementById('leadForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const formEl = e.currentTarget;
+    const msgEl = document.getElementById('leadMsg');
+    const btn = formEl.querySelector('button[type=submit]');
+    const r = window.__JAPA_RESULT__ || {};
+    const data = Object.fromEntries(new FormData(formEl).entries());
+    data.service = 'JAPA-Readiness';
+    data.timestamp = new Date().toISOString();
+    data.source = location.pathname;
+    data.Score = r.total;
+    data.Band = r.band;
+    data.Finance = (r.dimPct && r.dimPct.Finance) + '/25';
+    data.Academic = (r.dimPct && r.dimPct.Academic) + '/25';
+    data.Documentation = (r.dimPct && r.dimPct.Documentation) + '/25';
+    data.IntentPlan = (r.dimPct && r.dimPct['Intent & Plan']) + '/25';
+    data.Answers = JSON.stringify(r.answers || {});
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      if (FORM_ENDPOINT) {
+        await fetch(FORM_ENDPOINT, {
+          method:'POST', mode:'no-cors',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify(data)
+        });
+        msgEl.className = 'form-msg ok';
+        msgEl.style.display = 'block';
+        msgEl.innerHTML = '<strong>Sent.</strong> A Harmony advisor will email you within 24 hours with your action plan and call link.';
+        formEl.reset();
+      } else {
+        const body = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
+        const subject = `JAPA Readiness ${r.total}/100 — ${data.Name || 'no name'}`;
+        window.location.href = `mailto:info@harmonydigitalconsults.com.ng?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        msgEl.className = 'form-msg ok';
+        msgEl.style.display = 'block';
+        msgEl.innerHTML = 'Opening your email app… If nothing happens, email <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>.';
+      }
+    } catch(err) {
+      msgEl.className = 'form-msg err';
+      msgEl.style.display = 'block';
+      msgEl.innerHTML = 'Could not submit. Please email <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a> or WhatsApp +234 810 097 8587.';
+    } finally {
+      btn.disabled = false; btn.textContent = btn.dataset.label || 'Send my action plan';
+    }
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  // Boot
+  render();
+  </script>
+</body></html>

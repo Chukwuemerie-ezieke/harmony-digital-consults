@@ -1,6 +1,6 @@
 {
-  "version": "1.4",
-  "updated": "2026-05-14",
+  "version": "1.5",
+  "updated": "2026-05-20",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
     {
@@ -20,6 +20,25 @@
       "cta": {
         "label": "Engage Harmony for Capacity Building",
         "url": "/contact.html"
+      }
+    },
+    {
+      "id": "japa-readiness-score",
+      "title": "JAPA Readiness Score",
+      "slug": "japa-readiness",
+      "url": "/tools/japa-readiness.html",
+      "summary": "Free 12-question self-assessment that scores how prepared you really are to study or work abroad across Finance, Academics, Documentation, and Intent. Outputs a 0–100 score, dimension breakdown, and the three weakest areas to fix first.",
+      "category": "Tools & Recommenders",
+      "tags": ["Study Abroad", "JAPA", "Assessment", "Nigeria", "Career"],
+      "audience": ["Students", "Parents", "Young Professionals", "Career Advisors"],
+      "data_sources": ["Harmony advisory case patterns (200+ consultations)", "UKVI / IRCC / USCIS public guidance"],
+      "update_cadence": "Annually",
+      "last_updated": "2026-05-20",
+      "lead_author": "Harmony Digital Consults Advisory Team",
+      "featured": true,
+      "cta": {
+        "label": "Book a Study-Abroad Strategy Call",
+        "url": "/services/study-abroad-call.html"
       }
     },
     {
