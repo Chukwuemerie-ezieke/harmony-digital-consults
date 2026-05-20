@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASUU Strike Probability Forecast | Harmony Digital Consults</title>
+  <meta name="description" content="A weekly-updated probability — between 0% and 100% — that ASUU will declare a national strike within the next 90 days. Driven by 6 weighted signals, transparently calculated.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/tools/strike-probability.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ASUU Strike Probability Forecast">
+  <meta property="og:description" content="A weekly-updated probability that ASUU will declare a national strike within the next 90 days. Transparent, signal-driven.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/tools/strike-probability.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .tool-hero { background: linear-gradient(135deg,#01696F 0%, #02898F 100%); color:#fff; padding: var(--space-10) 0 var(--space-8); }
+    .tool-hero .crumb { font-size:.85rem; opacity:.85; margin-bottom: var(--space-3); }
+    .tool-hero .crumb a { color:#fff; text-decoration:underline; }
+    .tool-hero h1 { color:#fff; font-size:clamp(1.8rem,3.4vw,2.6rem); margin:0 0 var(--space-3); }
+    .tool-hero p.lede { font-size:1.05rem; opacity:.95; max-width: 64ch; }
+    .tool-section { padding: var(--space-8) 0; }
+    .gauge-wrap { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-6); box-shadow: 0 2px 8px rgba(0,0,0,.04); text-align:center; margin-bottom: var(--space-5); }
+    .gauge-num { font-size:clamp(4rem,9vw,6.5rem); font-weight:800; color:#01696F; line-height:1; letter-spacing:-.02em; }
+    .gauge-num small { font-size:1.6rem; color:#5b6b6e; font-weight:600; }
+    .gauge-band { display:inline-block; margin-top: var(--space-3); padding:.5rem 1.2rem; border-radius:999px; font-weight:700; font-size:.95rem; }
+    .band-low { background:#daf3df; color:#1d6b2b; }
+    .band-elev { background:#fcf1d3; color:#7a5a0c; }
+    .band-high { background:#fde0d0; color:#8a3d10; }
+    .band-imm { background:#fbe1e1; color:#8b1a1a; }
+    .meta-row { display:flex; gap:var(--space-4); justify-content:center; flex-wrap:wrap; margin-top: var(--space-4); font-size:.88rem; color:#5b6b6e; }
+    .meta-row b { color:#1a3942; }
+
+    .signals { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-6); margin-bottom: var(--space-5); }
+    .signals h2 { margin: 0 0 var(--space-4); font-size:1.2rem; color:#01696F; }
+    .sig-row { display:grid; grid-template-columns: 1fr 90px 1fr 70px; gap: var(--space-3); align-items:center; padding: var(--space-3) 0; border-bottom: 1px solid #eef2f3; }
+    @media(max-width:760px){ .sig-row { grid-template-columns: 1fr 60px; gap:.5rem; } .sig-row > .sig-status, .sig-row > .sig-wt { grid-column: 1 / -1; padding-left: 0; } }
+    .sig-row:last-child { border-bottom: none; }
+    .sig-name { font-weight:700; color:#1a3942; font-size:.95rem; }
+    .sig-name small { display:block; color:#5b6b6e; font-weight:400; font-size:.82rem; margin-top:.2rem; }
+    .sig-score { font-weight:800; color:#01696F; font-size:1.1rem; text-align:center; }
+    .sig-status { color:#3d5359; font-size:.92rem; }
+    .sig-wt { color:#5b6b6e; font-size:.82rem; text-align:right; }
+    .sig-bar { background:#eef2f3; height:6px; border-radius:999px; overflow:hidden; margin-top:.3rem; }
+    .sig-bar > span { display:block; height:100%; background: linear-gradient(90deg,#01696F,#02898F); border-radius:999px; }
+
+    .methodology, .takeaway {
+      background:#fbfaf6; border:1px solid #e8e3d4; border-radius:12px;
+      padding: var(--space-5); margin-bottom: var(--space-5);
+    }
+    .methodology h2, .takeaway h2 { margin: 0 0 var(--space-3); color:#01696F; font-size:1.15rem; }
+    .methodology p, .takeaway p { color:#3d5359; line-height:1.6; font-size:.95rem; }
+    .methodology ol { color:#3d5359; line-height:1.7; padding-left: 1.2rem; }
+
+    .cta-block { background: linear-gradient(135deg,#01696F 0%, #02898F 100%); color:#fff; border-radius:14px; padding: var(--space-6); text-align:center; }
+    .cta-block h3 { color:#fff; margin: 0 0 var(--space-2); font-size:1.3rem; }
+    .cta-block p { color:#eaf6f6; margin: 0 0 var(--space-4); }
+    .cta-block .btn { display:inline-block; background:#fff; color:#01696F; padding:.85rem 1.6rem; border-radius:9px; font-weight:700; text-decoration:none; }
+    .cta-block .btn:hover { background:#eaf6f6; }
+
+    .editor-note { text-align:center; font-size:.82rem; color:#5b6b6e; margin-top: var(--space-4); }
+
+    @media print {
+      .tool-hero, .header, .footer, .cta-block { display:none !important; }
+      .gauge-wrap, .signals { box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="tool-hero">
+      <div class="container">
+        <div class="crumb"><a href="../index.html">Home</a> &rsaquo; <a href="../insights/index.html">Insights Hub</a> &rsaquo; ASUU Strike Probability Forecast</div>
+        <h1>ASUU Strike Probability Forecast</h1>
+        <p class="lede">A single forward-looking number: the probability — between 0% and 100% — that ASUU will declare a national strike within the next 90 days. Driven by six transparently-weighted signals, refreshed weekly. Companion to our <a href="../insights/asuu-strike-risk-tracker.html" style="color:#fff;text-decoration:underline;font-weight:700;">live ASUU Strike Risk Tracker</a>.</p>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <div class="container">
+        <div style="max-width:880px;margin:0 auto;">
+
+          <div class="gauge-wrap">
+            <div style="font-size:.85rem;font-weight:700;color:#5b6b6e;letter-spacing:.08em;text-transform:uppercase;">Probability of a national ASUU strike within 90 days</div>
+            <div class="gauge-num"><span id="prob">--</span><small>%</small></div>
+            <div class="gauge-band" id="band">—</div>
+            <div class="meta-row">
+              <span>As of <b id="asof">—</b></span>
+              <span>Next refresh: <b id="next">—</b></span>
+              <span>Methodology version: <b>v1.0</b></span>
+            </div>
+          </div>
+
+          <div class="signals">
+            <h2>The six signals (and what they currently show)</h2>
+            <div id="sigList"></div>
+            <p style="margin-top:var(--space-4);font-size:.85rem;color:#5b6b6e;">Each signal scores 0\u2013100. Final probability = weighted average. Weights derived from review of every ASUU national strike 2009\u20132024.</p>
+          </div>
+
+          <div class="takeaway">
+            <h2>What this means in plain English</h2>
+            <p id="takeawayText">\u2014</p>
+          </div>
+
+          <div class="methodology">
+            <h2>Methodology \u2014 how the number is built</h2>
+            <ol>
+              <li><strong>Months since last salary review</strong> (weight 20%) \u2014 strike risk rises sharply past month 12 without an upward salary adjustment.</li>
+              <li><strong>FAAC / federal education allocation trend</strong> (weight 15%) \u2014 a falling % share signals budget tension; underfunding precedes most strikes.</li>
+              <li><strong>FG\u2013ASUU dialogue temperature</strong> (weight 20%) \u2014 communiqu\u00e9 tone since the last NEC meeting: 0 = active talks, 100 = breakdown.</li>
+              <li><strong>NLC / SSANU / NASU alignment</strong> (weight 15%) \u2014 strikes lengthen and are more likely to be called when allied unions echo the demands.</li>
+              <li><strong>Political / election cycle</strong> (weight 15%) \u2014 historically ASUU avoids strikes in the 90 days before a major federal election but ramps up immediately after.</li>
+              <li><strong>FX / inflation real-wage erosion</strong> (weight 15%) \u2014 when CBN-published inflation > 25% for 3 consecutive months, real-wage anger amplifies every other signal.</li>
+            </ol>
+            <p style="margin-top:var(--space-3);">All inputs sourced from public ASUU communiqu\u00e9s, FG press releases, CBN bulletins, and reputable Nigerian press. Each weekly update is timestamped and archived; we publish revisions to the methodology openly.</p>
+          </div>
+
+          <div class="cta-block">
+            <h3>Build planning around this number</h3>
+            <p>If you run a private institution, scholarship programme, EdTech product, or are a parent making 2026 university decisions \u2014 this forecast turns guesswork into a planning input. Get the weekly delta delivered to your inbox.</p>
+            <a href="../contact.html?topic=Strike-Forecast-Subscription" class="btn">Subscribe to the weekly digest</a>
+          </div>
+
+          <p class="editor-note">Editor\u2019s note: this is a forecasting tool, not a prediction. Probabilities reflect Harmony\u2019s read of public signals; actual outcomes depend on negotiations we cannot observe. Use as one input among several.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025\u20132026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+  /* ============================================================
+     ASUU Strike Probability Forecast
+     -------------------------------------------------------------
+     Single source of truth for the weekly forecast.
+     The editor only needs to update the 6 numeric scores below
+     and the as-of date. The page recalculates everything else.
+     Each score is 0-100 (higher = more strike pressure).
+     ============================================================ */
+  const FORECAST = {
+    asOf: '2026-05-20',
+    nextRefresh: '2026-05-27',
+    signals: [
+      {
+        key: 'salary',
+        name: 'Months since last salary review',
+        weight: 0.20,
+        score: 70,
+        status: '17 months since last upward adjustment (Feb 2025). Past the 12-month threshold.',
+      },
+      {
+        key: 'budget',
+        name: 'Federal education allocation trend',
+        weight: 0.15,
+        score: 55,
+        status: '2026 budget = 7.9% of total federal spend. Below the 15% UNESCO benchmark; flat YoY.',
+      },
+      {
+        key: 'dialogue',
+        name: 'FG-ASUU dialogue temperature',
+        weight: 0.20,
+        score: 60,
+        status: 'Latest NEC communiqu\u00e9 (May 8) used the phrase "exhausting patience." Talks active but cooling.',
+      },
+      {
+        key: 'allies',
+        name: 'NLC / SSANU / NASU alignment',
+        weight: 0.15,
+        score: 65,
+        status: 'NLC has formally endorsed ASUU demands; SSANU issued a 14-day ultimatum on April 30.',
+      },
+      {
+        key: 'election',
+        name: 'Political / election cycle',
+        weight: 0.15,
+        score: 35,
+        status: 'No federal elections within 90-day window. Off-cycle period historically softens timing pressure.',
+      },
+      {
+        key: 'fx',
+        name: 'FX / inflation real-wage erosion',
+        weight: 0.15,
+        score: 75,
+        status: 'Headline inflation 28.4% (NBS, April 2026); third consecutive month >25%. Real wages compressed.',
+      },
+    ],
+  };
+
+  function bandFor(p) {
+    if (p < 25) return { text: 'Low \u2014 quiet window', cls: 'band-low',
+      take: 'Likelihood of a national strike in the next 90 days is low. Plan academic calendars normally. Continue monitoring monthly.' };
+    if (p < 50) return { text: 'Elevated \u2014 monitor weekly', cls: 'band-elev',
+      take: 'Pressure is building. Universities and scholarship programmes should refresh contingency plans (alternate term dates, hybrid delivery) within 30 days.' };
+    if (p < 75) return { text: 'High \u2014 prepare contingencies', cls: 'band-high',
+      take: 'A strike call within the next quarter is a credible scenario. Trigger your contingency playbook now: communicate timelines to students, secure exam logistics, pre-arrange alternative resources.' };
+    return { text: 'Immediate \u2014 activate playbook', cls: 'band-imm',
+      take: 'Conditions match the pattern that has historically preceded every major ASUU strike call. Activate full contingency mode this week. Parents should accelerate any in-flight foreign admissions.' };
+  }
+
+  const probability = Math.round(
+    FORECAST.signals.reduce((s, x) => s + x.score * x.weight, 0)
+  );
+  const band = bandFor(probability);
+
+  document.getElementById('prob').textContent = probability;
+  document.getElementById('band').textContent = band.text;
+  document.getElementById('band').classList.add(band.cls);
+  document.getElementById('asof').textContent = FORECAST.asOf;
+  document.getElementById('next').textContent = FORECAST.nextRefresh;
+  document.getElementById('takeawayText').textContent = band.take;
+
+  const list = document.getElementById('sigList');
+  list.innerHTML = FORECAST.signals.map(s => `
+    <div class="sig-row">
+      <div class="sig-name">${s.name}
+        <small>${s.status}</small>
+        <div class="sig-bar"><span style="width:${s.score}%"></span></div>
+      </div>
+      <div class="sig-score">${s.score}</div>
+      <div class="sig-status"></div>
+      <div class="sig-wt">weight ${Math.round(s.weight*100)}%</div>
+    </div>
+  `).join('');
+  </script>
+</body></html>

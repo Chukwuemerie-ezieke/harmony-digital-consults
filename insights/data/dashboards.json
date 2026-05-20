@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "updated": "2026-05-20",
   "owner": "Harmony Digital Consults Ltd",
   "dashboards": [
@@ -39,6 +39,44 @@
       "cta": {
         "label": "Book a Study-Abroad Strategy Call",
         "url": "/services/study-abroad-call.html"
+      }
+    },
+    {
+      "id": "asuu-strike-probability-forecast",
+      "title": "ASUU Strike Probability Forecast",
+      "slug": "strike-probability",
+      "url": "/tools/strike-probability.html",
+      "summary": "A weekly-updated forward-looking probability (0–100%) that ASUU will declare a national strike within the next 90 days. Six transparently-weighted signals: salary review timing, federal allocation trend, dialogue temperature, NLC/SSANU/NASU alignment, election cycle, and inflation-driven real-wage erosion.",
+      "category": "Research & Advocacy",
+      "tags": ["ASUU", "Strike", "Forecast", "Tertiary", "Risk"],
+      "audience": ["Parents", "University Administrators", "Scholarship Programmes", "EdTech Founders", "Journalists"],
+      "data_sources": ["ASUU communiqués", "FG press releases", "CBN inflation bulletins", "NBS", "NLC / SSANU / NASU public statements"],
+      "update_cadence": "Weekly (Fridays)",
+      "last_updated": "2026-05-20",
+      "lead_author": "Harmony Digital Consults Research Desk",
+      "featured": true,
+      "cta": {
+        "label": "Subscribe to the weekly digest",
+        "url": "/contact.html?topic=Strike-Forecast-Subscription"
+      }
+    },
+    {
+      "id": "harmony-education-confidence-index",
+      "title": "Harmony Education Confidence Index",
+      "slug": "confidence-index",
+      "url": "/tools/confidence-index.html",
+      "summary": "A single 0–100 monthly number measuring confidence in the Nigerian education system. Five weighted components: strike-risk inverse, WAEC/NECO health, FX-adjusted access, federal funding share, and JAPA pressure inverse. Refreshed first Friday of every month with a published methodology and revisions log.",
+      "category": "Market Intelligence",
+      "tags": ["Index", "Macro", "Confidence", "Nigeria", "Policy", "Flagship"],
+      "audience": ["Journalists", "Ministries", "Donors", "EdTech Investors", "Foundation Officers", "Parents"],
+      "data_sources": ["WAEC / NECO public data", "NBS inflation", "CBN FX", "ASUU", "ICEF", "Google Trends"],
+      "update_cadence": "Monthly (first Friday)",
+      "last_updated": "2026-05-20",
+      "lead_author": "Harmony Digital Consults Research Desk",
+      "featured": true,
+      "cta": {
+        "label": "Subscribe to the monthly digest",
+        "url": "/contact.html?topic=Confidence-Index-Subscription"
       }
     },
     {

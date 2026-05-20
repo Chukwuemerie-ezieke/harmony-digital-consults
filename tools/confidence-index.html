@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmony Education Confidence Index | Harmony Digital Consults</title>
+  <meta name="description" content="A single 0–100 monthly number measuring confidence in the Nigerian education system. Five weighted components, refreshed every first Friday. Cite as: 'Harmony Education Confidence Index.'">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://harmonydigitalconsults.com.ng/tools/confidence-index.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Harmony Education Confidence Index">
+  <meta property="og:description" content="One number for the state of Nigerian education. Updated monthly.">
+  <meta property="og:url" content="https://harmonydigitalconsults.com.ng/tools/confidence-index.html">
+  <meta property="og:image" content="https://harmonydigitalconsults.com.ng/images/logo.png">
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .tool-hero { background: linear-gradient(135deg,#01696F 0%, #02898F 100%); color:#fff; padding: var(--space-10) 0 var(--space-8); }
+    .tool-hero .crumb { font-size:.85rem; opacity:.85; margin-bottom: var(--space-3); }
+    .tool-hero .crumb a { color:#fff; text-decoration:underline; }
+    .tool-hero h1 { color:#fff; font-size:clamp(1.8rem,3.4vw,2.6rem); margin:0 0 var(--space-3); }
+    .tool-hero p.lede { font-size:1.05rem; opacity:.95; max-width: 64ch; }
+    .tool-section { padding: var(--space-8) 0; }
+
+    .index-hero { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-7); box-shadow: 0 2px 8px rgba(0,0,0,.04); text-align:center; margin-bottom: var(--space-5); }
+    .index-num { font-size:clamp(4.5rem,11vw,8rem); font-weight:800; color:#01696F; line-height:1; letter-spacing:-.03em; }
+    .index-num small { font-size:1.6rem; color:#5b6b6e; font-weight:600; }
+    .delta { display:inline-block; margin-top: var(--space-3); padding:.4rem 1rem; border-radius:999px; font-weight:700; font-size:.92rem; }
+    .delta-up { background:#daf3df; color:#1d6b2b; }
+    .delta-down { background:#fbe1e1; color:#8b1a1a; }
+    .delta-flat { background:#eef2f3; color:#3d5359; }
+    .index-band { margin-top: var(--space-3); font-weight:700; color:#1a3942; font-size:1.05rem; }
+    .index-caption { color:#3d5359; margin-top: var(--space-3); font-size:.98rem; max-width: 60ch; margin-left:auto; margin-right:auto; line-height:1.55; }
+    .meta-row { display:flex; gap:var(--space-4); justify-content:center; flex-wrap:wrap; margin-top: var(--space-4); font-size:.85rem; color:#5b6b6e; }
+    .meta-row b { color:#1a3942; }
+
+    .components { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-6); margin-bottom: var(--space-5); }
+    .components h2 { margin: 0 0 var(--space-4); color:#01696F; font-size:1.2rem; }
+    .comp-grid { display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media(max-width:680px){ .comp-grid { grid-template-columns: 1fr; } }
+    .comp-card { border:1px solid #e2e8e9; border-radius:10px; padding: var(--space-4); background:#fbfaf6; }
+    .comp-card h3 { margin: 0 0 .3rem; font-size:.98rem; color:#1a3942; }
+    .comp-card .comp-weight { font-size:.78rem; color:#5b6b6e; font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
+    .comp-bar { background:#eef2f3; height:8px; border-radius:999px; overflow:hidden; margin: .6rem 0 .5rem; }
+    .comp-bar > span { display:block; height:100%; background: linear-gradient(90deg,#01696F,#02898F); border-radius:999px; transition: width .5s ease; }
+    .comp-val { display:flex; justify-content:space-between; font-size:.88rem; color:#3d5359; }
+    .comp-val b { color:#01696F; font-size:1.05rem; }
+    .comp-note { font-size:.83rem; color:#5b6b6e; margin-top:.4rem; line-height:1.45; }
+
+    .history { background:#fff; border:1px solid #e2e8e9; border-radius:14px; padding: var(--space-6); margin-bottom: var(--space-5); }
+    .history h2 { margin: 0 0 var(--space-4); color:#01696F; font-size:1.2rem; }
+    .sparkline { width: 100%; height: 140px; }
+    .hist-tbl { width:100%; border-collapse:collapse; margin-top: var(--space-4); font-size:.92rem; }
+    .hist-tbl th, .hist-tbl td { padding:.55rem .75rem; text-align:left; border-bottom: 1px solid #eef2f3; }
+    .hist-tbl th { background:#fbfaf6; color:#1a3942; font-weight:700; font-size:.85rem; letter-spacing:.04em; text-transform:uppercase; }
+    .hist-tbl td:nth-child(2), .hist-tbl td:nth-child(3) { font-weight:700; color:#01696F; }
+
+    .methodology, .takeaway {
+      background:#fbfaf6; border:1px solid #e8e3d4; border-radius:12px;
+      padding: var(--space-5); margin-bottom: var(--space-5);
+    }
+    .methodology h2, .takeaway h2 { margin: 0 0 var(--space-3); color:#01696F; font-size:1.15rem; }
+    .methodology p, .takeaway p { color:#3d5359; line-height:1.6; font-size:.95rem; }
+    .methodology ol { color:#3d5359; line-height:1.7; padding-left: 1.2rem; }
+    .methodology code { background:#eaf6f6; padding:.1rem .4rem; border-radius:4px; font-size:.88em; }
+
+    .cta-block { background: linear-gradient(135deg,#01696F 0%, #02898F 100%); color:#fff; border-radius:14px; padding: var(--space-6); text-align:center; }
+    .cta-block h3 { color:#fff; margin: 0 0 var(--space-2); font-size:1.3rem; }
+    .cta-block p { color:#eaf6f6; margin: 0 0 var(--space-4); }
+    .cta-block .btn { display:inline-block; background:#fff; color:#01696F; padding:.85rem 1.6rem; border-radius:9px; font-weight:700; text-decoration:none; }
+    .cta-block .btn:hover { background:#eaf6f6; }
+
+    .cite { background:#eaf6f6; border:1px dashed #01696F; border-radius:10px; padding: var(--space-4); margin-bottom: var(--space-5); font-size:.92rem; color:#1a3942; }
+    .cite b { color:#01696F; }
+
+    @media print {
+      .tool-hero, .header, .footer, .cta-block { display:none !important; }
+      .index-hero, .components, .history { box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="../index.html" class="header__logo">
+        <img src="../images/logo.png" alt="Harmony Digital Consults" class="header__logo-img" width="36" height="36">
+        <span class="header__logo-text">Harmony Digital</span>
+      </a>
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../products.html">Products</a>
+        <a href="../services.html">Services</a>
+        <a href="../process.html">Process</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../insights/index.html" style="color:#01696F;font-weight:700;">Insights</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../products.html">Products</a>
+    <a href="../services.html">Services</a>
+    <a href="../insights/index.html">Insights</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+  <main id="main">
+    <section class="tool-hero">
+      <div class="container">
+        <div class="crumb"><a href="../index.html">Home</a> &rsaquo; <a href="../insights/index.html">Insights Hub</a> &rsaquo; Confidence Index</div>
+        <h1>Harmony Education Confidence Index</h1>
+        <p class="lede">A single 0&ndash;100 number for the state of Nigerian education. Five weighted components, refreshed the first Friday of every month. Designed for journalists, ministries, donors, and EdTech operators who need one signal instead of a hundred.</p>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <div class="container">
+        <div style="max-width:880px;margin:0 auto;">
+
+          <div class="index-hero">
+            <div style="font-size:.85rem;font-weight:700;color:#5b6b6e;letter-spacing:.08em;text-transform:uppercase;">Harmony Education Confidence Index</div>
+            <div class="index-num"><span id="idx">--</span><small> / 100</small></div>
+            <div class="delta" id="delta">&mdash;</div>
+            <div class="index-band" id="band">&mdash;</div>
+            <p class="index-caption" id="caption">&mdash;</p>
+            <div class="meta-row">
+              <span>As of <b id="asof">&mdash;</b></span>
+              <span>Next refresh: <b id="next">&mdash;</b></span>
+              <span>Methodology version: <b>v1.0</b></span>
+            </div>
+          </div>
+
+          <div class="cite">
+            <b>How to cite:</b> "Harmony Education Confidence Index, <span id="citeMonth">May 2026</span>, <span id="citeVal">--</span>/100. Source: Harmony Digital Consults Ltd."
+          </div>
+
+          <div class="components">
+            <h2>The five components</h2>
+            <div class="comp-grid" id="compGrid"></div>
+          </div>
+
+          <div class="history">
+            <h2>12-month trend</h2>
+            <svg class="sparkline" id="spark" viewBox="0 0 600 140" preserveAspectRatio="none" aria-label="12-month Confidence Index trend"></svg>
+            <table class="hist-tbl" id="histTbl">
+              <thead><tr><th>Month</th><th>Index</th><th>MoM &Delta;</th><th>Note</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="takeaway">
+            <h2>What this month says</h2>
+            <p id="takeawayText">&mdash;</p>
+          </div>
+
+          <div class="methodology">
+            <h2>Methodology &mdash; how the index is built</h2>
+            <p>Each component is normalised 0&ndash;100 (100 = strongest possible confidence). The Index is then a weighted average: <code>Index = &Sigma; (component &times; weight)</code>.</p>
+            <ol>
+              <li><strong>Strike risk inverse</strong> (weight 25%) &mdash; 100 minus the ASUU Strike Probability. Direct read of public-tertiary stability.</li>
+              <li><strong>WAEC / NECO health</strong> (weight 20%) &mdash; registration trend vs prior year, malpractice incidents reported, results-release timeliness.</li>
+              <li><strong>FX-adjusted access</strong> (weight 20%) &mdash; ratio of average Nigerian wage to the cost of one year of local tertiary education plus a representative study-abroad package.</li>
+              <li><strong>Federal education funding</strong> (weight 15%) &mdash; education as a share of the federal budget, normalised against the 15% UNESCO benchmark.</li>
+              <li><strong>JAPA pressure inverse</strong> (weight 20%) &mdash; 100 minus an index of departure pressure (Google Trends for "japa," outbound student visa volumes, passport demand).</li>
+            </ol>
+            <p style="margin-top:var(--space-3);">All inputs are publicly sourced (WAEC, NECO, NBS, CBN, ASUU, ICEF, Google Trends). Calculations and raw inputs are published alongside each monthly release for full transparency. We commit to publishing every revision openly with a versioned changelog.</p>
+          </div>
+
+          <div class="cta-block">
+            <h3>Get the index in your inbox every first Friday</h3>
+            <p>One short email per month: the new number, the move, the why, and what to watch next. Used by EdTech founders, journalists, foundations, and parents.</p>
+            <a href="../contact.html?topic=Confidence-Index-Subscription" class="btn">Subscribe to the monthly digest</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">
+            <img src="../images/logo.png" alt="Harmony Digital Consults" width="28" height="28" style="border-radius: 4px;">
+            Harmony Digital Consults
+          </div>
+          <p class="footer__tagline">"Transforming education through technology."</p>
+          <p class="footer__rc">RC 8949899<br>Incorporated October 25, 2025</p>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Quick Links</h4>
+          <nav class="footer__links">
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="../products.html">Products</a>
+            <a href="../services.html">Services</a>
+            <a href="../insights/index.html">Insights Hub</a>
+            <a href="../publications.html">Publications</a>
+            <a href="../blog.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer__nav-heading">Contact</h4>
+          <div class="footer__contact-info">
+            <a href="mailto:info@harmonydigitalconsults.com.ng">info@harmonydigitalconsults.com.ng</a>
+            <a href="tel:+2348100978587">+234 810 097 8587</a>
+            <span>13, Stadium Road, Ekwulobia,<br>Anambra State, Nigeria</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2025\u20132026 Harmony Digital Consults Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+  /* ============================================================
+     Harmony Education Confidence Index
+     -------------------------------------------------------------
+     Editor: update the COMPONENTS scores and append to HISTORY
+     on the first Friday of each month. Page recomputes the rest.
+     Component score: 0-100 (higher = more confidence).
+     ============================================================ */
+  const COMPONENTS = [
+    { key:'strike',  name:'Strike risk inverse',        weight:0.25, score:39, note:'100 minus the ASUU Strike Probability Forecast (current: ~61%). Elevated risk drags this lower.' },
+    { key:'waec',    name:'WAEC / NECO health',          weight:0.20, score:58, note:'Registration up 4% YoY; results-release pacing on schedule; malpractice incidents flat.' },
+    { key:'access',  name:'FX-adjusted access',          weight:0.20, score:34, note:'Naira/USD pressure plus tuition inflation push private-sector and study-abroad costs up faster than wages.' },
+    { key:'funding', name:'Federal education funding',   weight:0.15, score:42, note:'7.9% of 2026 federal budget, vs the 15% UNESCO target. Flat versus 2025.' },
+    { key:'japa',    name:'JAPA pressure inverse',       weight:0.20, score:36, note:'"Japa" Google Trends in Nigeria sustained near 5-year highs; outbound student-visa volume up.' },
+  ];
+
+  // History — newest LAST. Editor: prepend to this array each month, then update CURRENT_MONTH.
+  const HISTORY = [
+    { month:'2025-06', val:48, note:'WAEC results delay raises concern.' },
+    { month:'2025-07', val:46, note:'ASUU NEC issues 21-day ultimatum.' },
+    { month:'2025-08', val:43, note:'Inflation re-accelerates above 30%.' },
+    { month:'2025-09', val:41, note:'JAPA-driven passport queues nationwide.' },
+    { month:'2025-10', val:44, note:'Federal salary review averts immediate strike.' },
+    { month:'2025-11', val:46, note:'Naira stabilises briefly post-Q3 reforms.' },
+    { month:'2025-12', val:45, note:'Year-end ASUU communiqu\u00e9 warns of 2026 action.' },
+    { month:'2026-01', val:43, note:'Tuition fee announcements in 6 federal universities.' },
+    { month:'2026-02', val:42, note:'2026 budget published \u2014 education share 7.9%.' },
+    { month:'2026-03', val:40, note:'SSANU joins ASUU posture; WAEC opens registration.' },
+    { month:'2026-04', val:41, note:'Inflation 28.4%; partial dialogue with FG resumes.' },
+    { month:'2026-05', val:42, note:'Current month \u2014 dialogue active but cooling.' },
+  ];
+  const CURRENT = HISTORY[HISTORY.length - 1];
+  const PREV    = HISTORY[HISTORY.length - 2];
+
+  function bandFor(v) {
+    if (v >= 70) return { text:'Strong confidence', take:'Fundamentals are aligned. A good window for institutional investment, hiring, and long-cycle policy commitments.' };
+    if (v >= 55) return { text:'Stable but watchful', take:'No acute crisis, but most components have room to improve. Keep contingency plans warm.' };
+    if (v >= 40) return { text:'Strained \u2014 plan defensively', take:'Multiple stressors pulling in the same direction. Schools, founders and parents should price risk into every decision this quarter.' };
+    return { text:'Fragile \u2014 high-risk environment', take:'Conditions resemble historic shock periods. Slow-down phase: defer non-critical commitments; communicate openly with stakeholders.' };
+  }
+
+  // Compute Index from component weights (overrides val if components present)
+  const computed = Math.round(COMPONENTS.reduce((s, c) => s + c.score * c.weight, 0));
+  // Use the computed value (authoritative) but ensure it stays in sync with the last HISTORY entry
+  HISTORY[HISTORY.length - 1].val = computed;
+
+  const band = bandFor(computed);
+  const delta = computed - PREV.val;
+  const deltaEl = document.getElementById('delta');
+  if (delta > 0) { deltaEl.className = 'delta delta-up';   deltaEl.textContent = `\u25B2 +${delta} vs ${PREV.month}`; }
+  else if (delta < 0) { deltaEl.className = 'delta delta-down'; deltaEl.textContent = `\u25BC ${delta} vs ${PREV.month}`; }
+  else { deltaEl.className = 'delta delta-flat'; deltaEl.textContent = `\u2014 flat vs ${PREV.month}`; }
+
+  document.getElementById('idx').textContent = computed;
+  document.getElementById('band').textContent = band.text;
+  document.getElementById('caption').textContent = band.take;
+  document.getElementById('takeawayText').textContent = band.take;
+
+  const fmtMonth = (m) => {
+    const [y,mm] = m.split('-');
+    const d = new Date(Number(y), Number(mm)-1, 1);
+    return d.toLocaleDateString('en-GB', { month:'long', year:'numeric' });
+  };
+  document.getElementById('asof').textContent  = fmtMonth(CURRENT.month);
+  document.getElementById('citeMonth').textContent = fmtMonth(CURRENT.month);
+  document.getElementById('citeVal').textContent = computed;
+  // Next refresh = first Friday of next month
+  function firstFriday(year, monthIdx) {
+    const d = new Date(year, monthIdx, 1);
+    while (d.getDay() !== 5) d.setDate(d.getDate()+1);
+    return d;
+  }
+  const [cy,cm] = CURRENT.month.split('-').map(Number);
+  const nf = firstFriday(cm === 12 ? cy+1 : cy, cm === 12 ? 0 : cm);
+  document.getElementById('next').textContent = nf.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+
+  // Components grid
+  document.getElementById('compGrid').innerHTML = COMPONENTS.map(c => `
+    <div class="comp-card">
+      <div class="comp-weight">Weight ${Math.round(c.weight*100)}%</div>
+      <h3>${c.name}</h3>
+      <div class="comp-bar"><span style="width:${c.score}%"></span></div>
+      <div class="comp-val"><span>Component score</span><b>${c.score} / 100</b></div>
+      <p class="comp-note">${c.note}</p>
+    </div>
+  `).join('');
+
+  // Sparkline
+  (function drawSpark() {
+    const svg = document.getElementById('spark');
+    const W = 600, H = 140, padX = 30, padY = 18;
+    const vals = HISTORY.map(h => h.val);
+    const min = Math.min(...vals) - 4, max = Math.max(...vals) + 4;
+    const x = i => padX + (i * (W - padX*2) / (HISTORY.length - 1));
+    const y = v => padY + (H - padY*2) * (1 - (v - min) / (max - min));
+    const pts = HISTORY.map((h,i) => `${x(i)},${y(h.val)}`).join(' ');
+    const area = `${x(0)},${H-padY} ${pts} ${x(HISTORY.length-1)},${H-padY}`;
+    svg.innerHTML = `
+      <polygon points="${area}" fill="#eaf6f6"/>
+      <polyline points="${pts}" fill="none" stroke="#01696F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      ${HISTORY.map((h,i)=>`<circle cx="${x(i)}" cy="${y(h.val)}" r="${i===HISTORY.length-1?5:3}" fill="${i===HISTORY.length-1?'#A84B2F':'#01696F'}"/>`).join('')}
+      <text x="${x(0)}" y="${H-2}" font-size="10" fill="#5b6b6e" text-anchor="middle">${HISTORY[0].month}</text>
+      <text x="${x(HISTORY.length-1)}" y="${H-2}" font-size="10" fill="#5b6b6e" text-anchor="middle">${CURRENT.month}</text>
+    `;
+  })();
+
+  // History table — newest first
+  const tbody = document.querySelector('#histTbl tbody');
+  tbody.innerHTML = HISTORY.slice().reverse().map((h, idx, arr) => {
+    const prev = arr[idx+1];
+    const d = prev ? h.val - prev.val : 0;
+    const dStr = prev ? (d > 0 ? `+${d}` : d < 0 ? `${d}` : '0') : '—';
+    return `<tr><td>${fmtMonth(h.month)}</td><td>${h.val}</td><td>${dStr}</td><td>${h.note}</td></tr>`;
+  }).join('');
+  </script>
+</body></html>
